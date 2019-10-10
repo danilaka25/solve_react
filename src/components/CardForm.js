@@ -12,6 +12,8 @@ import {
   View,
   Text,
   Button,
+  ScrollView,
+  TouchableHighlight,
 } from 'react-native';
 
 type Props = {
@@ -68,8 +70,7 @@ class CardForm extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.handleUserInput= this.handleUserInput.bind(this);
-
+    this.handleUserInput = this.handleUserInput.bind(this);
 
     this.state = {
       cardNunmber: '',
@@ -79,7 +80,7 @@ class CardForm extends React.Component<Props, State> {
       cvv: '',
       cvvValid: false,
       firstName: '',
-      firstNameValid: false,
+      firstNameValid: null,
       lastName: '',
       lastNameValid: false,
       secretQuestion: '',
@@ -102,7 +103,7 @@ class CardForm extends React.Component<Props, State> {
 
   handleUserInput = (inputName, inputValue) => {
     //console.log(e);
-    const name =  inputName;
+    const name = inputName;
     const value = inputValue;
     this.setState(
       {
@@ -131,7 +132,7 @@ class CardForm extends React.Component<Props, State> {
           fieldValidationErrors.cardNunmber = '';
         } else {
           cardNunmberValid = false;
-          fieldValidationErrors.cardNunmber = ' is invalid';
+          fieldValidationErrors.cardNunmber = ' isInvalid';
         }
         break;
       case 'cardExpirationDate':
@@ -143,7 +144,7 @@ class CardForm extends React.Component<Props, State> {
           fieldValidationErrors.cardExpirationDate = '';
         } else {
           cardExpirationDateValid = false;
-          fieldValidationErrors.cardExpirationDate = ' is invalid';
+          fieldValidationErrors.cardExpirationDate = ' isInvalid';
         }
         break;
       case 'cvv':
@@ -153,7 +154,7 @@ class CardForm extends React.Component<Props, State> {
           fieldValidationErrors.cvv = '';
         } else {
           cvvValid = false;
-          fieldValidationErrors.cvv = ' is invalid';
+          fieldValidationErrors.cvv = ' isInvalid';
         }
         break;
 
@@ -161,10 +162,10 @@ class CardForm extends React.Component<Props, State> {
         fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
         if (fieldName) {
           firstNameValid = true;
-          fieldValidationErrors.firstName = '';
+           
         } else {
           firstNameValid = false;
-          fieldValidationErrors.firstName = ' is invalid';
+           
         }
         break;
       case 'lastName':
@@ -174,7 +175,7 @@ class CardForm extends React.Component<Props, State> {
           fieldValidationErrors.lastName = '';
         } else {
           lastNameValid = false;
-          fieldValidationErrors.lastName = ' is invalid';
+          fieldValidationErrors.lastName = ' isInvalid';
         }
         break;
       case 'secretQuestion':
@@ -184,7 +185,7 @@ class CardForm extends React.Component<Props, State> {
           fieldValidationErrors.secretQuestion = '';
         } else {
           secretQuestionValid = false;
-          fieldValidationErrors.secretQuestion = ' is invalid';
+          fieldValidationErrors.secretQuestion = ' isInvalid';
         }
         break;
       case 'secretAnswer':
@@ -194,7 +195,7 @@ class CardForm extends React.Component<Props, State> {
           fieldValidationErrors.secretAnswer = '';
         } else {
           secretAnswerValid = false;
-          fieldValidationErrors.secretAnswer = ' is invalid';
+          fieldValidationErrors.secretAnswer = ' isInvalid';
         }
         break;
       default:
@@ -228,8 +229,8 @@ class CardForm extends React.Component<Props, State> {
       //this.state.cardNunmberValid &&
       // this.state.cardExpirationDateValid &&
       // this.state.cvvValid &&
-      this.state.firstNameValid &&
-      this.state.lastNameValid
+      this.state.firstNameValid 
+      // this.state.lastNameValid
       // this.state.secretQuestionValid &&
       // this.state.secretAnswerValid
     ) {
@@ -261,124 +262,253 @@ class CardForm extends React.Component<Props, State> {
   };
 
   errorClass(error: Object) {
-    return error.length === 0 ? '' : 'has-error';
+    return error.length === 0 ? '' : "backgroundColor: '#e8301c'";
   }
+
+
+  // addErrorLine (field){
+  //   //console.log(this.state.formErrors[field]);
+
+  //   if (this.state.formErrors[field] === "isInvalid") {
+  //     return false
+  //   } else {
+  //     return true
+  //   }
+  // }
 
   render() {
     //  console.log("(render) CardForm");
+    //console.log(this.state);
+
+
     console.log(this.state);
+    console.log('firstName');
+    console.log(this.state.firstName.length);
     return (
-      <View>
-        <View>
+      <View style={stylesForm.mainActivity}>
+        
+        
+        <View style={{height: 60}} >    
           <Text>Form</Text>
-          <View className="card_row">
-                    <View
-                      className={`form-group ${this.errorClass(
-                        this.state.formErrors.cardNunmber,
-                      )}`}>
-                      <TextInput
+        </View>
+
+
+
+         
+
+
+            <View style={stylesForm.cardRow}>  
+            
+                <TextInput
+                  style={[stylesForm.formInput  , stylesForm.inputCardnumber]}
+                  name="cardNunmber"
+                  placeholder="Card Nunmber"
+                  onChangeText={val => this.handleUserInput('cardNunmber', val)}
+                />
+                  
+                <TextInput
+                  style={[stylesForm.formInput , stylesForm.inputExpiration]}
+                  name="cardExpirationDate"
+                  placeholder="mm/yyyy"
+                  onChangeText={val =>
+                    this.handleUserInput('cardExpirationDate', val)
+                  }
+                />
+              
+                <TextInput
+                  style={[stylesForm.formInput , stylesForm.inputCvv]}
+                  name="cvv"
+                  placeholder="cvv"
+                  value={this.state.cvv}
+                  onChangeText={this.handleUserInput}
+                />
+
+              </View>
+
+
+
+
+
+
+            
+            <View style={stylesForm.fieldsRow}> 
+
+                        {/* {this.errorClass(
+                this.state.formErrors.lastName,
+              )} */}
+
+              
                 
-                        // className="form-control"
-                        name="cardNunmber"
-                        placeholder="Card Nunmber"
-                        
-                        onChangeText={val => this.handleUserInput("cardNunmber", val)}
-                      />
-                    </View>
-                    {/* <View
-                      className={`form-group ${this.errorClass(
-                        this.state.formErrors.cardExpirationDate,
-                      )}`}>
-                      <TextInput
-                        
-                        className="form-control"
-                        name="cardExpirationDate"
-                        placeholder="mm/yyyy"
-                        
-                        onChangeText={val => this.handleUserInput("cardExpirationDate", val)}
-                      />
-                    </View> */}
-                    <View
-                      className={`form-group ${this.errorClass(
-                        this.state.formErrors.cvv,
-                      )}`}>
-                      <TextInput
-                         
-                        className="form-control"
-                        name="cvv"
-                        placeholder="cvv"
-                        value={this.state.cvv}
-                        onChangeText={this.handleUserInput}
-                      />
-                    </View>
+                <TextInput
+                  // style={{borderColor: this.addErrorLine('firstName')?'green':'red'}}
+                   style={[
+                     stylesForm.formInput, 
+                     stylesForm.inputStandart, 
+                     {borderBottomColor: this.state.firstNameValid ? 'green' : 'red' },
+                     {borderBottomWidth: (this.state.firstName.length > 0) ? 1 : 0 },                  
+                     ]}
+                  name="firstName"
+                  placeholder="First Name"
+                  //value={this.state.firstName}
+                  onChangeText={val => this.handleUserInput('firstName', val)}
+                />
+                
+                <TextInput
+                   style={[
+                     stylesForm.formInput, 
+                     stylesForm.inputStandart, 
+                     {borderBottomColor: this.state.lastNameValid ? 'green' : 'red' },
+                     {borderBottomWidth: (this.state.lastName.length > 0) ? 1 : 0 },                  
+                     ]}
+                  name="lastName"
+                  placeholder="Last Name"
+                  //value={this.state.lastName}
+                  onChangeText={val => this.handleUserInput('lastName', val)}
+                />
+
+            </View>
+
+            <View style={stylesForm.fieldsRow}>     
+              
+                <TextInput
+                  style={[stylesForm.formInput, stylesForm.inputStandart]}
+                  name="secretQuestion"
+                  placeholder="Secret Question"
+                  onChange={this.handleUserInput}
+                />
+
+    
+            
+                <TextInput
+                  style={[stylesForm.formInput, stylesForm.inputStandart]}
+                  name="secretAnswer"
+                  placeholder="Secret Answer"
+                  onChange={this.handleUserInput}
+                />
+            </View>           
+
+        
+            
+          {/* <Button
+              onPress={this.handleSubmit}
+              title="Sign up"
+              style={stylesForm.formButton}
+            /> */}
+
+
+          <View style={stylesForm.fieldsRow}> 
+
+          <TouchableHighlight style={stylesForm.formButton} onPress={this.handleSubmit}>
+              <Text style={stylesForm.formButtonText}>Sign up</Text>
+          </TouchableHighlight>
+
+
           </View>
           
-            <View
-              className={`col-md-6 form-group ${this.errorClass(
-                this.state.formErrors.firstName,
-              )}`}>
-              <TextInput
-                 
-                // className="form-control"
-                name="firstName"
-                placeholder="First Name"
-                //value={this.state.firstName}
-                onChangeText={val => this.handleUserInput("firstName", val)}
-              />
-            </View>
-            <View
-              className={`col-md-6 form-group ${this.errorClass(
-                this.state.formErrors.lastName,
-              )}`}>
-              <TextInput
-               
-                // className="form-control"
-                name="lastName"
-                placeholder="Last Name"
-                //value={this.state.lastName}
-                onChangeText={val => this.handleUserInput("lastName", val)}
-              />
-            </View>
-            {/* <View className="row">
-          </View>
-          <View className="row">
-            <View
-              className={`col-md-6 form-group ${this.errorClass(
-                this.state.formErrors.secretQuestion,
-              )}`}>
-              <TextInput
-                type="text"
-                className="form-control"
-                name="secretQuestion"
-                placeholder="Secret Question"
-                value={this.state.secretQuestion}
-                onChange={this.handleUserInput}
-              />
-            </View>
-            <View
-              className={`col-md-6 form-group ${this.errorClass(
-                this.state.formErrors.secretAnswer,
-              )}`}>
-              <TextInput
-                type="text"
-                className="form-control"
-                name="secretAnswer"
-                placeholder="Secret Answer"
-                value={this.state.secretAnswer}
-                onChange={this.handleUserInput}
-              />
-            </View> */}
-           
+         
 
-
-           <View><Button onPress={this.handleSubmit} title="Sign up" /></View>
-
-
-        </View>
-        <CheckCard cardNunmber={this.state.cardNunmber} updateData={this.updateData} />
+        {/* <CheckCard
+          cardNunmber={this.state.cardNunmber}
+          updateData={this.updateData}
+        /> */}
       </View>
     );
   }
 }
+
+const stylesForm = StyleSheet.create({
+
+  isInvalid: {
+    backgroundColor: '#e8301c',
+  },
+
+  mainActivity: {
+    backgroundColor: '#00b5ec',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  cardRow: {
+     
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginBottom: 30,
+  
+  },
+
+    inputCardnumber: {
+      flex: 10,
+    },
+
+    inputExpiration: {
+      flex: 4,
+      marginLeft: 5,
+      marginRight: 5,
+    },
+
+    inputCvv: {
+      flex: 2,
+    },
+
+  fieldsRow: {
+     
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginBottom: 30,
+    // flex: 1,
+     
+     
+    //backgroundColor: 'skyblue'
+  },
+
+    inputStandart: {
+        flex: 1,
+    },
+
+  // inputContainer: {
+  //   width: 300,
+  //   height: 50,
+  //   backgroundColor: '#999999',
+     
+  //   flexDirection: 'row',
+  //    alignItems: 'center',
+  // },
+
+  formInput: {
+   
+
+
+    flex: 0.5,
+    height: 45,
+    borderBottomColor: 'yellow',
+    borderBottomWidth: 1,
+    paddingLeft: 10,
+    backgroundColor: '#cccccc',
+  },
+
+  formButton: {
+    backgroundColor: "#cccccc",
+    alignItems: 'center',
+     flex: 0.5,
+    flexDirection: 'row',
+    height: 45,
+     justifyContent: 'center',
+    
+  },
+
+  formButtonText: {
+       color: '#FFFFFF', 
+       textAlign: 'center',
+
+  }
+
+});
 
 export default CardForm;

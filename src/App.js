@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 import CardForm from './components/CardForm';
 import DisplayCardInfo from './components/DisplayCardInfo';
@@ -58,7 +58,7 @@ class CardApp extends Component<Props, State> {
 
   render() {
     return (
-      <View>
+      <View style={stylesMainscreen.mainActivity}>
         <CardForm updateData={this.updateData} />
         <DisplayCardInfo
           firstName={this.state.firstName}
@@ -71,5 +71,11 @@ class CardApp extends Component<Props, State> {
     );
   }
 }
+
+const stylesMainscreen = StyleSheet.create({
+  mainActivity: {
+    flex: 1,
+  },
+});
 
 export default CardApp;

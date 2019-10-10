@@ -11,6 +11,9 @@ import {
   View,
   Text,
   StatusBar,
+  Modal,
+  Alert,
+  Dimensions,
 } from 'react-native';
 
 type Props = {
@@ -28,7 +31,6 @@ type State = {
 };
 
 class DisplayCardInfo extends React.Component<Props, State> {
-  
   //static whyDidYouRender = true;
 
   static defaultProps = {
@@ -72,31 +74,71 @@ class DisplayCardInfo extends React.Component<Props, State> {
     }
     // Timer is already rendered. Reset prev timer + start new timer for 5 sec
     // console.log("update timer");
-    const { timerId } = this.state;
+    const {timerId} = this.state;
     clearTimeout(timerId);
     this.startTimer();
   };
 
   render() {
-    
-    //console.log('(render) DisplayCardInfo');
+    //console.log(this.props.formValid);
 
     if (!this.state.visible) {
       return null;
     }
 
-    const isVisible = this.props.formValid === 'true';
+    const isValid = this.props.formValid === 'true';
 
     return (
-      <View>
+      <Modal
+        style={stylesPopup.modalStyles}
+        animationType="slide"
+        transparent={true}
+        visible={this.state.visible}//this.state.visible
+        >
+        {/* <View style={stylesPopup.popupWrapper}>
+            <Text> Your Card Added </Text>
+            <Text> Result </Text>
+            <Text> First Name: {this.props.firstName} </Text>
+            <Text> Last Name: {this.props.lastName} </Text>
+            <Text>
+              {' '}
+              Card Nunmber: **** **** ****
+              {this.props.cardNunmber.substr(this.props.cardNunmber.length - 4)}
+            </Text>
+            <Text> Pay System: {this.props.paySystem} </Text>
+          </View> */}
+
+
+        <View style={stylesPopup.popupWrapper}>
+         {isValid ? (
+          <View style={stylesPopup.okBg} >
+            <Text> Result </Text>
+            <Text> First Name: {this.props.firstName} </Text>
+            <Text> Last Name: {this.props.lastName} </Text>
+            <Text> Card Nunmber: **** **** ****
+              {this.props.cardNunmber.substr(
+                this.props.cardNunmber.length - 4,
+              )}
+            </Text>
+            <Text> Pay System: {this.props.paySystem} </Text>
+          </View>
+        ) : (
+          <View style={stylesPopup.errorBg}  >
+            <Text> Result </Text>
+            <Text> Error </Text>
+          </View>
+        )}
+      </View> 
+
+      </Modal>
+
+      /* <View style={stylesPopup.popupWrapper}>
         {isVisible ? (
           <View>
             <Text> Result </Text>
             <Text> First Name: {this.props.firstName} </Text>
             <Text> Last Name: {this.props.lastName} </Text>
-            <Text>
-              
-              Card Nunmber: **** **** ****
+            <Text> Card Nunmber: **** **** ****
               {this.props.cardNunmber.substr(
                 this.props.cardNunmber.length - 4,
               )}
@@ -109,10 +151,55 @@ class DisplayCardInfo extends React.Component<Props, State> {
             <Text> Error </Text>
           </View>
         )}
-      </View>
+      </View> */
     );
   }
 }
+
+const { height } = Dimensions.get('window').height;
+console.log(height);
+
+//paddingTop: height * 0.1
+
+const stylesPopup = StyleSheet.create({
+
+modalStyles: {
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+         
+},
+
+
+  popupWrapper: {
+    
+
+    alignItems: 'center',
+    flex: 1,
+    
+    justifyContent: 'center',
+    // backgroundColor: '#999999',
+     
+    
+  },
+
+
+  errorBg: {
+    backgroundColor: '#e8301c',
+    padding: 30,
+     
+  },
+
+  okBg: {
+    backgroundColor: '#82e81c',
+    padding: 30,
+    
+  }
+
+
+
+
+});
 
 //defaultProps пишем полюбому даже с flow
 
