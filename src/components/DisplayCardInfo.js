@@ -156,8 +156,8 @@ class DisplayCardInfo extends React.Component<Props, State> {
   }
 }
 
-const { height } = Dimensions.get('window').height;
-console.log(height);
+// const { height } = Dimensions.get('window').height;
+// console.log(height);
 
 //paddingTop: height * 0.1
 

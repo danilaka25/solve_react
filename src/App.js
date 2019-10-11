@@ -11,6 +11,8 @@ import {View, StyleSheet} from 'react-native';
 
 import CardForm from './components/CardForm';
 import DisplayCardInfo from './components/DisplayCardInfo';
+import TestList from './components/TestList';
+import ProductEdit from './components/ProductEdit';
 
 type Props = {
   updateData: (
@@ -59,14 +61,16 @@ class CardApp extends Component<Props, State> {
   render() {
     return (
       <View style={stylesMainscreen.mainActivity}>
-        <CardForm updateData={this.updateData} />
+        {/* <TestList /> */}
+        <ProductEdit />
+        {/* <CardForm updateData={this.updateData} />
         <DisplayCardInfo
           firstName={this.state.firstName}
           lastName={this.state.lastName}
           cardNunmber={this.state.cardNunmber}
           formValid={this.state.formValid}
           paySystem={this.state.paySystem}
-        />
+        /> */}
       </View>
     );
   }
