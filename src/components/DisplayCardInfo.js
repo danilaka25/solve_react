@@ -53,7 +53,7 @@ class DisplayCardInfo extends React.Component<Props, State> {
         timerId: undefined,
         startAt: undefined,
       });
-    }, 5000);
+    }, 2000);
     this.setState({
       visible: true,
       timerId,
@@ -82,9 +82,9 @@ class DisplayCardInfo extends React.Component<Props, State> {
   render() {
     //console.log(this.props.formValid);
 
-    if (!this.state.visible) {
-      return null;
-    }
+    // if (!this.state.visible) {
+    //   return null;
+    // }
 
     const isValid = this.props.formValid === 'true';
 
@@ -93,112 +93,59 @@ class DisplayCardInfo extends React.Component<Props, State> {
         style={stylesPopup.modalStyles}
         animationType="slide"
         transparent={true}
-        visible={this.state.visible}//this.state.visible
-        >
-        {/* <View style={stylesPopup.popupWrapper}>
-            <Text> Your Card Added </Text>
-            <Text> Result </Text>
-            <Text> First Name: {this.props.firstName} </Text>
-            <Text> Last Name: {this.props.lastName} </Text>
-            <Text>
-              {' '}
-              Card Nunmber: **** **** ****
-              {this.props.cardNunmber.substr(this.props.cardNunmber.length - 4)}
-            </Text>
-            <Text> Pay System: {this.props.paySystem} </Text>
-          </View> */}
-
-
+        visible={this.state.visible} //this.state.visible
+      >
         <View style={stylesPopup.popupWrapper}>
-         {isValid ? (
-          <View style={stylesPopup.okBg} >
-            <Text> Result </Text>
-            <Text> First Name: {this.props.firstName} </Text>
-            <Text> Last Name: {this.props.lastName} </Text>
-            <Text> Card Nunmber: **** **** ****
-              {this.props.cardNunmber.substr(
-                this.props.cardNunmber.length - 4,
-              )}
-            </Text>
-            <Text> Pay System: {this.props.paySystem} </Text>
-          </View>
-        ) : (
-          <View style={stylesPopup.errorBg}  >
-            <Text> Result </Text>
-            <Text> Error </Text>
-          </View>
-        )}
-      </View> 
-
+          {isValid ? (
+            <View style={stylesPopup.okBg}>
+              <Text> Result </Text>
+              <Text> First Name: {this.props.firstName} </Text>
+              <Text> Last Name: {this.props.lastName} </Text>
+              <Text>
+                {' '}
+                Card Nunmber: **** **** ****
+                {this.props.cardNunmber.substr(
+                  this.props.cardNunmber.length - 4,
+                )}
+              </Text>
+              <Text> Pay System: {this.props.paySystem} </Text>
+            </View>
+          ) : (
+            <View style={stylesPopup.errorBg}>
+              <Text> Result </Text>
+              <Text> Error </Text>
+            </View>
+          )}
+        </View>
       </Modal>
-
-      /* <View style={stylesPopup.popupWrapper}>
-        {isVisible ? (
-          <View>
-            <Text> Result </Text>
-            <Text> First Name: {this.props.firstName} </Text>
-            <Text> Last Name: {this.props.lastName} </Text>
-            <Text> Card Nunmber: **** **** ****
-              {this.props.cardNunmber.substr(
-                this.props.cardNunmber.length - 4,
-              )}
-            </Text>
-            <Text> Pay System: {this.props.paySystem} </Text>
-          </View>
-        ) : (
-          <View> 
-            <Text> Result </Text>
-            <Text> Error </Text>
-          </View>
-        )}
-      </View> */
     );
   }
 }
 
-// const { height } = Dimensions.get('window').height;
-// console.log(height);
-
-//paddingTop: height * 0.1
-
 const stylesPopup = StyleSheet.create({
-
-modalStyles: {
-        position: 'absolute',
-        justifyContent: 'center',
-        alignItems: 'center',
-         
-},
-
-
-  popupWrapper: {
-    
-
-    alignItems: 'center',
-    flex: 1,
-    
+  modalStyles: {
+    position: 'absolute',
     justifyContent: 'center',
-    // backgroundColor: '#999999',
-     
-    
+    alignItems: 'center',
   },
 
+  popupWrapper: {
+    alignItems: 'center',
+    flex: 1,
+
+    justifyContent: 'center',
+    // backgroundColor: '#999999',
+  },
 
   errorBg: {
     backgroundColor: '#e8301c',
     padding: 30,
-     
   },
 
   okBg: {
     backgroundColor: '#82e81c',
     padding: 30,
-    
-  }
-
-
-
-
+  },
 });
 
 //defaultProps пишем полюбому даже с flow

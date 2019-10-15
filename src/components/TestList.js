@@ -4,51 +4,33 @@
 import React, {Component} from 'react';
 //import PropTypes from 'prop-types';
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Modal,
-  Alert,
-  Image,
-  FlatList,
-  Platform,
-} from 'react-native';
+import {StyleSheet, View, Text, Image, FlatList, Platform} from 'react-native';
 
 class TestList extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      Obj: {},
+      usersList: {},
     };
   }
 
   fetchData() {
-    return fetch('https://randomuser.me/api/?results=500')
+    return fetch('https://randomuser.me/api/?results=150')
       .then(response => response.json())
       .then(responseJson => {
-        let Obj2 = [];
-        //console.log(responseJson);
+        let usersTemp = [];
 
-        let newObj = responseJson;
-
-        for (let i of Object.keys(newObj.results)) {
-          //console.log(newObj.results)
-          //console.log(newObj.results[i].name.first)
-          Obj2.push({
-            firstname: newObj.results[i].name.first,
-            lastname: newObj.results[i].name.last,
-            img: newObj.results[i].picture.thumbnail,
+        for (let i of Object.keys(responseJson.results)) {
+          usersTemp.push({
+            firstname: responseJson.results[i].name.first,
+            lastname: responseJson.results[i].name.last,
+            img: responseJson.results[i].picture.thumbnail,
             id: i,
           });
         }
 
         this.setState({
-          Obj: Obj2,
+          usersList: usersTemp,
         });
       })
       .catch(error => {
@@ -56,39 +38,47 @@ class TestList extends React.Component {
       });
   }
 
-  componentDidMount(prevProps, prevState) {
+  componentDidMount() {
     this.fetchData();
   }
 
-  Item({name, lastname, img}) {
+  Item({name, lastname, img, id}) {
     return (
-      <View style={ stylesList.listItem }>
-        <Image style={{width: 50, height: 50}} source={{uri: img}} />
-        <View style={ stylesList.listInfo }>
-          <Text style={{color: '#000'}}>{name}</Text>
-          <Text style={{color: '#000'}}>{lastname}</Text>
-        </View>  
+      <View style={stylesList.listItem}>
+        <Image style={stylesList.listImg} source={{uri: img}} />
+        <View style={stylesList.listInfo}>
+          <Text style={stylesList.listText}>{name}</Text>
+          <Text style={stylesList.listText}>{lastname}</Text>
+        </View>
+        <View>
+          <Text style={stylesList.listText}>{id}</Text>
+        </View>
       </View>
     );
   }
 
   render() {
-    console.log(this.state.Obj);
-
     return (
       <View>
-        <View style={{height: 0}}>
-          <Text style={{color: '#999999'}}>Form</Text>
-        </View>
-
         <FlatList
-         getItemLayout={(data, index) => (
-            {length: 60, offset: 60 * index, index}
+          getItemLayout={
+            (data, index) => ({
+              length: 70,
+              offset: 70 * index,
+              index,
+            })
             //console.log("get item layout " + index)
+          }
+          style={stylesList.listWrapper}
+          data={this.state.usersList}
+          renderItem={({item}) => (
+            <this.Item
+              name={item.firstname}
+              lastname={item.lastname}
+              img={item.img}
+              id={item.id}
+            />
           )}
-          style={ stylesList.listWrapper }
-          data={this.state.Obj}
-          renderItem={({item}) => <this.Item name={item.firstname} lastname={item.lastname} img={item.img}/>}
           keyExtractor={item => item.id}
         />
       </View>
@@ -97,26 +87,32 @@ class TestList extends React.Component {
 }
 
 const stylesList = StyleSheet.create({
-
   listWrapper: {
     marginTop: Platform.OS === 'ios' ? 35 : 0,
   },
-
+  listImg: {
+    width: 50, 
+    height: 50
+  },
   listItem: {
-          flexDirection: 'row',
-          height: 60,
-          color: '#999999',
-          borderBottomColor: '#999999',
-          borderBottomWidth: 0.5,
-          alignItems: 'center',
+    flexDirection: 'row',
+    height: 70,
+    color: '#999999',
+    borderBottomColor: '#999999',
+    borderBottomWidth: 0.5,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    paddingRight: 10,
   },
-  listInfo: {         
-          
-          alignItems: 'flex-start',
-          paddingLeft: 20,
+  listInfo: {
+    alignItems: 'flex-start',
+    paddingLeft: 20,
+    flex: 1,
   },
-
-
+  listText: {
+    color: '#000'
+  }
 });
 
 export default TestList;

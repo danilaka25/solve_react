@@ -5,30 +5,19 @@ import React, {Component} from 'react';
 //import PropTypes from 'prop-types';
 
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
-  StatusBar,
-  Modal,
   Alert,
-  Image,
-  FlatList,
   Platform,
   Button,
   TextInput,
+  Picker,
 } from 'react-native';
 
 class ProductEdit extends React.Component {
   constructor(props) {
-
     super(props);
-    //this._handleCreateBtn = this._handleCreateBtn.bind(this);
-    //this.handleUserInput = this.handleUserInput.bind(this);
-
-  
-     
 
     this.state = {
       productName: '',
@@ -42,8 +31,6 @@ class ProductEdit extends React.Component {
     };
   }
 
-  componentDidMount(prevProps, prevState) {}
-
   handleUserInput = (inputName, inputValue) => {
     //console.log(e);
     const name = inputName;
@@ -53,49 +40,67 @@ class ProductEdit extends React.Component {
         [name]: value,
       },
       () => {
-        this.validateField(name, value);
+        this.validateField();
       },
     );
   };
 
- validateField(name, value) {
-     if (value.length > 2) {
-         this.setState({
-             formIsValid: true
+  handleValueChange = (inputName, inputValue) => {
+    const name = inputName;
+    const value = inputValue;
 
-         })
+    this.setState(
+      {
+        [name]: value,
+      },
+      () => {
+        this.validateField();
+      },
+    );
+  };
 
-         
-
-     }
-
- }
-
-  handleCreateBtn = () => {
-    this.setState({
-    //   formIsValid: true,
-      btnCreate: true,
-      btnEdit: false,
-      isFieldEditable: false,
-    });
-     //console.log(event);
-
+  validateField() {
+    if (
+      this.state.productName.length > 2 &&
+      this.state.productWeight.length > 2 &&
+      this.state.productSize.length > 2 &&
+      this.state.productCountry.length > 2
+    ) {
+      this.setState({
+        formIsValid: true,
+      });
+    } else {
+      this.setState({
+        formIsValid: false,
+      });
+    }
   }
 
+  handleCreateBtn = () => {
+    if (this.state.formIsValid) {
+      this.setState({
+        btnCreate: true,
+        btnEdit: false,
+        isFieldEditable: false,
+      });
+    } else {
+      this.showError();
+    }
+  };
+
   handleEditBtn = () => {
-   this.setState({
-    //   formIsValid: true,
+    this.setState({
       btnCreate: false,
       btnEdit: true,
       isFieldEditable: true,
     });
+  };
 
-  }
-
+  showError = () => {
+    Alert.alert('Some of your field is leth then 2 character');
+  };
 
   render() {
-    console.log(this.state);
-
     return (
       <View style={stylesProduct.productWrapper}>
         <View style={stylesProduct.buttonRow}>
@@ -105,7 +110,6 @@ class ProductEdit extends React.Component {
             onPress={this.handleCreateBtn}
             disabled={this.state.btnCreate}
           />
-
           <Button
             title="Edit"
             color="#f194ff"
@@ -120,29 +124,39 @@ class ProductEdit extends React.Component {
             onChangeText={val => this.handleUserInput('productName', val)}
             editable={this.state.isFieldEditable}
           />
-
           <TextInput
             style={[stylesProduct.productInput]}
             placeholder="productWeight"
             onChangeText={val => this.handleUserInput('productWeight', val)}
             editable={this.state.isFieldEditable}
           />
-
           <TextInput
             style={[stylesProduct.productInput]}
             placeholder="productSize"
             onChangeText={val => this.handleUserInput('productSize', val)}
             editable={this.state.isFieldEditable}
           />
-
-          <TextInput
+          {/* <TextInput
             style={[stylesProduct.productInput]}
             placeholder="productCountry"
             onChangeText={val => this.handleUserInput('productCountry', val)}
             editable={this.state.isFieldEditable}
-          />
+          /> */}
 
-          <Text>{JSON.stringify(this.state)} </Text>
+          <Picker
+            selectedValue={this.state.productCountry}
+            style={[stylesProduct.productPicker]}
+            enabled={this.state.isFieldEditable}
+            onValueChange={val =>
+              this.handleValueChange('productCountry', val)
+            }>
+            <Picker.Item label="Usa" value="usa" />
+            <Picker.Item label="Jahpan" value="jahpan" />
+            <Picker.Item label="Germany" value="germany" />
+            <Picker.Item label="Ukraine" value="ukraine" />
+          </Picker>
+
+          <Text style={{marginTop: 200}}>{JSON.stringify(this.state)} </Text>
         </View>
       </View>
     );
@@ -156,10 +170,14 @@ const stylesProduct = StyleSheet.create({
 
   productInput: {
     height: 45,
-    // borderBottomColor: 'yellow',
-    // borderBottomWidth: 1,
     paddingLeft: 10,
     backgroundColor: '#cccccc',
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 20,
+  },
+
+  productPicker: {
     marginLeft: 20,
     marginRight: 20,
     marginBottom: 20,
@@ -180,6 +198,7 @@ const stylesProduct = StyleSheet.create({
     borderBottomWidth: 0.5,
     alignItems: 'center',
   },
+
   listInfo: {
     alignItems: 'flex-start',
     paddingLeft: 20,
