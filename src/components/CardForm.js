@@ -5,6 +5,8 @@ import React, {Component} from 'react';
 import CheckCard from './CheckCard';
 // import PropTypes from 'prop-types';
 
+import Server from '../server/index';
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -73,41 +75,52 @@ class CardForm extends React.Component<Props, State> {
     this.handleUserInput = this.handleUserInput.bind(this);
 
     this.state = {
-      cardNunmber: '',
-      cardNunmberValid: false,
-      cardExpirationDate: '',
-      cardExpirationDateValid: false,
-      cvv: '',
-      cvvValid: false,
-      firstName: '',
-      firstNameValid: false,
-      lastName: '',
-      lastNameValid: false,
-      secretQuestion: '',
-      secretQuestionValid: false,
-      secretAnswer: '',
-      secretAnswerValid: false,
+      // cardNunmber: '',
+      // cardNunmberValid: false,
+      // cardExpirationDate: '',
+      // cardExpirationDateValid: false,
+      // cvv: '',
+      // cvvValid: false,
+      // firstName: '',
+      // firstNameValid: false,
+      // lastName: '',
+      // lastNameValid: false,
+      // secretQuestion: '',
+      // secretQuestionValid: false,
+      // secretAnswer: '',
+      // secretAnswerValid: false,
+
+      fields: {
+        cardNunmber: '',
+        cardExpirationDate: '',
+        cvv: '',
+        firstName: '',
+        lastName: '',
+        secretQuestion: '',
+        secretAnswer: '',
+      },
+
       formErrors: {
         cardNunmber: 'true',
         cardExpirationDate: 'true',
         cvv: 'true',
-        firstName: 'true',
-        lastName: 'true',
+        firstName: 'false',
+        lastName: 'false',
         secretQuestion: 'true',
         secretAnswer: 'true',
       },
+
       formValid: 'false',
       paySystem: '--',
     };
   }
 
   handleUserInput = (inputName, inputValue) => {
-    //console.log(e);
     const name = inputName;
     const value = inputValue;
     this.setState(
       {
-        [name]: value,
+        fields: {...this.state.fields, [name]: value},
       },
       () => {
         this.validateField(name, value);
@@ -118,104 +131,59 @@ class CardForm extends React.Component<Props, State> {
   validateField(fieldName: string, value: string) {
     //let fieldValidationErrors = this.state.formErrors;
 
-    let {
-      formErrors,
-      cardNunmberValid,
-      cardExpirationDateValid,
-      cvvValid,
-      firstNameValid,
-      lastNameValid,
-      secretQuestionValid,
-      secretAnswerValid,
-    } = this.state;
+    let {formErrors} = this.state;
 
-    switch (fieldName) {
-      case 'cardNunmber':
-        fieldName = value.match(/^[0-9]{16}$/);
-        if (fieldName) {
-          cardNunmberValid = true;
-          //formErrors.cardNunmber = 'Valid';
-        } else {
-          cardNunmberValid = false;
-          //formErrors.cardNunmber = 'isInvalid';
-        }
-        break;
-      case 'cardExpirationDate':
-        fieldName = value.match(
-          /((0[1-9])|(1[0-2]))\/[2-9](([1-9]\d\d)|(01[0-9])|(0[2-9]\d))/,
-        );
-        if (fieldName) {
-          cardExpirationDateValid = true;
-          // formErrors.cardExpirationDate = '';
-        } else {
-          cardExpirationDateValid = false;
-          //formErrors.cardExpirationDate = 'isInvalid';
-        }
-        break;
-      case 'cvv':
-        fieldName = value.match(/^[0-9]{3,4}$/);
-        if (fieldName) {
-          cvvValid = true;
-          // formErrors.cvv = '';
-        } else {
-          cvvValid = false;
-          // formErrors.cvv = 'isInvalid';
-        }
-        break;
+    // switch (fieldName) {
+    //   case 'cardNunmber':
+    //     fieldName = value.match(/^[0-9]{16}$/);
+    //     fieldName
+    //       ? (formErrors.cardNunmber = true)
+    //       : (formErrors.cardNunmber = false);
+    //     break;
+    //   case 'cardExpirationDate':
+    //     fieldName = value.match(
+    //       /((0[1-9])|(1[0-2]))\/[2-9](([1-9]\d\d)|(01[0-9])|(0[2-9]\d))/,
+    //     );
+    //     fieldName
+    //       ? (formErrors.cardExpirationDate = true)
+    //       : (formErrors.cardExpirationDate = false);
+    //     break;
+    //   case 'cvv':
+    //     fieldName = value.match(/^[0-9]{3,4}$/);
+    //     fieldName
+    //       ? (formErrors.cvv = true)
+    //       : (formErrors.cvv = false);
+    //     break;
+    //   case 'firstName':
+    //     fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
+    //     fieldName
+    //       ? (formErrors.firstName = true)
+    //       : (formErrors.firstName = false);
+    //     break;
+    //   case 'lastName':
+    //     fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
+    //     fieldName
+    //       ? (formErrors.lastName = true)
+    //       : (formErrors.lastName = false);
+    //     break;
+    //   case 'secretQuestion':
+    //     fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
+    //     fieldName
+    //       ? (formErrors.secretQuestion = true)
+    //       : (formErrors.secretQuestion = false);
+    //     break;
+    //   case 'secretAnswer':
+    //     fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
+    //     fieldName
+    //       ? (formErrors.secretAnswer = true)
+    //       : (formErrors.secretAnswer = false);
+    //     break;
+    //   default:
+    //     break;
+    // }
 
-      case 'firstName':
-        fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
-        if (fieldName) {
-          firstNameValid = true;
-          // formErrors.firstName = 'Valid';
-        } else {
-          firstNameValid = false;
-          // formErrors.firstName = 'isInvalid';
-        }
-        break;
-      case 'lastName':
-        fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
-        if (fieldName) {
-          lastNameValid = true;
-          //  formErrors.lastName = '';
-        } else {
-          lastNameValid = false;
-          // formErrors.lastName = 'isInvalid';
-        }
-        break;
-      case 'secretQuestion':
-        fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
-        if (fieldName) {
-          secretQuestionValid = true;
-          // formErrors.secretQuestion = '';
-        } else {
-          secretQuestionValid = false;
-          //  formErrors.secretQuestion = 'isInvalid';
-        }
-        break;
-      case 'secretAnswer':
-        fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
-        if (fieldName) {
-          secretAnswerValid = true;
-          //  formErrors.secretAnswer = '';
-        } else {
-          secretAnswerValid = false;
-          // formErrors.secretAnswer = 'isInvalid';
-        }
-        break;
-      default:
-        break;
-    }
     this.setState({
       formErrors: formErrors,
-      cardNunmberValid: cardNunmberValid,
-      cardExpirationDateValid: cardExpirationDateValid,
-      cvvValid: cvvValid,
-      firstNameValid: firstNameValid,
-      lastNameValid: lastNameValid,
-      secretQuestionValid: secretQuestionValid,
-      secretAnswerValid: secretAnswerValid,
-      //  { ...this.state }=   {formErrors, cardNunmberValid, cardExpirationDateValid, cvvValid, firstNameValid, lastNameValid, secretQuestionValid, secretAnswerValid} ;
     });
   }
 
@@ -229,59 +197,92 @@ class CardForm extends React.Component<Props, State> {
     }
   };
 
-  handleSubmit = (event: any) => {
-    let formErrors = {...this.state.formErrors};
+  sendData = (data: Array) => {
+    Server(data)
+      .then(response => {
+        //console.log(resp);
+        this.setState({formErrors: response}, () => this.validateForm());
+      })
+      .catch(err => console.log(err));
+  };
 
-    for (let i of Object.keys(formErrors)) { // second validation on Submit
-      let a = i + 'Valid';
-      formErrors[i] = this.state[a];
-    }
+  validateForm = () => {
+    //console.log(this.state.formErrors)
 
-    this.setState({
-      formErrors: formErrors,
-    });
+    for (let fieldName of Object.keys(this.state.formErrors)) {
+      //console.log(this.state.formErrors[fieldName]);
+      if (this.state.formErrors[fieldName] === 'false') {
+        // form NOT valid
 
-    event.preventDefault();
-    if (
-      this.state.cardNunmberValid &&
-      this.state.cardExpirationDateValid &&
-      this.state.cvvValid &&
-      this.state.firstNameValid &&
-      this.state.lastNameValid &&
-      this.state.secretQuestionValid &&
-      this.state.secretAnswerValid
-    ) {
-      this.setState(
-        // zzz  6) Думаю эта функция работает, но выглядит неправильно с точки зрения чистого кода
-        {
-          formValid: 'true',
-        },
-        function() {
-          this.props.updateData(
-            this.state.firstName,
-            this.state.lastName,
-            this.state.cardNunmber,
-            this.state.formValid,
-            this.state.paySystem,
-          );
-        },
-      );
-    } else {
-      this.setState(
-        {
+        this.setState({
           formValid: 'false',
         },
         function() {
           this.props.updateData(this.state.formValid);
-        },
-      );
+        })
+        return
+
+        
+
+      } 
+
+      
     }
+
+    console.log(this.state.formValid);
+
+    // if (this.state.formErrors.indexOf( 'false' ) != -1 ) {
+    //   console.log("yes false")
+
+    // }
+  };
+
+  handleSubmit = (event: any) => {
+    this.sendData(this.state); ///////
+
+    event.preventDefault();
+
+    // if (
+    //   this.state.formErrors.firstName //&&
+    //   //this.state.formErrors.lastName === "true"
+    // ) {
+    //   this.setState(
+    //     {
+    //       formValid: 'true',
+    //     },
+    //     function() {
+    //       console.log;
+    //       // this.props.updateData(
+    //       //   this.state.firstName,
+    //       //   this.state.lastName,
+    //       //   this.state.cardNunmber,
+    //       //   this.state.formValid,
+    //       //   this.state.paySystem,
+    //       // );
+    //     },
+    //   );
+    // } else {
+    //   this.setState(
+    //     {
+    //       formValid: 'false',
+    //     },
+    //     // function() {
+    //     //   this.props.updateData(this.state.formValid);
+    //     // },
+    //   );
+    // }
   };
 
   render() {
     // console.log("(render) CardForm");
-     console.log(this.state);
-    // console.log(this.state.formErrors);
+    // console.log("-----FIELDS----");
+    // console.log(this.state.fields);
+    //console.log(this.state);
+    //console.log(this.state.formValid);
+    // console.log("----State-----");
+    // console.log(this.state.fields.firstName);
+    // console.log(this.state.formErrors.firstName);
+    //console.log(this.state);
 
     return (
       <View style={stylesForm.mainActivity}>
@@ -294,11 +295,11 @@ class CardForm extends React.Component<Props, State> {
             style={[
               stylesForm.formInput,
               stylesForm.inputCardnumber,
-              {
-                borderBottomColor: this.state.formErrors.cardNunmber
-                  ? '#ffffff'
-                  : 'red',
-              },
+              // {
+              //   borderBottomColor: this.state.errorsForRedLines.cardNunmber
+              //     ? '#ffffff'
+              //     : 'red',
+              // },
             ]}
             name="cardNunmber"
             placeholder="Card Nunmber"
@@ -309,11 +310,12 @@ class CardForm extends React.Component<Props, State> {
             style={[
               stylesForm.formInput,
               stylesForm.inputExpiration,
-              {
-                borderBottomColor: this.state.formErrors.cardExpirationDate
-                  ? '#ffffff'
-                  : 'red',
-              },
+              // {
+              //   borderBottomColor: this.state.errorsForRedLines
+              //     .cardExpirationDate
+              //     ? '#ffffff'
+              //     : 'red',
+              // },
             ]}
             name="cardExpirationDate"
             placeholder="mm/yyyy"
@@ -326,11 +328,11 @@ class CardForm extends React.Component<Props, State> {
             style={[
               stylesForm.formInput,
               stylesForm.inputCvv,
-              {
-                borderBottomColor: this.state.formErrors.cvv
-                  ? '#ffffff'
-                  : 'red',
-              },
+              // {
+              //   borderBottomColor: this.state.errorsForRedLines.cvv
+              //     ? '#ffffff'
+              //     : 'red',
+              // },
             ]}
             name="cvv"
             placeholder="cvv"
@@ -366,7 +368,6 @@ class CardForm extends React.Component<Props, State> {
             ]}
             name="lastName"
             placeholder="Last Name"
-            //value={this.state.lastName}
             onChangeText={val => this.handleUserInput('lastName', val)}
           />
         </View>
@@ -376,38 +377,32 @@ class CardForm extends React.Component<Props, State> {
             style={[
               stylesForm.formInput,
               stylesForm.inputStandart,
-              {
-                borderBottomColor: this.state.formErrors.secretQuestion
-                  ? '#ffffff'
-                  : 'red',
-              },
+              // {
+              //   borderBottomColor: this.state.errorsForRedLines.secretQuestion
+              //     ? '#ffffff'
+              //     : 'red',
+              // },
             ]}
             name="secretQuestion"
             placeholder="Secret Question"
-            onChange={this.handleUserInput}
+            onChangeText={val => this.handleUserInput('secretQuestion', val)}
           />
 
           <TextInput
             style={[
               stylesForm.formInput,
               stylesForm.inputStandart,
-              {
-                borderBottomColor: this.state.formErrors.secretAnswer
-                  ? '#ffffff'
-                  : 'red',
-              },
+              // {
+              //   borderBottomColor: this.state.errorsForRedLines.secretAnswer
+              //     ? '#ffffff'
+              //     : 'red',
+              // },
             ]}
             name="secretAnswer"
             placeholder="Secret Answer"
-            onChange={this.handleUserInput}
+            onChangeText={val => this.handleUserInput('secretAnswer', val)}
           />
         </View>
-
-        {/* <Button
-              onPress={this.handleSubmit}
-              title="Sign up"
-              style={stylesForm.formButton}
-            /> */}
 
         <View style={stylesForm.fieldsRow}>
           <TouchableHighlight
@@ -417,10 +412,10 @@ class CardForm extends React.Component<Props, State> {
           </TouchableHighlight>
         </View>
 
-        {/* <CheckCard
+        <CheckCard
           cardNunmber={this.state.cardNunmber}
           updateData={this.updateData}
-        /> */}
+        />
       </View>
     );
   }

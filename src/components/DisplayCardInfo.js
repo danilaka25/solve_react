@@ -65,7 +65,9 @@ class DisplayCardInfo extends React.Component<Props, State> {
     if (
       prevProps.firstName === this.props.firstName &&
       prevProps.lastName === this.props.lastName &&
-      prevProps.cardNunmber === this.props.cardNunmber
+      prevProps.cardNunmber === this.props.cardNunmber 
+      
+
     ) {
       return;
     }
