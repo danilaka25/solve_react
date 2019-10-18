@@ -1,4 +1,3 @@
-/* eslint-disable */
 // @flow
 
 import React, {Component} from 'react';
@@ -52,7 +51,7 @@ type State = {
     secretQuestion: string,
     secretAnswer: string,
   },
-  formValid: string,
+  formValid: boolean,
   paySystem: string,
 };
 
@@ -101,13 +100,13 @@ class CardForm extends React.Component<Props, State> {
       },
 
       formErrors: {
-        cardNunmber: 'true',
-        cardExpirationDate: 'true',
-        cvv: 'true',
+        cardNunmber: 'false',
+        cardExpirationDate: 'false',
+        cvv: 'false',
         firstName: 'false',
         lastName: 'false',
-        secretQuestion: 'true',
-        secretAnswer: 'true',
+        secretQuestion: 'false',
+        secretAnswer: 'false',
       },
 
       formValid: 'false',
@@ -207,26 +206,38 @@ class CardForm extends React.Component<Props, State> {
   };
 
   validateForm = () => {
-    //console.log(this.state.formErrors)
+    // console.log(this.state.formErrors.firstName);
+    // console.log(this.state.formErrors.lastName);
 
-    for (let fieldName of Object.keys(this.state.formErrors)) {
-      //console.log(this.state.formErrors[fieldName]);
-      if (this.state.formErrors[fieldName] === 'false') {
-        // form NOT valid
+    //console.log(typeof(this.state.formErrors.lastName));
 
-        this.setState({
+    if (this.state.formErrors.firstName && this.state.formErrors.lastName) {
+      //console.log('MUST BE TRUE');
+      this.setState(
+        {
+          formValid: 'true',
+        },
+        function() {
+          this.props.updateData(
+            this.state.firstName,
+            this.state.lastName,
+            this.state.cardNunmber,
+            this.state.formValid,
+            this.state.paySystem,
+          );
+        },
+      );
+    } else {
+      //console.log('NOT TRUE');
+      this.setState(
+        {
           formValid: 'false',
         },
         function() {
+          console.log;
           this.props.updateData(this.state.formValid);
-        })
-        return
-
-        
-
-      } 
-
-      
+        },
+      );
     }
 
     console.log(this.state.formValid);
