@@ -3,9 +3,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
-
+import {connect} from 'react-redux';
 
 import {
   SafeAreaView,
@@ -65,14 +63,10 @@ class DisplayCardInfo extends React.Component<Props, State> {
   };
 
   componentDidUpdate = (prevProps: Props) => {
-
-    // console.log("last", prevProps.firstName)
-    // console.log("next", this.props.firstName)
-
     if (
       prevProps.formData.firstName === this.props.formData.firstName &&
-      prevProps.formData.lastName === this.props.formData.lastName //&&
-      //prevProps.formData.cardNunmber === this.props.formData.cardNunmber
+      prevProps.formData.lastName === this.props.formData.lastName &&
+      prevProps.formData.cardNunmber === this.props.formData.cardNunmber
     ) {
       return;
     }
@@ -87,15 +81,14 @@ class DisplayCardInfo extends React.Component<Props, State> {
   };
 
   render() {
-    
-    console.log(this.props.formData);
+
+    //console.log(this.props.formData);
 
     if (!this.state.visible) {
       return null;
     }
 
     const isValid = this.props.formData.formValid;
-
 
     return (
       <Modal
@@ -158,7 +151,6 @@ const stylesPopup = StyleSheet.create({
 });
 
 //defaultProps пишем полюбому даже с flow
-
 
 const DisplayCardInfoContainer = connect(state => ({
   formData: state.formReducer,

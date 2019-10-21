@@ -6,7 +6,7 @@ import { rootReducer } from './rootReducer';
 
 // createReducer
 
-//const store = createStore(rootReducer, applyMiddleware(logger));
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(logger));
+//const store = createStore(rootReducer);
 
 export { store };

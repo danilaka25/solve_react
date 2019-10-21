@@ -4,7 +4,7 @@ export const onSubmit = (
   lastName,
   cardNunmber,
   formValid,
-  paySystem,
+  // paySystem,
 ) => {
   // validation
 
@@ -15,6 +15,19 @@ export const onSubmit = (
       lastName,
       cardNunmber,
       formValid,
+      // paySystem,
+    },
+  };
+};
+
+export const chekCard = (
+  paySystem,
+) => {
+  // validation
+
+  return {
+    type: 'CHEK_CARD',
+    payload: {
       paySystem,
     },
   };

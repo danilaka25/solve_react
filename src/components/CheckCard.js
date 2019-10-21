@@ -2,11 +2,14 @@
 // @flow
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {onSubmit} from '../actions/onSubmit';
+import {chekCard} from '../actions/onSubmit';
 
 type Props = {
   cardNunmber: string,
   updateData: (v1: string) => void,
+  chekCard: (
+    paySystem: string,
+  ) => void,
 };
 
 type State = {
@@ -25,7 +28,7 @@ class CheckCard extends React.Component<Props, State> {
   };
 
   componentDidUpdate(prevProps: Props) {
-     console.log('chekCars', this.props.formData.cardNunmber.length);
+     //console.log('chekCars', this.props.formData.cardNunmber.length);
     if (this.props.formData.cardNunmber.length === 16) {
       let count: number = +this.props.formData.cardNunmber.substring(0, 4);
 
@@ -37,7 +40,7 @@ class CheckCard extends React.Component<Props, State> {
               paySystem: 'Visa',
             },
             () => {
-              this.props.onSubmit(this.state.paySystem);
+              this.props.chekCard(this.state.paySystem);
             },
           );
         } else {
@@ -46,26 +49,27 @@ class CheckCard extends React.Component<Props, State> {
               paySystem: 'MasterCard',
             },
             () => {
-              this.props.onSubmit(this.state.paySystem);
+             this.props.chekCard(this.state.paySystem);
             },
           );
         }
 
         // console.log('card number', this.props.formData.cardNunmber);
 
-        //console.log('card', this.state.paySystem);
+        // console.log('-----', prevProps.cardNunmber);
+        // console.log('+++++', this.props.formData.cardNunmber);
       }
 
       // console.log('card', this.props.formData.cardNunmber);
 
-      // console.log('card', this.state.paySystem);
+      //console.log('card type', this.state.paySystem);
 
-      ///this.props.onSubmit(this.state.paySystem);
+     //this.props.onSubmit(this.state.paySystem);
     }
   }
 
   render() {
-    console.log('card', this.state.paySystem);
+    //console.log('card', this.state.paySystem);
     //console.log('(render) CheckCard');
     return null;
   }
@@ -76,7 +80,7 @@ const CheckCardContainer = connect(
     formData: state.formReducer,
   }),
   {
-    onSubmit,
+    chekCard,
   },
 )(CheckCard);
 

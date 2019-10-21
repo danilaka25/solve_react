@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 // @flow
 
-import React, {Component} from 'react';
+import React from 'react';
 import CheckCard from './CheckCard';
 import {connect} from 'react-redux';
 import {onSubmit} from '../actions/onSubmit';
@@ -20,13 +21,6 @@ import {
 } from 'react-native';
 
 type Props = {
-  updateData: (
-    firstName: string,
-    lastName: string,
-    cardNunmber: string,
-    formValid: string,
-    paySystem: string,
-  ) => void,
   onSubmit: (
     firstName: string,
     lastName: string,
@@ -37,21 +31,7 @@ type Props = {
 };
 
 type State = {
-  cardNunmber: string,
-  cardNunmberValid: boolean,
-  cardExpirationDate: string,
-  cardExpirationDateValid: boolean,
-  cvv: string,
-  cvvValid: boolean,
-  firstName: string,
-  firstNameValid: boolean,
-  lastName: string,
-  lastNameValid: boolean,
-  secretQuestion: string,
-  secretQuestionValid: boolean,
-  secretAnswer: string,
-  secretAnswerValid: boolean,
-  formErrors: {
+  fields: {
     cardNunmber: string,
     cardExpirationDate: string,
     cvv: string,
@@ -60,6 +40,17 @@ type State = {
     secretQuestion: string,
     secretAnswer: string,
   },
+
+  formErrors: {
+    cardNunmber: boolean,
+    cardExpirationDate: boolean,
+    cvv: boolean,
+    firstName: boolean,
+    lastName: boolean,
+    secretQuestion: boolean,
+    secretAnswer: boolean,
+  },
+
   formValid: boolean,
   paySystem: string,
 };
@@ -83,21 +74,6 @@ class CardForm extends React.Component<Props, State> {
     this.handleUserInput = this.handleUserInput.bind(this);
 
     this.state = {
-      // cardNunmber: '',
-      // cardNunmberValid: false,
-      // cardExpirationDate: '',
-      // cardExpirationDateValid: false,
-      // cvv: '',
-      // cvvValid: false,
-      // firstName: '',
-      // firstNameValid: false,
-      // lastName: '',
-      // lastNameValid: false,
-      // secretQuestion: '',
-      // secretQuestionValid: false,
-      // secretAnswer: '',
-      // secretAnswerValid: false,
-
       fields: {
         cardNunmber: '',
         cardExpirationDate: '',
@@ -131,14 +107,6 @@ class CardForm extends React.Component<Props, State> {
     });
   };
 
-  updateData = (paySystem: string) => {
-    if (this.state.paySystem !== paySystem) {
-      this.setState({
-        paySystem: paySystem,
-      });
-    }
-  };
-
   sendData = (data: Array) => {
     Server(data)
       .then(response => {
@@ -152,7 +120,7 @@ class CardForm extends React.Component<Props, State> {
   };
 
   validateForm = () => {
-    //console.log('validateForm', this.state.formValid);
+    console.log('validateForm', this.state.formValid);
     // console.log(this.state.formErrors.lastName);
     //console.log(typeof(this.state.formErrors.lastName));
 
@@ -307,10 +275,7 @@ class CardForm extends React.Component<Props, State> {
           </TouchableHighlight>
         </View>
 
-        <CheckCard
-          cardNunmber={this.state.cardNunmber}
-          updateData={this.updateData}
-        />
+        <CheckCard />
       </View>
     );
   }

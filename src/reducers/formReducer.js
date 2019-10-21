@@ -16,6 +16,12 @@ export const formReducer = (state = initialValue, action) => {
         ...action.payload,
       };
 
+    case 'CHEK_CARD':
+      return {
+        ...state,
+        ...action.payload,
+    };  
+
     default:
       return state;
   }
