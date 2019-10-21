@@ -1,6 +1,5 @@
 /* eslint-disable */
 
-
 const Server = data => {
   return new Promise(resolve => {
     setTimeout(() => resolve(validateFormOnServer(data)), 1000);
@@ -8,11 +7,18 @@ const Server = data => {
 };
 
 const validateFormOnServer = data => {
+  
+  const allDataAfterValidation = data;
+
   const fields = data.fields;
   const formErrors = data.formErrors;
 
-  for (let fieldName of Object.keys(fields)) {
+  let formValid = data.formValid;
 
+  formValid = true;
+  //console.log(formValid);
+
+  for (let fieldName of Object.keys(fields)) {
     // console.log(fieldName);
     // console.log(fields[fieldName]);
 
@@ -21,7 +27,7 @@ const validateFormOnServer = data => {
         fieldName = fields[fieldName].match(/^[0-9]{16}$/);
         fieldName
           ? (formErrors.cardNunmber = true)
-          : (formErrors.cardNunmber = false);
+          : (formErrors.cardNunmber = false, formValid = false);
         break;
       case 'cardExpirationDate':
         fieldName = fields[fieldName].match(
@@ -39,13 +45,13 @@ const validateFormOnServer = data => {
         fieldName = fields[fieldName].match(/([a-zA-Z]{3,30}\s*)+/);
         fieldName
           ? (formErrors.firstName = true)
-          : (formErrors.firstName = false);
+          : (formErrors.firstName = false, formValid = false)
         break;
       case 'lastName':
         fieldName = fields[fieldName].match(/([a-zA-Z]{3,30}\s*)+/);
         fieldName
           ? (formErrors.lastName = true)
-          : (formErrors.lastName = false);
+          : (formErrors.lastName = false , formValid = false);
         break;
       case 'secretQuestion':
         fieldName = fields[fieldName].match(/([a-zA-Z]{3,30}\s*)+/);
@@ -64,8 +70,13 @@ const validateFormOnServer = data => {
     }
   }
 
-  //console.log(formErrors);
-  return formErrors;
+  allDataAfterValidation.formErrors = formErrors;
+  allDataAfterValidation.formValid = formValid;
+
+   //console.log(formErrors.firstName)
+   //console.log(formValid);
+   
+  return allDataAfterValidation;
 };
 
 export default Server;

@@ -8,6 +8,9 @@
 
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
+import {Provider} from 'react-redux';
+
+import {store} from './configs/createStore';
 
 import CardForm from './components/CardForm';
 import DisplayCardInfo from './components/DisplayCardInfo';
@@ -60,18 +63,14 @@ class CardApp extends Component<Props, State> {
 
   render() {
     return (
-      <View style={stylesMainscreen.mainActivity}>
-        {/* <TestList />
+      <Provider store={store}>
+        <View style={stylesMainscreen.mainActivity}>
+          {/* <TestList />
         <ProductEdit /> */}
-        <CardForm updateData={this.updateData} />
-        <DisplayCardInfo
-          firstName={this.state.firstName}
-          lastName={this.state.lastName}
-          cardNunmber={this.state.cardNunmber}
-          formValid={this.state.formValid}
-          paySystem={this.state.paySystem}
-        />
-      </View>
+          <CardForm updateData={this.updateData} />
+          <DisplayCardInfo />
+        </View>
+      </Provider>
     );
   }
 }

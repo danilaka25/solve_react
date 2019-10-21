@@ -3,6 +3,9 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+
 
 import {
   SafeAreaView,
@@ -62,12 +65,14 @@ class DisplayCardInfo extends React.Component<Props, State> {
   };
 
   componentDidUpdate = (prevProps: Props) => {
-    if (
-      prevProps.firstName === this.props.firstName &&
-      prevProps.lastName === this.props.lastName &&
-      prevProps.cardNunmber === this.props.cardNunmber 
-      
 
+    // console.log("last", prevProps.firstName)
+    // console.log("next", this.props.firstName)
+
+    if (
+      prevProps.formData.firstName === this.props.formData.firstName &&
+      prevProps.formData.lastName === this.props.formData.lastName //&&
+      //prevProps.formData.cardNunmber === this.props.formData.cardNunmber
     ) {
       return;
     }
@@ -82,13 +87,15 @@ class DisplayCardInfo extends React.Component<Props, State> {
   };
 
   render() {
-    //console.log(this.props.formValid);
+    
+    console.log(this.props.formData);
 
-    // if (!this.state.visible) {
-    //   return null;
-    // }
+    if (!this.state.visible) {
+      return null;
+    }
 
-    const isValid = this.props.formValid === 'true';
+    const isValid = this.props.formData.formValid;
+
 
     return (
       <Modal
@@ -98,19 +105,19 @@ class DisplayCardInfo extends React.Component<Props, State> {
         visible={this.state.visible} //this.state.visible
       >
         <View style={stylesPopup.popupWrapper}>
-          {isValid ? (
+          {this.props.formData.formValid ? (
             <View style={stylesPopup.okBg}>
               <Text> Result </Text>
-              <Text> First Name: {this.props.firstName} </Text>
-              <Text> Last Name: {this.props.lastName} </Text>
+              <Text> First Name: {this.props.formData.firstName} </Text>
+              <Text> Last Name: {this.props.formData.lastName} </Text>
               <Text>
                 {' '}
                 Card Nunmber: **** **** ****
-                {this.props.cardNunmber.substr(
-                  this.props.cardNunmber.length - 4,
+                {this.props.formData.cardNunmber.substr(
+                  this.props.formData.cardNunmber.length - 4,
                 )}
               </Text>
-              <Text> Pay System: {this.props.paySystem} </Text>
+              <Text> Pay System: {this.props.formData.paySystem} </Text>
             </View>
           ) : (
             <View style={stylesPopup.errorBg}>
@@ -152,4 +159,11 @@ const stylesPopup = StyleSheet.create({
 
 //defaultProps пишем полюбому даже с flow
 
-export default DisplayCardInfo;
+
+const DisplayCardInfoContainer = connect(state => ({
+  formData: state.formReducer,
+}))(DisplayCardInfo);
+
+export default DisplayCardInfoContainer;
+
+// export default DisplayCardInfo;

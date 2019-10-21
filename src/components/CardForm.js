@@ -2,6 +2,8 @@
 
 import React, {Component} from 'react';
 import CheckCard from './CheckCard';
+import {connect} from 'react-redux';
+import {onSubmit} from '../actions/onSubmit';
 // import PropTypes from 'prop-types';
 
 import Server from '../server/index';
@@ -19,6 +21,13 @@ import {
 
 type Props = {
   updateData: (
+    firstName: string,
+    lastName: string,
+    cardNunmber: string,
+    formValid: string,
+    paySystem: string,
+  ) => void,
+  onSubmit: (
     firstName: string,
     lastName: string,
     cardNunmber: string,
@@ -117,76 +126,10 @@ class CardForm extends React.Component<Props, State> {
   handleUserInput = (inputName, inputValue) => {
     const name = inputName;
     const value = inputValue;
-    this.setState(
-      {
-        fields: {...this.state.fields, [name]: value},
-      },
-      () => {
-        this.validateField(name, value);
-      },
-    );
-  };
-
-  validateField(fieldName: string, value: string) {
-    //let fieldValidationErrors = this.state.formErrors;
-
-    let {formErrors} = this.state;
-
-    // switch (fieldName) {
-    //   case 'cardNunmber':
-    //     fieldName = value.match(/^[0-9]{16}$/);
-    //     fieldName
-    //       ? (formErrors.cardNunmber = true)
-    //       : (formErrors.cardNunmber = false);
-    //     break;
-    //   case 'cardExpirationDate':
-    //     fieldName = value.match(
-    //       /((0[1-9])|(1[0-2]))\/[2-9](([1-9]\d\d)|(01[0-9])|(0[2-9]\d))/,
-    //     );
-    //     fieldName
-    //       ? (formErrors.cardExpirationDate = true)
-    //       : (formErrors.cardExpirationDate = false);
-    //     break;
-    //   case 'cvv':
-    //     fieldName = value.match(/^[0-9]{3,4}$/);
-    //     fieldName
-    //       ? (formErrors.cvv = true)
-    //       : (formErrors.cvv = false);
-    //     break;
-    //   case 'firstName':
-    //     fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
-    //     fieldName
-    //       ? (formErrors.firstName = true)
-    //       : (formErrors.firstName = false);
-    //     break;
-    //   case 'lastName':
-    //     fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
-    //     fieldName
-    //       ? (formErrors.lastName = true)
-    //       : (formErrors.lastName = false);
-    //     break;
-    //   case 'secretQuestion':
-    //     fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
-    //     fieldName
-    //       ? (formErrors.secretQuestion = true)
-    //       : (formErrors.secretQuestion = false);
-    //     break;
-    //   case 'secretAnswer':
-    //     fieldName = value.match(/([a-zA-Z]{3,30}\s*)+/);
-    //     fieldName
-    //       ? (formErrors.secretAnswer = true)
-    //       : (formErrors.secretAnswer = false);
-    //     break;
-    //   default:
-    //     break;
-    // }
-
     this.setState({
-      formErrors: formErrors,
+      fields: {...this.state.fields, [name]: value},
     });
-  }
-
-  // zzz Не понял что тут происходит. Перегруженная конструкция, я бы подумал над упрощением
+  };
 
   updateData = (paySystem: string) => {
     if (this.state.paySystem !== paySystem) {
@@ -200,101 +143,42 @@ class CardForm extends React.Component<Props, State> {
     Server(data)
       .then(response => {
         //console.log(resp);
-        this.setState({formErrors: response}, () => this.validateForm());
+        this.setState(
+          {formErrors: response.formErrors, formValid: response.formValid},
+          () => this.validateForm(),
+        );
       })
       .catch(err => console.log(err));
   };
 
   validateForm = () => {
-    // console.log(this.state.formErrors.firstName);
+    //console.log('validateForm', this.state.formValid);
     // console.log(this.state.formErrors.lastName);
-
     //console.log(typeof(this.state.formErrors.lastName));
 
-    if (this.state.formErrors.firstName && this.state.formErrors.lastName) {
-      //console.log('MUST BE TRUE');
-      this.setState(
-        {
-          formValid: 'true',
-        },
-        function() {
-          this.props.updateData(
-            this.state.firstName,
-            this.state.lastName,
-            this.state.cardNunmber,
-            this.state.formValid,
-            this.state.paySystem,
-          );
-        },
-      );
-    } else {
-      //console.log('NOT TRUE');
-      this.setState(
-        {
-          formValid: 'false',
-        },
-        function() {
-          console.log;
-          this.props.updateData(this.state.formValid);
-        },
-      );
-    }
+    this.props.onSubmit(
+      this.state.fields.firstName,
+      this.state.fields.lastName,
+      this.state.fields.cardNunmber,
+      this.state.formValid,
+      //this.state.paySystem,
+    );
 
-    console.log(this.state.formValid);
-
+    //console.log(this.state.formValid);
     // if (this.state.formErrors.indexOf( 'false' ) != -1 ) {
     //   console.log("yes false")
-
     // }
   };
 
   handleSubmit = (event: any) => {
-    this.sendData(this.state); ///////
-
     event.preventDefault();
 
-    // if (
-    //   this.state.formErrors.firstName //&&
-    //   //this.state.formErrors.lastName === "true"
-    // ) {
-    //   this.setState(
-    //     {
-    //       formValid: 'true',
-    //     },
-    //     function() {
-    //       console.log;
-    //       // this.props.updateData(
-    //       //   this.state.firstName,
-    //       //   this.state.lastName,
-    //       //   this.state.cardNunmber,
-    //       //   this.state.formValid,
-    //       //   this.state.paySystem,
-    //       // );
-    //     },
-    //   );
-    // } else {
-    //   this.setState(
-    //     {
-    //       formValid: 'false',
-    //     },
-    //     // function() {
-    //     //   this.props.updateData(this.state.formValid);
-    //     // },
-    //   );
-    // }
+    this.sendData(this.state); ///////
+
+    //console.log(this.state.formValid);
   };
 
   render() {
-    // console.log("(render) CardForm");
-    // console.log("-----FIELDS----");
-    // console.log(this.state.fields);
-    //console.log(this.state);
-    //console.log(this.state.formValid);
-    // console.log("----State-----");
-    // console.log(this.state.fields.firstName);
-    // console.log(this.state.formErrors.firstName);
-    //console.log(this.state);
-
     return (
       <View style={stylesForm.mainActivity}>
         <View style={{height: 60}}>
@@ -306,11 +190,11 @@ class CardForm extends React.Component<Props, State> {
             style={[
               stylesForm.formInput,
               stylesForm.inputCardnumber,
-              // {
-              //   borderBottomColor: this.state.errorsForRedLines.cardNunmber
-              //     ? '#ffffff'
-              //     : 'red',
-              // },
+              {
+                borderBottomColor: this.state.formErrors.cardNunmber
+                  ? '#ffffff'
+                  : 'red',
+              },
             ]}
             name="cardNunmber"
             placeholder="Card Nunmber"
@@ -518,4 +402,13 @@ const stylesForm = StyleSheet.create({
   },
 });
 
-export default CardForm;
+const FormContainer = connect(
+  state => ({
+    form: state.formReducer,
+  }),
+  {
+    onSubmit,
+  },
+)(CardForm);
+
+export default FormContainer;
