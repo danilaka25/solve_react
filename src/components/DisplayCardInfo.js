@@ -81,8 +81,7 @@ class DisplayCardInfo extends React.Component<Props, State> {
   };
 
   render() {
-
-    //console.log(this.props.formData);
+    console.log(this.props.formData.paySystem);
 
     if (!this.state.visible) {
       return null;

@@ -1,41 +1,23 @@
 /* eslint-disable */
 
-import {onServerValidation} from '../services/onServerValidation'
+import {onServerValidation} from '../services/onServerValidation';
 
-import {
-  POST_USER_FAILURE,
-  POST_USER_REQUEST,
-  POST_USER_SUCCESS,
-} from '../types/actionTypes'
+export const serverSendData = data => (dispatch, getState) => {
+  
+  
+  //console.log('we are in action/validate');
+  dispatch({type: 'SERVER_IS_LOADING'});
 
+   onServerValidation(data)
+    .then((data) => {
+      dispatch({type: 'SERVER_RESPONSE_SUCCESS', payload: data});
+    })
+    //.then(console.log(data.fields))
 
-
-export const onSubmit = (
-  firstName,
-  lastName,
-  cardNunmber,
-  formValid,
-  // paySystem,
-) => {
-  // validation
-
-  return {
-    type: 'ON_SUBMIT',
-    payload: {
-      firstName,
-      lastName,
-      cardNunmber,
-      formValid,
-      // paySystem,
-    },
-  };
+    .catch((err) => dispatch({type: 'SERVER_HAS_ERRORED', err}));
 };
 
-export const chekCard = (
-  paySystem,
-) => {
-  // validation
-
+export const chekCard = paySystem => {
   return {
     type: 'CHEK_CARD',
     payload: {
@@ -44,4 +26,25 @@ export const chekCard = (
   };
 };
 
-// payload, err(or), meta
+// export const onSubmit = (
+//   firstName,
+//   lastName,
+//   cardNunmber,
+//   formValid,
+//   // paySystem,
+// ) => {
+//   // validation
+
+//   return {
+//     type: 'ON_SUBMIT',
+//     payload: {
+//       firstName,
+//       lastName,
+//       cardNunmber,
+//       formValid,
+//       // paySystem,
+//     },
+//   };
+// };
+
+

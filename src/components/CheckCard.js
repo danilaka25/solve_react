@@ -7,9 +7,7 @@ import {chekCard} from '../actions/onSubmit';
 type Props = {
   cardNunmber: string,
   updateData: (v1: string) => void,
-  chekCard: (
-    paySystem: string,
-  ) => void,
+  chekCard: (paySystem: string) => void,
 };
 
 type State = {
@@ -28,11 +26,17 @@ class CheckCard extends React.Component<Props, State> {
   };
 
   componentDidUpdate(prevProps: Props) {
-     //console.log('chekCars', this.props.formData.cardNunmber.length);
-    if (this.props.formData.cardNunmber.length === 16) {
-      let count: number = +this.props.formData.cardNunmber.substring(0, 4);
+    //console.log('chekCars', this.props.formData.cardNunmber.length);
+    if (this.props.formData.fields.cardNunmber.length === 16) {
+      let count: number = +this.props.formData.fields.cardNunmber.substring(
+        0,
+        4,
+      );
 
-      if (this.props.formData.cardNunmber !== prevProps.formData.cardNunmber) {
+      if (
+        this.props.formData.fields.cardNunmber !==
+        prevProps.formData.fields.cardNunmber
+      ) {
         //console.log('chekCars', this.props.formData.cardNunmber);
         if (count < 2000) {
           this.setState(
@@ -49,7 +53,7 @@ class CheckCard extends React.Component<Props, State> {
               paySystem: 'MasterCard',
             },
             () => {
-             this.props.chekCard(this.state.paySystem);
+              this.props.chekCard(this.state.paySystem);
             },
           );
         }
@@ -64,7 +68,7 @@ class CheckCard extends React.Component<Props, State> {
 
       //console.log('card type', this.state.paySystem);
 
-     //this.props.onSubmit(this.state.paySystem);
+      //this.props.onSubmit(this.state.paySystem);
     }
   }
 
