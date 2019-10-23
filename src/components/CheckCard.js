@@ -57,24 +57,11 @@ class CheckCard extends React.Component<Props, State> {
             },
           );
         }
-
-        // console.log('card number', this.props.formData.cardNunmber);
-
-        // console.log('-----', prevProps.cardNunmber);
-        // console.log('+++++', this.props.formData.cardNunmber);
       }
-
-      // console.log('card', this.props.formData.cardNunmber);
-
-      //console.log('card type', this.state.paySystem);
-
-      //this.props.onSubmit(this.state.paySystem);
     }
   }
 
   render() {
-    //console.log('card', this.state.paySystem);
-    //console.log('(render) CheckCard');
     return null;
   }
 }

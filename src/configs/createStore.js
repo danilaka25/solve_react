@@ -1,18 +1,17 @@
-/* eslint-disable */
-import { applyMiddleware, createStore, compose } from 'redux';
-import logger from 'redux-logger';
+import {applyMiddleware, createStore, compose} from 'redux';
+import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
+import {rootReducer} from './rootReducer';
 
+const logger = createLogger({
+  collapsed: true,
+  diff: true,
+});
 
-import { rootReducer } from './rootReducer';
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk, logger)),
+);
 
-// createReducer
-
-//const store = createStore(rootReducer, applyMiddleware(logger));
-//const store = createStore(rootReducer);
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, logger)))
-
-
-export { store };
+export {store};

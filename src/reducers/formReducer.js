@@ -11,20 +11,15 @@ const initialValue = {
     secretAnswer: '',
   },
 
-  formValid: 'false',
+  formValid: false,
   paySystem: 'none',
 
-  serverIsLoading: 'false',
-  serverWasLoaded: 'false',
+  serverIsLoading: false,
+  serverWasLoaded: false,
 };
 
 export const formReducer = (state = initialValue, action) => {
   switch (action.type) {
-    // case 'ON_SUBMIT':
-    //   return {
-    //     ...state,
-    //     ...action.payload,
-    //   };
 
     case 'CHEK_CARD':
       return {
@@ -33,28 +28,28 @@ export const formReducer = (state = initialValue, action) => {
       };
 
     case 'SERVER_IS_LOADING':
-      console.log('SERVER_IS_LOADING');
+      //console.log('SERVER_IS_LOADING');
       return {
         ...state,
-        serverIsLoading: 'true',
+        serverIsLoading: true,
         //data: action.payload,
       };
 
     case 'SERVER_HAS_ERRORED':
-      console.log('SERVER_HAS_ERRORED');
+      //console.log('SERVER_HAS_ERRORED');
       return {
         ...state,
-        serverIsLoading: 'false',
-        serverWasLoaded: 'true',
+        serverIsLoading: false,
+        serverWasLoaded: true,
         err: action.err,
       };
 
     case 'SERVER_RESPONSE_SUCCESS':
-      console.log('SERVER_RESPONSE_SUCCESS');
+      //console.log('SERVER_RESPONSE_SUCCESS');
       return {
         ...state,
-        serverIsLoading: 'false',
-        serverWasLoaded: 'true',
+        serverIsLoading: false,
+        serverWasLoaded: true,
         data: action.payload,
       };
 

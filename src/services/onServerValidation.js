@@ -3,27 +3,25 @@ const callServerMock = data => {
     setTimeout(() => resolve(validateFormOnServer(data)), 1000);
   });
 };
+
 const validateFormOnServer = data => {
   const allDataAfterValidation = data;
-
   const fields = data.fields;
   const formErrors = data.formErrors;
 
   let formValid = data.formValid;
+  let paySystem = data.paySystem;
 
   formValid = true;
-  //console.log(formValid);
 
   for (let fieldName of Object.keys(fields)) {
-    // console.log(fieldName);
-    // console.log(fields[fieldName]);
-
     switch (fieldName) {
       case 'cardNunmber':
         fieldName = fields[fieldName].match(/^[0-9]{16}$/);
         fieldName
           ? (formErrors.cardNunmber = true)
-          : ((formErrors.cardNunmber = false), (formValid = false));
+          : // : ((formErrors.cardNunmber = false), (formValid = false));
+            (formErrors.cardNunmber = false);
         break;
       case 'cardExpirationDate':
         fieldName = fields[fieldName].match(
@@ -66,6 +64,16 @@ const validateFormOnServer = data => {
     }
   }
 
+  if (formErrors.cardNunmber) {
+    let count = fields.cardNunmber.substring(0, 4);
+    if (count < 2000) {
+      paySystem = 'VISA';
+    } else {
+      paySystem = 'MasterCard';
+    }
+  }
+
+  allDataAfterValidation.paySystem = paySystem;
   allDataAfterValidation.formErrors = formErrors;
   allDataAfterValidation.formValid = formValid;
 
