@@ -1,8 +1,11 @@
-/* eslint-disable */
+// @flow
 
 import {onServerValidation} from '../services/onServerValidation';
 
-export const serverSendData = data => (dispatch, getState) => {
+export const serverSendData = (data: Object) => (
+  dispatch: void,
+  getState: void,
+) => {
   //console.log('we are in action/validate');
   dispatch({type: 'SERVER_IS_LOADING'});
 
@@ -12,12 +15,3 @@ export const serverSendData = data => (dispatch, getState) => {
     })
     .catch(err => dispatch({type: 'SERVER_HAS_ERRORED', err}));
 };
-
-// export const chekCard = paySystem => {
-//   return {
-//     type: 'CHEK_CARD',
-//     payload: {
-//       paySystem,
-//     },
-//   };
-// };

@@ -45,7 +45,7 @@ class DisplayCardInfo extends React.Component<Props, State> {
         timerId: undefined,
         startAt: undefined,
       });
-    }, 4000);
+    }, 1500);
     this.setState({
       visible: true,
       timerId,

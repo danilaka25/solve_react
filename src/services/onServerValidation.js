@@ -65,12 +65,9 @@ const validateFormOnServer = data => {
   }
 
   if (formErrors.cardNunmber) {
-    let count = fields.cardNunmber.substring(0, 4);
-    if (count < 2000) {
-      paySystem = 'VISA';
-    } else {
-      paySystem = 'MasterCard';
-    }
+    fields.cardNunmber.substring(0, 4) < 2000
+      ? (paySystem = 'VISA')
+      : (paySystem = 'MasterCard');
   }
 
   allDataAfterValidation.paySystem = paySystem;
