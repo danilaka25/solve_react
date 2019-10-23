@@ -1,28 +1,19 @@
-/* eslint-disable */
 // @flow
 
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+//import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+//import {formReducer} from '../reducers/formReducer';
+import {stylesPopup} from '../styles/stylesheet.js';
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Modal,
-  Alert,
-  Dimensions,
-} from 'react-native';
+import {View, Text, Modal} from 'react-native';
 
 type Props = {
   firstName: string,
   lastName: string,
   cardNunmber: string,
   paySystem: string,
-  formValid: string,
+  formValid: boolean,
 };
 
 type State = {
@@ -54,7 +45,7 @@ class DisplayCardInfo extends React.Component<Props, State> {
         timerId: undefined,
         startAt: undefined,
       });
-    }, 2000);
+    }, 4000);
     this.setState({
       visible: true,
       timerId,
@@ -63,13 +54,18 @@ class DisplayCardInfo extends React.Component<Props, State> {
   };
 
   componentDidUpdate = (prevProps: Props) => {
+    console.log('prevProps', prevProps.formData);
     if (
-      prevProps.formData.firstName === this.props.formData.firstName &&
-      prevProps.formData.lastName === this.props.formData.lastName &&
-      prevProps.formData.cardNunmber === this.props.formData.cardNunmber
+      prevProps.formData.fields.firstName ===
+        this.props.formData.fields.firstName &&
+      prevProps.formData.fields.lastName ===
+        this.props.formData.fields.lastName &&
+      prevProps.formData.fields.cardNunmber ===
+        this.props.formData.fields.cardNunmber
     ) {
       return;
     }
+
     if (!this.state.visible) {
       return this.startTimer();
     }
@@ -81,7 +77,7 @@ class DisplayCardInfo extends React.Component<Props, State> {
   };
 
   render() {
-    console.log("this.props.formData.formValid" , this.props.formData.formValid);
+    console.log('formValid', this.props.formData.formValid);
 
     if (!this.state.visible) {
       return null;
@@ -97,16 +93,16 @@ class DisplayCardInfo extends React.Component<Props, State> {
         visible={this.state.visible} //this.state.visible
       >
         <View style={stylesPopup.popupWrapper}>
-          {this.props.formData.formValid ? (
+          {isValid ? (
             <View style={stylesPopup.okBg}>
               <Text> Result </Text>
-              <Text> First Name: {this.props.formData.firstName} </Text>
-              <Text> Last Name: {this.props.formData.lastName} </Text>
+              <Text> First Name: {this.props.formData.fields.firstName} </Text>
+              <Text> Last Name: {this.props.formData.fields.lastName} </Text>
               <Text>
                 {' '}
                 Card Nunmber: **** **** ****
-                {this.props.formData.cardNunmber.substr(
-                  this.props.formData.cardNunmber.length - 4,
+                {this.props.formData.fields.cardNunmber.substr(
+                  this.props.formData.fields.cardNunmber.length - 4,
                 )}
               </Text>
               <Text> Pay System: {this.props.formData.paySystem} </Text>
@@ -123,37 +119,13 @@ class DisplayCardInfo extends React.Component<Props, State> {
   }
 }
 
-const stylesPopup = StyleSheet.create({
-  modalStyles: {
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  popupWrapper: {
-    alignItems: 'center',
-    flex: 1,
-
-    justifyContent: 'center',
-    // backgroundColor: '#999999',
-  },
-
-  errorBg: {
-    backgroundColor: '#e8301c',
-    padding: 30,
-  },
-
-  okBg: {
-    backgroundColor: '#82e81c',
-    padding: 30,
-  },
-});
-
 //defaultProps пишем полюбому даже с flow
 
-const DisplayCardInfoContainer = connect(state => ({
-  formData: state.formReducer,
-}))(DisplayCardInfo);
+const DisplayCardInfoContainer = connect(state => {
+  return {
+    formData: state.formReducer,
+  };
+})(DisplayCardInfo);
 
 export default DisplayCardInfoContainer;
 

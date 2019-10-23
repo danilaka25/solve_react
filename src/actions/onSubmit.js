@@ -13,11 +13,11 @@ export const serverSendData = data => (dispatch, getState) => {
     .catch(err => dispatch({type: 'SERVER_HAS_ERRORED', err}));
 };
 
-export const chekCard = paySystem => {
-  return {
-    type: 'CHEK_CARD',
-    payload: {
-      paySystem,
-    },
-  };
-};
+// export const chekCard = paySystem => {
+//   return {
+//     type: 'CHEK_CARD',
+//     payload: {
+//       paySystem,
+//     },
+//   };
+// };

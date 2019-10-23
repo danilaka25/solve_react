@@ -1,37 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
-// /* eslint-disable react-native/no-inline-styles */
 // @flow
 
-import React from 'react';
-import CheckCard from './CheckCard';
-import {connect} from 'react-redux';
-
+//import CheckCard from './CheckCard';
 //import PropTypes from 'prop-types';
 //import onServerValidation from '../services/onServerValidation';
 //import formReducer from '../reducers/formReducer';
+import React from 'react';
+import {connect} from 'react-redux';
 import {serverSendData} from '../actions/onSubmit';
-
-import {
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-  Button,
-  ScrollView,
-  TouchableHighlight,
-} from 'react-native';
-
-type Props = {
-  // form
-  onSubmit: (
-    firstName: string,
-    lastName: string,
-    cardNunmber: string,
-    formValid: string,
-    paySystem: string,
-  ) => void,
-};
+import {stylesForm} from '../styles/stylesheet.js';
+import {TextInput, View, Text, TouchableHighlight} from 'react-native';
 
 type State = {
   fields: {
@@ -88,16 +66,16 @@ class CardForm extends React.Component<Props, State> {
       },
 
       formErrors: {
-        cardNunmber: 'false',
-        cardExpirationDate: 'false',
-        cvv: 'false',
-        firstName: 'false',
-        lastName: 'false',
-        secretQuestion: 'false',
-        secretAnswer: 'false',
+        cardNunmber: true,
+        cardExpirationDate: true,
+        cvv: true,
+        firstName: true,
+        lastName: true,
+        secretQuestion: true,
+        secretAnswer: true,
       },
 
-      formValid: 'false',
+      formValid: false,
       paySystem: '--',
     };
   }
@@ -110,22 +88,14 @@ class CardForm extends React.Component<Props, State> {
     });
   };
 
-  validateForm = () => {
-    // this.props.onSubmit(
-    //   this.state.fields.firstName,
-    //   this.state.fields.lastName,
-    //   this.state.fields.cardNunmber,
-    //   this.state.formValid,
-    //   this.state.serverIsLoading,
-    // );
-  };
-
   handleSubmit = (event: any) => {
     event.preventDefault();
     this.props.serverSendData(this.state);
   };
 
   render() {
+    //console.log('this.props.form', this.props.form);
+
     const isLoading = this.props.form.serverIsLoading;
 
     return (
@@ -136,20 +106,18 @@ class CardForm extends React.Component<Props, State> {
           </View>
         )}
         <View style={stylesForm.mainActivity}>
-          <View style={{height: 60}}>
-            <Text>Form</Text>
-          </View>
+          <Text style={stylesForm.formTitle}>CARD FORM</Text>
 
           <View style={stylesForm.cardRow}>
             <TextInput
               style={[
                 stylesForm.formInput,
                 stylesForm.inputCardnumber,
-                // {
-                //   borderBottomColor: this.state.formErrors.cardNunmber
-                //     ? '#ffffff'
-                //     : 'red',
-                // },
+                {
+                  borderBottomColor: this.state.formErrors.cardNunmber
+                    ? '#ffffff'
+                    : 'red',
+                },
               ]}
               name="cardNunmber"
               placeholder="Card Nunmber"
@@ -160,11 +128,11 @@ class CardForm extends React.Component<Props, State> {
               style={[
                 stylesForm.formInput,
                 stylesForm.inputExpiration,
-                // {
-                //   borderBottomColor: this.state.formErrors.cardExpirationDate
-                //     ? '#ffffff'
-                //     : 'red',
-                // },
+                {
+                  borderBottomColor: this.state.formErrors.cardExpirationDate
+                    ? '#ffffff'
+                    : 'red',
+                },
               ]}
               name="cardExpirationDate"
               placeholder="mm/yyyy"
@@ -177,11 +145,11 @@ class CardForm extends React.Component<Props, State> {
               style={[
                 stylesForm.formInput,
                 stylesForm.inputCvv,
-                // {
-                //   borderBottomColor: this.state.errorsForRedLines.cvv
-                //     ? '#ffffff'
-                //     : 'red',
-                // },
+                {
+                  borderBottomColor: this.state.formErrors.cvv
+                    ? '#ffffff'
+                    : 'red',
+                },
               ]}
               name="cvv"
               placeholder="cvv"
@@ -204,7 +172,8 @@ class CardForm extends React.Component<Props, State> {
               placeholder="First Name"
               onChangeText={val => this.handleUserInput('firstName', val)}
             />
-
+          </View>
+          <View style={stylesForm.fieldsRow}>
             <TextInput
               style={[
                 stylesForm.formInput,
@@ -226,26 +195,27 @@ class CardForm extends React.Component<Props, State> {
               style={[
                 stylesForm.formInput,
                 stylesForm.inputStandart,
-                // {
-                //   borderBottomColor: this.state.errorsForRedLines.secretQuestion
-                //     ? '#ffffff'
-                //     : 'red',
-                // },
+                {
+                  borderBottomColor: this.state.formErrors.secretQuestion
+                    ? '#ffffff'
+                    : 'red',
+                },
               ]}
               name="secretQuestion"
               placeholder="Secret Question"
               onChangeText={val => this.handleUserInput('secretQuestion', val)}
             />
-
+          </View>
+          <View style={stylesForm.fieldsRow}>
             <TextInput
               style={[
                 stylesForm.formInput,
                 stylesForm.inputStandart,
-                // {
-                //   borderBottomColor: this.state.errorsForRedLines.secretAnswer
-                //     ? '#ffffff'
-                //     : 'red',
-                // },
+                {
+                  borderBottomColor: this.state.formErrors.secretAnswer
+                    ? '#ffffff'
+                    : 'red',
+                },
               ]}
               name="secretAnswer"
               placeholder="Secret Answer"
@@ -261,116 +231,15 @@ class CardForm extends React.Component<Props, State> {
             </TouchableHighlight>
           </View>
 
-          <CheckCard />
+          {/* <CheckCard /> */}
         </View>
       </>
     );
   }
 }
 
-const stylesForm = StyleSheet.create({
-  isLoadingView: {
-    //position: 'absolute',
-    backgroundColor: '#cccccc',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-
-  isLoadingText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-
-  isInvalid: {
-    backgroundColor: '#e8301c',
-  },
-
-  errorLine: {
-    borderBottomWidth: 1,
-  },
-
-  mainActivity: {
-    backgroundColor: '#00b5ec',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  cardRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginBottom: 30,
-  },
-
-  inputCardnumber: {
-    flex: 10,
-  },
-
-  inputExpiration: {
-    flex: 4,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-
-  inputCvv: {
-    flex: 2,
-  },
-
-  fieldsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginBottom: 30,
-
-    //backgroundColor: 'skyblue'
-  },
-
-  inputStandart: {
-    flex: 1,
-  },
-
-  // inputContainer: {
-  //   width: 300,
-  //   height: 50,
-  //   backgroundColor: '#999999',
-
-  //   flexDirection: 'row',
-  //    alignItems: 'center',
-  // },
-
-  formInput: {
-    height: 45,
-    borderBottomColor: 'yellow',
-    borderBottomWidth: 1,
-    paddingLeft: 10,
-    backgroundColor: '#cccccc',
-  },
-
-  formButton: {
-    backgroundColor: '#cccccc',
-    alignItems: 'center',
-    flex: 0.5,
-    flexDirection: 'row',
-    height: 45,
-    justifyContent: 'center',
-  },
-
-  formButtonText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-  },
-});
-
 const FormContainer = connect(
   state => {
-    console.log('+++', state);
     return {
       form: state.formReducer,
     };

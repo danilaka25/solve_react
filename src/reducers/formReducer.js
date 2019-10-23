@@ -1,32 +1,40 @@
 /* eslint-disable */
 
 const initialValue = {
-  fields: {
-    cardNunmber: '',
-    cardExpirationDate: '',
-    cvv: '',
-    firstName: '',
-    lastName: '',
-    secretQuestion: '',
-    secretAnswer: '',
-  },
 
-  formValid: false,
-  paySystem: 'none',
+      fields: {
+        cardNunmber: '',
+        cardExpirationDate: '',
+        cvv: '',
+        firstName: '',
+        lastName: '',
+        secretQuestion: '',
+        secretAnswer: '',
+      },
+
+      formErrors: {
+        cardNunmber: true,
+        cardExpirationDate: true,
+        cvv: true,
+        firstName:  true,
+        lastName: true,
+        secretQuestion:  true,
+        secretAnswer:  true,
+      },
+
+      formValid: false,
+      paySystem: '--',
 
   serverIsLoading: false,
   serverWasLoaded: false,
+
+  // cardExpirationDate: '',
+  // firstName: '',
+  // lastName: '',
 };
 
 export const formReducer = (state = initialValue, action) => {
   switch (action.type) {
-
-    case 'CHEK_CARD':
-      return {
-        ...state,
-        ...action.payload,
-      };
-
     case 'SERVER_IS_LOADING':
       //console.log('SERVER_IS_LOADING');
       return {
@@ -50,8 +58,14 @@ export const formReducer = (state = initialValue, action) => {
         ...state,
         serverIsLoading: false,
         serverWasLoaded: true,
-        data: action.payload,
+        ...action.payload,
       };
+
+    // case 'CHEK_CARD':
+    //   return {
+    //     ...state,
+    //     ...action.payload,
+    //   };
 
     default:
       return state;
