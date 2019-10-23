@@ -9,11 +9,13 @@ import {stylesPopup} from '../styles/stylesheet.js';
 import {View, Text, Modal} from 'react-native';
 
 type Props = {
+  cardNunmber: string,
+  cardExpirationDate: string,
+  cvv: string,
   firstName: string,
   lastName: string,
-  cardNunmber: string,
-  paySystem: string,
-  formValid: boolean,
+  secretQuestion: string,
+  secretAnswer: string,
 };
 
 type State = {
@@ -61,7 +63,14 @@ class DisplayCardInfo extends React.Component<Props, State> {
       prevProps.formData.fields.lastName ===
         this.props.formData.fields.lastName &&
       prevProps.formData.fields.cardNunmber ===
-        this.props.formData.fields.cardNunmber
+        this.props.formData.fields.cardNunmber &&
+      prevProps.formData.fields.cardExpirationDate ===
+        this.props.formData.fields.cardExpirationDate &&
+      prevProps.formData.fields.cvv === this.props.formData.fields.cvv &&
+      prevProps.formData.fields.secretQuestion ===
+        this.props.formData.fields.secretQuestion &&
+      prevProps.formData.fields.secretAnswer ===
+        this.props.formData.fields.secretAnswer
     ) {
       return;
     }

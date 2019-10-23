@@ -1,9 +1,9 @@
 // @flow
-import {
-  SERVER_HAS_ERRORED,
-  SERVER_IS_LOADING,
-  SERVER_RESPONSE_SUCCESS,
-} from '../types/actionTypes';
+// import {
+//   SERVER_HAS_ERRORED,
+//   SERVER_IS_LOADING,
+//   SERVER_RESPONSE_SUCCESS,
+// } from '../types/actionTypes';
 // import { RequestStatus } from "../utils/RequestStatus";
 
 type State = {
@@ -89,12 +89,6 @@ export const formReducer = (state: State = initialValue, action: Object) => {
         serverWasLoaded: true,
         ...action.payload,
       };
-
-    // case 'CHEK_CARD':
-    //   return {
-    //     ...state,
-    //     ...action.payload,
-    //   };
 
     default:
       return state;

@@ -1,10 +1,37 @@
-const callServerMock = data => {
+// @flow
+
+type State = {
+  fields: {
+    cardNunmber: string,
+    cardExpirationDate: string,
+    cvv: string,
+    firstName: string,
+    lastName: string,
+    secretQuestion: string,
+    secretAnswer: string,
+  },
+
+  formErrors: {
+    cardNunmber: boolean,
+    cardExpirationDate: boolean,
+    cvv: boolean,
+    firstName: boolean,
+    lastName: boolean,
+    secretQuestion: boolean,
+    secretAnswer: boolean,
+  },
+
+  formValid: boolean,
+  paySystem: string,
+};
+
+const callServerMock = (data: State) => {
   return new Promise(resolve => {
     setTimeout(() => resolve(validateFormOnServer(data)), 1000);
   });
 };
 
-const validateFormOnServer = data => {
+const validateFormOnServer = (data: State) => {
   const allDataAfterValidation = data;
   const fields = data.fields;
   const formErrors = data.formErrors;
@@ -20,8 +47,7 @@ const validateFormOnServer = data => {
         fieldName = fields[fieldName].match(/^[0-9]{16}$/);
         fieldName
           ? (formErrors.cardNunmber = true)
-          : // : ((formErrors.cardNunmber = false), (formValid = false));
-            (formErrors.cardNunmber = false);
+          : ((formErrors.cardNunmber = false), (formValid = false));
         break;
       case 'cardExpirationDate':
         fieldName = fields[fieldName].match(
@@ -29,11 +55,13 @@ const validateFormOnServer = data => {
         );
         fieldName
           ? (formErrors.cardExpirationDate = true)
-          : (formErrors.cardExpirationDate = false);
+          : ((formErrors.cardExpirationDate = false), (formValid = false));
         break;
       case 'cvv':
         fieldName = fields[fieldName].match(/^[0-9]{3,4}$/);
-        fieldName ? (formErrors.cvv = true) : (formErrors.cvv = false);
+        fieldName
+          ? (formErrors.cvv = true)
+          : ((formErrors.cvv = false), (formValid = false));
         break;
       case 'firstName':
         fieldName = fields[fieldName].match(/([a-zA-Z]{3,30}\s*)+/);
@@ -51,13 +79,13 @@ const validateFormOnServer = data => {
         fieldName = fields[fieldName].match(/([a-zA-Z]{3,30}\s*)+/);
         fieldName
           ? (formErrors.secretQuestion = true)
-          : (formErrors.secretQuestion = false);
+          : ((formErrors.secretQuestion = false), (formValid = false));
         break;
       case 'secretAnswer':
         fieldName = fields[fieldName].match(/([a-zA-Z]{3,30}\s*)+/);
         fieldName
           ? (formErrors.secretAnswer = true)
-          : (formErrors.secretAnswer = false);
+          : ((formErrors.secretAnswer = false), (formValid = false));
         break;
       default:
         break;
@@ -77,6 +105,6 @@ const validateFormOnServer = data => {
   return allDataAfterValidation;
 };
 
-const onServerValidation = data => callServerMock(data);
+const onServerValidation = (data: State) => callServerMock(data);
 
 export {onServerValidation};
