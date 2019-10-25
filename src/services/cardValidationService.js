@@ -105,6 +105,14 @@ const validateFormOnServer = (data: State) => {
   return allDataAfterValidation;
 };
 
-const cardValidationService = (data: State) => callServerMock(data);
+//const cardValidationService = (data: State) => callServerMock(data);
+
+class CardValidationService {
+  validateCreditCard(data: State) {
+    return callServerMock(data);
+  }
+}
+
+const cardValidationService = new CardValidationService();
 
 export {cardValidationService};

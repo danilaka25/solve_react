@@ -42,7 +42,9 @@ export const serverSendData = (data: State) => (
   //console.log('we are in action/validate');
   dispatch({type: SERVER_IS_LOADING});
 
-  cardValidationService(data)
+  cardValidationService
+    .validateCreditCard(data)
+    // cardValidationService(data)
     .then(data => {
       dispatch({type: SERVER_RESPONSE_SUCCESS, payload: data});
     })

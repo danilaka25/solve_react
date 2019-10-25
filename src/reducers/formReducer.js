@@ -1,10 +1,10 @@
 // @flow
 
-// import {
-//   SERVER_HAS_ERRORED,
-//   SERVER_IS_LOADING,
-//   SERVER_RESPONSE_SUCCESS,
-// } from '../types/actionTypes';
+import {
+  SERVER_HAS_ERRORED,
+  SERVER_IS_LOADING,
+  SERVER_RESPONSE_SUCCESS,
+} from '../types/actionTypes';
 // import { RequestStatus } from "../utils/RequestStatus";
 
 type State = {
@@ -65,7 +65,7 @@ const initialValue = {
 
 export const formReducer = (state: State = initialValue, action: Object) => {
   switch (action.type) {
-    case 'SERVER_IS_LOADING':
+    case SERVER_IS_LOADING:
       //console.log('SERVER_IS_LOADING');
       return {
         ...state,
@@ -73,7 +73,7 @@ export const formReducer = (state: State = initialValue, action: Object) => {
         //data: action.payload,
       };
 
-    case 'SERVER_HAS_ERRORED':
+    case SERVER_HAS_ERRORED:
       //console.log('SERVER_HAS_ERRORED');
       return {
         ...state,
@@ -82,7 +82,7 @@ export const formReducer = (state: State = initialValue, action: Object) => {
         err: action.err,
       };
 
-    case 'SERVER_RESPONSE_SUCCESS':
+    case SERVER_RESPONSE_SUCCESS:
       //console.log('SERVER_RESPONSE_SUCCESS');
       return {
         ...state,
