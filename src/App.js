@@ -1,21 +1,23 @@
 // @flow
 
-import React, {Component} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Provider} from 'react-redux';
 import {store} from './configs/createStore';
 import CardForm from './components/CardForm';
 import DisplayCardInfo from './components/DisplayCardInfo';
-// import TestList from './components/TestList';
-// import ProductEdit from './components/ProductEdit';
+//import TestList from './components/TestList';
+//import ProductEdit from './components/ProductEdit';
 
-class CardApp extends Component<Props, State> {
+type Props = {};
+
+class CardApp extends React.Component<Props> {
   render() {
     return (
       <Provider store={store}>
         <View style={stylesMainscreen.mainActivity}>
-          {/* <TestList />
-        <ProductEdit /> */}
+          {/* <TestList /> */}
+          {/* <ProductEdit /> */}
           <CardForm />
           <DisplayCardInfo />
         </View>

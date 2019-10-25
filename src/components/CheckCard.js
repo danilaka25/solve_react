@@ -1,12 +1,10 @@
-/* eslint-disable */
 // @flow
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {chekCard} from '../actions/onSubmit';
 
 type Props = {
   cardNunmber: string,
-  updateData: (v1: string) => void,
+  formData: Object,
   chekCard: (paySystem: string) => void,
 };
 
@@ -70,9 +68,7 @@ const CheckCardContainer = connect(
   state => ({
     formData: state.formReducer,
   }),
-  {
-    chekCard,
-  },
+  {},
 )(CheckCard);
 
 export default CheckCardContainer;

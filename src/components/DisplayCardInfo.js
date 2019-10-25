@@ -4,9 +4,8 @@ import React from 'react';
 //import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 //import {formReducer} from '../reducers/formReducer';
-import {stylesPopup} from '../styles/stylesheet.js';
 
-import {View, Text, Modal} from 'react-native';
+import {View, Text, Modal, StyleSheet} from 'react-native';
 
 type Props = {
   cardNunmber: string,
@@ -16,6 +15,7 @@ type Props = {
   lastName: string,
   secretQuestion: string,
   secretAnswer: string,
+  formData: Object,
 };
 
 type State = {
@@ -127,6 +127,34 @@ class DisplayCardInfo extends React.Component<Props, State> {
     );
   }
 }
+
+const stylesPopup = StyleSheet.create({
+  modalStyles: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2,
+  },
+
+  popupWrapper: {
+    alignItems: 'center',
+    flex: 1,
+
+    justifyContent: 'center',
+    // backgroundColor: '#999999',
+  },
+
+  errorBg: {
+    backgroundColor: '#e8301c',
+    padding: 30,
+    fontSize: 30,
+  },
+
+  okBg: {
+    backgroundColor: '#82e81c',
+    padding: 30,
+  },
+});
 
 //defaultProps пишем полюбому даже с flow
 

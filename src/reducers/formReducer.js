@@ -1,4 +1,5 @@
 // @flow
+
 // import {
 //   SERVER_HAS_ERRORED,
 //   SERVER_IS_LOADING,
@@ -27,11 +28,11 @@ type State = {
     secretAnswer: boolean,
   },
 
-  formValid: false,
+  formValid: boolean,
   paySystem: string,
 
-  serverIsLoading: false,
-  serverWasLoaded: false,
+  serverIsLoading: boolean,
+  serverWasLoaded: boolean,
 };
 
 const initialValue = {

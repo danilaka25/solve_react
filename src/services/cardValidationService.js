@@ -26,7 +26,7 @@ type State = {
 };
 
 const callServerMock = (data: State) => {
-  return new Promise(resolve => {
+  return new Promise<State>(resolve => {
     setTimeout(() => resolve(validateFormOnServer(data)), 1000);
   });
 };
@@ -93,7 +93,7 @@ const validateFormOnServer = (data: State) => {
   }
 
   if (formErrors.cardNunmber) {
-    fields.cardNunmber.substring(0, 4) < 2000
+    +fields.cardNunmber.substring(0, 4) < 2000
       ? (paySystem = 'VISA')
       : (paySystem = 'MasterCard');
   }
@@ -105,6 +105,6 @@ const validateFormOnServer = (data: State) => {
   return allDataAfterValidation;
 };
 
-const onServerValidation = (data: State) => callServerMock(data);
+const cardValidationService = (data: State) => callServerMock(data);
 
-export {onServerValidation};
+export {cardValidationService};

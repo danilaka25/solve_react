@@ -1,13 +1,20 @@
-/* eslint-disable */
 // @flow
 
-import React, {Component} from 'react';
+import React from 'react';
 //import PropTypes from 'prop-types';
 
 import {StyleSheet, View, Text, Image, FlatList, Platform} from 'react-native';
 
-class TestList extends React.Component {
-  constructor(props) {
+type Props = {
+  Item: (name: string, lastname: string, img: string, id: number) => void,
+};
+
+type State = {
+  usersList: Object,
+};
+
+class TestList extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       usersList: {},
@@ -42,6 +49,7 @@ class TestList extends React.Component {
     this.fetchData();
   }
 
+  // Item = (name: string, lastname: string, img: string, id: number) => {
   Item({name, lastname, img, id}) {
     return (
       <View style={stylesList.listItem}>
@@ -91,8 +99,8 @@ const stylesList = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 35 : 0,
   },
   listImg: {
-    width: 50, 
-    height: 50
+    width: 50,
+    height: 50,
   },
   listItem: {
     flexDirection: 'row',
@@ -111,8 +119,8 @@ const stylesList = StyleSheet.create({
     flex: 1,
   },
   listText: {
-    color: '#000'
-  }
+    color: '#000',
+  },
 });
 
 export default TestList;

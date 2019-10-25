@@ -1,4 +1,3 @@
-/* eslint-disable */
 // @flow
 
 import React, {Component} from 'react';
@@ -15,8 +14,21 @@ import {
   Picker,
 } from 'react-native';
 
-class ProductEdit extends React.Component {
-  constructor(props) {
+type Props = {};
+
+type State = {
+  productName: string,
+  productWeight: string,
+  productSize: string,
+  productCountry: string,
+  btnCreate: boolean,
+  btnEdit: boolean,
+  formIsValid: boolean,
+  isFieldEditable: boolean,
+};
+
+class ProductEdit extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -31,7 +43,7 @@ class ProductEdit extends React.Component {
     };
   }
 
-  handleUserInput = (inputName, inputValue) => {
+  handleUserInput = (inputName: string, inputValue: string) => {
     //console.log(e);
     const name = inputName;
     const value = inputValue;
@@ -45,7 +57,7 @@ class ProductEdit extends React.Component {
     );
   };
 
-  handleValueChange = (inputName, inputValue) => {
+  handleValueChange = (inputName: string, inputValue: string) => {
     const name = inputName;
     const value = inputValue;
 
