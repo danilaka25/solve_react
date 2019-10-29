@@ -1,41 +1,43 @@
-// @flow
-
 import React from 'react';
-//import PropTypes from 'prop-types';
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  View,
+  Alert,
+  TouchableOpacity,
+  TextInput,
+  Button,
+} from 'react-native';
+import CheckBox from 'react-native-check-box';
 
-import {StyleSheet, View, Text, Image, FlatList, Platform} from 'react-native';
-
-type Props = {
-  Item: (name: string, lastname: string, img: string, id: number) => void,
-};
-
-type State = {
-  usersList: Object,
-};
-
-class TestList extends React.Component<Props, State> {
-  constructor(props: Props) {
+export default class TestList extends React.Component {
+  constructor(props) {
     super(props);
+
     this.state = {
-      usersList: {},
+      usersList: [],
+      textInput_Holder: '',
+      btnAdd: false,
+      btnDelete: false,
+      inputValid: false,
     };
   }
 
   fetchData() {
-    return fetch('https://randomuser.me/api/?results=150')
+    return fetch('https://randomuser.me/api/?results=5')
       .then(response => response.json())
       .then(responseJson => {
         let usersTemp = [];
-
+        let id = 1;
         for (let i of Object.keys(responseJson.results)) {
           usersTemp.push({
             firstname: responseJson.results[i].name.first,
-            lastname: responseJson.results[i].name.last,
-            img: responseJson.results[i].picture.thumbnail,
-            id: i,
+            id: id,
+            isChecked: false,
           });
+          id++;
         }
-
         this.setState({
           usersList: usersTemp,
         });
@@ -49,78 +51,241 @@ class TestList extends React.Component<Props, State> {
     this.fetchData();
   }
 
-  // Item = (name: string, lastname: string, img: string, id: number) => {
-  Item({name, lastname, img, id}) {
+  addUser = () => {
+    let usersTemp = this.state.usersList;
+    usersTemp.push({
+      firstname: this.state.textInput_Holder,
+      id: this.state.usersList.length + 1,
+      isChecked: false,
+    });
+    this.setState({usersList: usersTemp, btnAdd: false});
+    //console.log(usersTemp);
+    this.textInput.clear();
+  };
+
+  deleteChekedItems = () => {
+    console.log('deleteChekedItems');
+
+    let usersTemp = [];
+    for (let i of Object.keys(this.state.usersList)) {
+      if (this.state.usersList[i].isChecked === true) {
+      } else {
+        usersTemp.push({
+          firstname: this.state.usersList[i].firstname,
+          id: this.state.usersList[i].id,
+          isChecked: this.state.usersList[i].isChecked,
+        });
+      }
+    }
+
+    this.setState({usersList: usersTemp, btnDelete: false});
+  };
+
+  chekItem = item => {
+    console.log('-----');
+
+    let usersTemp = [];
+
+    for (let i of Object.keys(this.state.usersList)) {
+      if (this.state.usersList[i].id === item.id) {
+        usersTemp.push({
+          firstname: item.firstname,
+          id: item.id,
+          isChecked: item.isChecked ? false : true,
+        });
+      } else {
+        usersTemp.push({
+          firstname: this.state.usersList[i].firstname,
+          id: this.state.usersList[i].id,
+          isChecked: this.state.usersList[i].isChecked,
+        });
+      }
+    }
+
+    let result = usersTemp.find(obj => obj.isChecked == true);
+    // console.log(result);
+    if (result === undefined) {
+      this.setState({btnDelete: false});
+    } else {
+      this.setState({btnDelete: true});
+    }
+
+    this.setState({usersList: usersTemp});
+  };
+
+  handleUserInput = val => {
+    if (val.length >= 1) {
+      this.setState(
+        {
+          btnAdd: true,
+          textInput_Holder: val,
+        },
+        () => {
+          //console.log(this.state.btnAdd);
+        },
+      );
+    } else {
+      this.setState({
+        btnAdd: false,
+      });
+    }
+  };
+
+  FlatListItemSeparator = () => {
     return (
-      <View style={stylesList.listItem}>
-        <Image style={stylesList.listImg} source={{uri: img}} />
-        <View style={stylesList.listInfo}>
-          <Text style={stylesList.listText}>{name}</Text>
-          <Text style={stylesList.listText}>{lastname}</Text>
-        </View>
-        <View>
-          <Text style={stylesList.listText}>{id}</Text>
-        </View>
-      </View>
+      <View
+        style={{
+          height: 1,
+          width: '100%',
+          backgroundColor: '#607D8B',
+        }}
+      />
     );
-  }
+  };
 
   render() {
+    console.log(this.state.btnDelete);
+    //console.log('render');
+
     return (
-      <View>
+      <View style={styles.MainContainer}>
         <FlatList
-          getItemLayout={
-            (data, index) => ({
-              length: 70,
-              offset: 70 * index,
-              index,
-            })
-            //console.log("get item layout " + index)
-          }
-          style={stylesList.listWrapper}
+          ref="flatList"
+          onContentSizeChange={() => this.refs.flatList.scrollToEnd()}
           data={this.state.usersList}
+          width="100%"
+          keyExtractor={item => item.id.toString()}
+          ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={({item}) => (
-            <this.Item
-              name={item.firstname}
-              lastname={item.lastname}
-              img={item.img}
-              id={item.id}
-            />
-          )}
-          keyExtractor={item => item.id}
+            <View style={styles.listItem}>
+              <Text
+                style={styles.item}
+                //onPress={this.deleteData.bind(this, item.firstname)}
+              >
+                {item.firstname} {item.isChecked}
+              </Text>
+              <CheckBox
+                style={{padding: 10}}
+                onClick={this.chekItem.bind(this, item)}
+                isChecked={item.isChecked}
+              />
+            </View>
+          )} //onPress={this.GetItem.bind(this, item.title)}
         />
+
+        <TextInput
+          placeholder="Enter Value Here"
+          onChangeText={data => this.setState({textInput_Holder: data})}
+          onChangeText={val => this.handleUserInput(val)}
+          style={styles.textInputStyle}
+          ref={input => {
+            this.textInput = input;
+          }}
+        />
+        <TouchableOpacity
+          onPress={this.addUser}
+          activeOpacity={0.7}
+          // style={styles.buttonRow}
+          style={[
+            styles.btn,
+            {backgroundColor: this.state.btnAdd ? 'green' : '#cccccc'},
+          ]}>
+          <Button
+            style={styles.add}
+            disabled={this.state.btnAdd}
+            title="Add Values"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.deleteChekedItems}
+          activeOpacity={0.7}
+          style={[
+            styles.buttonRow,
+            styles.btn,
+            {backgroundColor: this.state.btnDelete ? 'green' : '#cccccc'},
+          ]}>
+          <Button
+            style={styles.delete}
+            disabled={this.state.btnDelete}
+            title="Delete Values"
+          />
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
-const stylesList = StyleSheet.create({
-  listWrapper: {
-    marginTop: Platform.OS === 'ios' ? 35 : 0,
-  },
-  listImg: {
-    width: 50,
-    height: 50,
-  },
+const styles = StyleSheet.create({
   listItem: {
     flexDirection: 'row',
-    height: 70,
-    color: '#999999',
-    borderBottomColor: '#999999',
-    borderBottomWidth: 0.5,
-    alignItems: 'center',
     justifyContent: 'space-between',
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  listInfo: {
-    alignItems: 'flex-start',
-    paddingLeft: 20,
+    //alignItems: 'center',
     flex: 1,
   },
-  listText: {
-    color: '#000',
+  enabled: {
+    color: 'green',
+  },
+  disabled: {
+    color: 'red',
+  },
+  MainContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    margin: 2,
+    marginTop: 40,
+  },
+
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+
+  textInputStyle: {
+    textAlign: 'center',
+    height: 40,
+    width: '90%',
+    borderWidth: 1,
+    borderColor: '#4CAF50',
+    borderRadius: 7,
+    marginTop: 12,
+  },
+
+  btn: {
+    textAlign: 'center',
+    height: 40,
+    width: '90%',
+    borderWidth: 1,
+    borderColor: '#cccccc',
+    borderRadius: 7,
+    marginTop: 12,
+  },
+
+  add: {
+    width: '90%',
+    height: 40,
+    padding: 10,
+    // backgroundColor: '#4CAF50',
+    color: '#ffffff',
+    borderRadius: 8,
+    marginTop: 10,
+    //marginBottom: 10,
+  },
+
+  delete: {
+    width: '90%',
+    height: 40,
+    padding: 10,
+    backgroundColor: '#4CAF50',
+    borderRadius: 8,
+    marginTop: 10,
+    marginBottom: 70,
+  },
+
+  buttonRow: {
+    marginBottom: 60,
+    //color: '#fff',
+    // textAlign: 'center',
   },
 });
-
-export default TestList;
