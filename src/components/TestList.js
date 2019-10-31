@@ -64,7 +64,7 @@ export default class TestList extends React.Component {
   };
 
   deleteChekedItems = () => {
-    console.log('deleteChekedItems');
+    //console.log('deleteChekedItems');
 
     let usersTemp = [];
     for (let i of Object.keys(this.state.usersList)) {
@@ -82,7 +82,7 @@ export default class TestList extends React.Component {
   };
 
   chekItem = item => {
-    console.log('-----');
+    //console.log('-----');
 
     let usersTemp = [];
 
@@ -144,7 +144,15 @@ export default class TestList extends React.Component {
   };
 
   render() {
-    console.log(this.state.usersList[this.state.usersList.length - 1]);
+    //console.log(this.state.usersList[this.state.usersList.length - 1]);
+
+    const variable = this.state.usersList[this.state.usersList.length - 1];
+    console.log (variable); // {"firstname": "Olivier", "id": 25, "isChecked": false}
+    console.log (typeof variable); // object
+    console.log (variable.id); // underfind is not an object
+
+
+
 
     return (
       <View style={styles.MainContainer}>

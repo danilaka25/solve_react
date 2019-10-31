@@ -16,10 +16,10 @@ class CardApp extends React.Component<Props> {
     return (
       <Provider store={store}>
         <View style={stylesMainscreen.mainActivity}>
-          {/* <TestList /> */}
+          <TestList />
           {/* <ProductEdit /> */}
-          <CardForm />
-          <DisplayCardInfo />
+          {/* <CardForm />
+          <DisplayCardInfo /> */}
         </View>
       </Provider>
     );
