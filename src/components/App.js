@@ -3,11 +3,11 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Provider} from 'react-redux';
-import {store} from './configs/createStore';
-import CardForm from './components/CardForm';
-import DisplayCardInfo from './components/DisplayCardInfo';
-//import TestList from './components/TestList';
-//import ProductEdit from './components/ProductEdit';
+import {store} from '../configs/createStore';
+import CardForm from './CardForm';
+import DisplayCardInfo from './CardDispalyResult';
+import TestList from './TestList';
+import ProductEdit from './ProductEdit';
 
 type Props = {};
 

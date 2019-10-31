@@ -25,7 +25,7 @@ export default class TestList extends React.Component {
   }
 
   fetchData() {
-    return fetch('https://randomuser.me/api/?results=5')
+    return fetch('https://randomuser.me/api/?results=25')
       .then(response => response.json())
       .then(responseJson => {
         let usersTemp = [];
@@ -144,8 +144,7 @@ export default class TestList extends React.Component {
   };
 
   render() {
-    console.log(this.state.btnDelete);
-    //console.log('render');
+    console.log(this.state.usersList[this.state.usersList.length - 1]);
 
     return (
       <View style={styles.MainContainer}>
@@ -162,7 +161,7 @@ export default class TestList extends React.Component {
                 style={styles.item}
                 //onPress={this.deleteData.bind(this, item.firstname)}
               >
-                {item.firstname} {item.isChecked}
+                {item.firstname} {item.id}
               </Text>
               <CheckBox
                 style={{padding: 10}}

@@ -1,11 +1,9 @@
 // @flow
+//logic
 
 import React from 'react';
-//import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-//import {formReducer} from '../reducers/formReducer';
-
-import {View, Text, Modal, StyleSheet} from 'react-native';
+import DisplayCardInfo from "./DisplayCardInfo";
 
 type Props = {
   cardNunmber: string,
@@ -24,7 +22,7 @@ type State = {
   startAt?: number,
 };
 
-class DisplayCardInfo extends React.Component<Props, State> {
+class DisplayCardInfoContainer extends React.Component<Props, State> {
   //static whyDidYouRender = true;
 
   static defaultProps = {
@@ -86,7 +84,7 @@ class DisplayCardInfo extends React.Component<Props, State> {
   };
 
   render() {
-    console.log('formValid', this.props.formData.formValid);
+    //console.log('formValid', this.props.formData.formValid);
 
     if (!this.state.visible) {
       return null;
@@ -94,76 +92,22 @@ class DisplayCardInfo extends React.Component<Props, State> {
 
     const isValid = this.props.formData.formValid;
 
-    return (
-      <Modal
-        style={stylesPopup.modalStyles}
-        animationType="slide"
-        transparent={true}
-        visible={this.state.visible} //this.state.visible
-      >
-        <View style={stylesPopup.popupWrapper}>
-          {isValid ? (
-            <View style={stylesPopup.okBg}>
-              <Text> Result </Text>
-              <Text> First Name: {this.props.formData.fields.firstName} </Text>
-              <Text> Last Name: {this.props.formData.fields.lastName} </Text>
-              <Text>
-                {' '}
-                Card Nunmber: **** **** ****
-                {this.props.formData.fields.cardNunmber.substr(
-                  this.props.formData.fields.cardNunmber.length - 4,
-                )}
-              </Text>
-              <Text> Pay System: {this.props.formData.paySystem} </Text>
-            </View>
-          ) : (
-            <View style={stylesPopup.errorBg}>
-              <Text> Result </Text>
-              <Text> Error </Text>
-            </View>
-          )}
-        </View>
-      </Modal>
-    );
+    return <DisplayCardInfo 
+    data = {this.props.formData}
+    isValid ={isValid}
+    //visible ={}
+    />;
   }
 }
 
-const stylesPopup = StyleSheet.create({
-  modalStyles: {
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 2,
-  },
-
-  popupWrapper: {
-    alignItems: 'center',
-    flex: 1,
-
-    justifyContent: 'center',
-    // backgroundColor: '#999999',
-  },
-
-  errorBg: {
-    backgroundColor: '#e8301c',
-    padding: 30,
-    fontSize: 30,
-  },
-
-  okBg: {
-    backgroundColor: '#82e81c',
-    padding: 30,
-  },
-});
-
 //defaultProps пишем полюбому даже с flow
 
-const DisplayCardInfoContainer = connect(state => {
+const DisplayCardInfoReduxContainer = connect(state => {
   return {
     formData: state.formReducer,
   };
-})(DisplayCardInfo);
+})(DisplayCardInfoContainer);
 
-export default DisplayCardInfoContainer;
+export default DisplayCardInfoReduxContainer;
 
 // export default DisplayCardInfo;
