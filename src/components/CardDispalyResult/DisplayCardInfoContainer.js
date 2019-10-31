@@ -3,7 +3,7 @@
 
 import React from 'react';
 import {connect} from 'react-redux';
-import DisplayCardInfo from "./DisplayCardInfo";
+import DisplayCardInfo from './DisplayCardInfo';
 
 type Props = {
   cardNunmber: string,
@@ -84,19 +84,11 @@ class DisplayCardInfoContainer extends React.Component<Props, State> {
   };
 
   render() {
-    //console.log('formValid', this.props.formData.formValid);
-
     if (!this.state.visible) {
       return null;
     }
 
-    const isValid = this.props.formData.formValid;
-
-    return <DisplayCardInfo 
-    data = {this.props.formData}
-    isValid ={isValid}
-    //visible ={}
-    />;
+    return <DisplayCardInfo data={this.props.formData} />;
   }
 }
 
