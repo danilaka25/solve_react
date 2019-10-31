@@ -49,13 +49,15 @@ export default class TestList extends React.Component {
 
   componentDidMount() {
     this.fetchData();
+
+       
   }
 
   addUser = () => {
     let usersTemp = this.state.usersList;
     usersTemp.push({
       firstname: this.state.textInput_Holder,
-      id: this.state.usersList.length + 1,
+      id: this.state.usersList[this.state.usersList.length - 1].id + 1,
       isChecked: false,
     });
     this.setState({usersList: usersTemp, btnAdd: false});
@@ -144,14 +146,7 @@ export default class TestList extends React.Component {
   };
 
   render() {
-    //console.log(this.state.usersList[this.state.usersList.length - 1]);
-
-    const variable = this.state.usersList[this.state.usersList.length - 1];
-    console.log (variable); // {"firstname": "Olivier", "id": 25, "isChecked": false}
-    console.log (typeof variable); // object
-    console.log (variable.id); // underfind is not an object
-
-
+    
 
 
     return (
