@@ -49,8 +49,6 @@ export default class TestList extends React.Component {
 
   componentDidMount() {
     this.fetchData();
-
-       
   }
 
   addUser = () => {
@@ -146,9 +144,6 @@ export default class TestList extends React.Component {
   };
 
   render() {
-    
-
-
     return (
       <View style={styles.MainContainer}>
         <FlatList

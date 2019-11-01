@@ -8,6 +8,7 @@ import CardForm from './CardForm';
 import DisplayCardInfo from './CardDispalyResult';
 import TestList from './TestList';
 import ProductEdit from './ProductEdit';
+import FlatListHook from './FlatListHook';
 
 type Props = {};
 
@@ -16,10 +17,11 @@ class CardApp extends React.Component<Props> {
     return (
       <Provider store={store}>
         <View style={stylesMainscreen.mainActivity}>
-          <TestList />
+          {/* <TestList /> */}
           {/* <ProductEdit /> */}
           {/* <CardForm />
           <DisplayCardInfo /> */}
+          <FlatListHook />
         </View>
       </Provider>
     );
