@@ -1,1 +1,1 @@
-export {default} from './DisplayCardInfoContainer'
+export {default} from './DisplayCardInfo'

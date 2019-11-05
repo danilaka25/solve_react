@@ -4,31 +4,17 @@ import React from 'react';
 import {TextInput, View, Text, TouchableHighlight} from 'react-native';
 import stylesForm from './Styles';
 import {useCardForm} from './useCardForm';
-import { connect } from "react-redux";
- import {serverSendData} from '../../actions/onSubmit';
-
-
-
-
+import {connect} from 'react-redux';
 
 const CardForm = (form) => {
-  const {
-    data,
-    handleUserInput, 
-    handleSubmit
-    } = useCardForm();
+  const {data, handleUserInput, handleSubmit} = useCardForm();
 
-    //console.log("********INPUTS*********", data)
-
-
-    let formIsLoading = form.serverIsLoading;
-
-    console.log("********INPUTS*********", form.serverIsLoading)
-
+  //console.log("********INPUTS*********", data)
+  //console.log('********INPUTS*********', form.form.serverIsLoading);
 
   return (
     <>
-      {formIsLoading && (
+      {form.form.serverIsLoading && (
         <View style={stylesForm.isLoadingView}>
           <Text style={stylesForm.isLoadingText}>Is loading ... </Text>
         </View>
@@ -152,18 +138,13 @@ const CardForm = (form) => {
   );
 };
 
-
 const FormReduxContainer = connect(
   state => {
     return {
       form: state.formReducer,
     };
-  },
-  {
-    //serverSendData,
-  },
+  }
 )(CardForm);
 
 export default FormReduxContainer;
 
-//export default CardForm;

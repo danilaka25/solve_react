@@ -8,15 +8,13 @@ import {
 // import { RequestStatus } from "../utils/RequestStatus";
 
 type State = {
-  fields: {
-    cardNunmber: string,
-    cardExpirationDate: string,
-    cvv: string,
-    firstName: string,
-    lastName: string,
-    secretQuestion: string,
-    secretAnswer: string,
-  },
+  cardNunmber: string,
+  cardExpirationDate: string,
+  cvv: string,
+  firstName: string,
+  lastName: string,
+  secretQuestion: string,
+  secretAnswer: string,
 
   formErrors: {
     cardNunmber: boolean,
@@ -36,15 +34,13 @@ type State = {
 };
 
 const initialValue = {
-  fields: {
-    cardNunmber: '',
-    cardExpirationDate: '',
-    cvv: '',
-    firstName: '',
-    lastName: '',
-    secretQuestion: '',
-    secretAnswer: '',
-  },
+  cardNunmber: '',
+  cardExpirationDate: '',
+  cvv: '',
+  firstName: '',
+  lastName: '',
+  secretQuestion: '',
+  secretAnswer: '',
 
   formErrors: {
     cardNunmber: true,

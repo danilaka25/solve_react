@@ -54,7 +54,6 @@ export const useTestList = () => {
     let usersTemp = [];
     for (let i of Object.keys(users)) {
       if (!users[i].isChecked === true) {
-     
         usersTemp.push({
           firstname: users[i].firstname,
           id: users[i].id,

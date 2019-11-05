@@ -6,6 +6,33 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {serverSendData} from '../../actions/onSubmit';
 
+
+type State = {
+  cardNunmber: string,
+  cardExpirationDate: string,
+  cvv: string,
+  firstName: string,
+  lastName: string,
+  secretQuestion: string,
+  secretAnswer: string,
+
+  formErrors: {
+    cardNunmber: boolean,
+    cardExpirationDate: boolean,
+    cvv: boolean,
+    firstName: boolean,
+    lastName: boolean,
+    secretQuestion: boolean,
+    secretAnswer: boolean,
+  },
+
+  formValid: boolean,
+  paySystem: string,
+
+  serverIsLoading: boolean,
+  serverWasLoaded: boolean,
+};
+
 export const useCardForm = () => {
   const [data, setData] = useState({
     cardNunmber: '',
@@ -29,8 +56,6 @@ export const useCardForm = () => {
     formValid: false,
     paySystem: '--',
 
-    serverIsLoading: false,
-    serverWasLoaded: false,
   });
 
   const dispatch = useDispatch();
@@ -41,33 +66,9 @@ export const useCardForm = () => {
     setData({...data, [name]: value});
   };
 
-  // const handleSubmit = (event: any) => {
-  //   event.preventDefault();
-  //   //this.props.serverSendData(this.state);
-  // };
-
   const handleSubmit = useCallback(() => {
     dispatch(serverSendData(data));
-    // handleCardSubmit();
   }, [data]);
-
-  // const handleSubmit = useCallback(() => {
-  //   dispatch(validateCreditCard(cardData));
-  //   handleCardSubmit();
-  // }, [cardData]);
-
-  //formIsLoading = data.serverIsLoading;
-
-  //formIsLoading = false;
-
-  // return (
-  //   <CardForm
-  //     data = {this.props.form}
-  //     formIsLoading={this.props.form.serverIsLoading}
-  //     handleUserInput={this.handleUserInput}
-  //     handleSubmit={this.handleSubmit}
-  //   />
-  // );
 
   return {
     data,
@@ -75,16 +76,3 @@ export const useCardForm = () => {
     handleSubmit,
   };
 };
-
-// const FormReduxContainer = connect(
-//   state => {
-//     return {
-//       form: state.formReducer,
-//     };
-//   },
-//   {
-//     serverSendData,
-//   },
-// )(useCardForm);
-
-// export default FormReduxContainer;

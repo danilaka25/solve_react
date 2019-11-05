@@ -19,9 +19,9 @@ class CardApp extends React.Component {
         <View style={stylesMainscreen.mainActivity}>
           {/* <TestList /> */}
           {/* <ProductEdit /> */}
-          {/* <CardForm />
-          <DisplayCardInfo /> */}
-          <FlatList />
+          <CardForm />
+          <DisplayCardInfo />
+          {/* <FlatList /> */}
         </View>
       </Provider>
     );

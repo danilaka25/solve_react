@@ -1,7 +1,7 @@
 // @flow
 
 type State = {
-  fields: {
+
     cardNunmber: string,
     cardExpirationDate: string,
     cvv: string,
@@ -9,7 +9,7 @@ type State = {
     lastName: string,
     secretQuestion: string,
     secretAnswer: string,
-  },
+  
 
   formErrors: {
     cardNunmber: boolean,
@@ -48,7 +48,7 @@ const validateFormOnServer = (data: State) => {
   };
   
 
-  console.log("-----server-----" , data.formErrors)
+  //console.log("-----server-----" , data.formErrors)
 
   const formErrors = data.formErrors;
 

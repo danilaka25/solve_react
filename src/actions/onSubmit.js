@@ -8,7 +8,6 @@ import {
 } from '../types/actionTypes';
 
 type State = {
-  fields: {
     cardNunmber: string,
     cardExpirationDate: string,
     cvv: string,
@@ -16,7 +15,6 @@ type State = {
     lastName: string,
     secretQuestion: string,
     secretAnswer: string,
-  },
 
   formErrors: {
     cardNunmber: boolean,

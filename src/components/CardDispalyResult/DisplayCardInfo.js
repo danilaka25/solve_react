@@ -3,34 +3,58 @@
 import React from 'react';
 import stylesPopup from './Styles';
 import {View, Text, Modal} from 'react-native';
+import {connect} from 'react-redux';
+import {useDisplayCardInfo} from './useDisplayCardInfo';
 
-type Props = {
-  data: Object,
-};
+// type Props = {
+//   data: Object,
+// };
 
-const DisplayCardInfo = ({data}: Props) => {
+const DisplayCardInfo = form => {
+  
+  const {
+    cardNunmber,
+    cardExpirationDate,
+    cvv,
+    firstName,
+    lastName,
+    secretQuestion,
+    secretAnswer,
+    formValid,
+  } = form.form;
+
+  const {visible} = useDisplayCardInfo(
+    cardNunmber,
+    cardExpirationDate,
+    cvv,
+    firstName,
+    lastName,
+    secretQuestion,
+    secretAnswer,
+    formValid,
+  );
+
+  ///console.log('++++++++form in component serverIsLoading++++++++', form.form);
 
   return (
     <Modal
       style={stylesPopup.modalStyles}
       animationType="slide"
       transparent={true}
-      visible={true} //this.state.visible
+      visible={visible && form.form.serverWasLoaded} //this.state.visible
     >
       <View style={stylesPopup.popupWrapper}>
-        {data.isValid ? (
+        {formValid ? (
           <View style={stylesPopup.okBg}>
             <Text> Result </Text>
-            <Text> First Name: {data.fields.firstName} </Text>
-            <Text> Last Name: {data.fields.lastName} </Text>
+            <Text> First Name: {form.form.firstName} </Text>
+            <Text> Last Name: {form.form.lastName} </Text>
             <Text>
               {' '}
               Card Nunmber: **** **** ****
-              {data.fields.cardNunmber.substr(
-                data.fields.cardNunmber.length - 4,
-              )}
+              {form.form.cardNunmber.substr(form.form.cardNunmber.length - 4)}
             </Text>
-            <Text> Pay System: {data.paySystem} </Text>
+            <Text> Pay System: {form.form.paySystem} </Text>
           </View>
         ) : (
           <View style={stylesPopup.errorBg}>
@@ -43,5 +67,10 @@ const DisplayCardInfo = ({data}: Props) => {
   );
 };
 
+const DisplayCardInfoRedux = connect(state => {
+  return {
+    form: state.formReducer,
+  };
+})(DisplayCardInfo);
 
-export default DisplayCardInfo;
+export default DisplayCardInfoRedux;
