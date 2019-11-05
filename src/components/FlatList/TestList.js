@@ -10,20 +10,24 @@ import {
   Button,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
-import stylesForm from './Styles';
+import {styles} from './Styles';
+import {useTestList} from './useTestList';
 
-const TestList = ({
-      users,
-      addUser,
-      deleteChekedItems,
-      chekItem,
-      handleUserInput,
-      btnAdd,
-      btnDelete
-}) => {
+const TestList = () => {
+  const {
+    users,
+    addUser,
+    deleteChekedItems,
+    chekItem,
+    handleUserInput,
+    btnAdd,
+    btnDelete,
+    inputEl
+  } = useTestList();
 
+  console.log("*********" , inputEl);
 
-    const FlatListItemSeparator = () => {
+  const FlatListItemSeparator = () => {
     return (
       <View
         style={{
@@ -34,16 +38,11 @@ const TestList = ({
       />
     );
   };
-    
-  return (
-            
 
-      
+  return (
     <View style={styles.MainContainer}>
       <FlatList
-
-         
-        //onContentSizeChange={() => this.refs.flatList.scrollToEnd()}
+        //onContentSizeChange={() => {this.ref.flatList.scrollToEnd()}}
         data={users}
         width="100%"
         keyExtractor={item => item.id.toString()}
@@ -67,20 +66,16 @@ const TestList = ({
 
       <TextInput
         placeholder="Enter Value Here"
-        //onChangeText={data => this.setState({textInput_Holder: data})}
         onChangeText={val => handleUserInput(val)}
-       
         //value={textInput}
 
-        // style={styles.textInputStyle}
-        // ref={input => {
-        //   this.textInput = input;
-        // }}
+        style={styles.textInputStyle}
+
+        ref={inputEl}
       />
       <TouchableOpacity
         onPress={addUser}
         activeOpacity={0.7}
-        // style={styles.buttonRow}
         style={[styles.btn, {backgroundColor: btnAdd ? 'green' : '#cccccc'}]}>
         <Button style={styles.add} disabled={btnAdd} title="Add Values" />
       </TouchableOpacity>
@@ -94,13 +89,12 @@ const TestList = ({
         ]}>
         <Button
           style={styles.delete}
-           disabled={btnDelete}
+          disabled={btnDelete}
           title="Delete Values"
         />
       </TouchableOpacity>
     </View>
   );
 };
-
 
 export default TestList;

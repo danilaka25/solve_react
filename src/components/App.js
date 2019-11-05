@@ -8,11 +8,11 @@ import CardForm from './CardForm';
 import DisplayCardInfo from './CardDispalyResult';
 import TestList from './TestList';
 import ProductEdit from './ProductEdit';
-import FlatListHook from './FlatListHook';
+import FlatList from './FlatList';
 
-type Props = {};
+// type Props = {};
 
-class CardApp extends React.Component<Props> {
+class CardApp extends React.Component {
   render() {
     return (
       <Provider store={store}>
@@ -21,7 +21,7 @@ class CardApp extends React.Component<Props> {
           {/* <ProductEdit /> */}
           {/* <CardForm />
           <DisplayCardInfo /> */}
-          <FlatListHook />
+          <FlatList />
         </View>
       </Provider>
     );

@@ -23,6 +23,8 @@ type State = {
 
   formValid: boolean,
   paySystem: string,
+
+  
 };
 
 const callServerMock = (data: State) => {
@@ -33,7 +35,21 @@ const callServerMock = (data: State) => {
 
 const validateFormOnServer = (data: State) => {
   const allDataAfterValidation = data;
-  const fields = data.fields;
+  // const fields = data.fields;
+
+  const fields = {
+    cardNunmber: data.cardNunmber,
+    cardExpirationDate: data.cardExpirationDate,
+    cvv: data.cvv,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    secretQuestion: data.secretQuestion,
+    secretAnswer: data.secretAnswer,
+  };
+  
+
+  console.log("-----server-----" , data.formErrors)
+
   const formErrors = data.formErrors;
 
   let formValid = data.formValid;

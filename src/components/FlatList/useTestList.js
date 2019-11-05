@@ -1,18 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import TestList from './TestList';
+import React, {useState, useEffect, useRef} from 'react';
 
-const TestListHook = () => {
-  
+export const useTestList = () => {
   const [users, setUsers] = useState([]);
-  const [inputValid, setInputValid] = useState(false);
+  //const [inputValid, setInputValid] = useState(false);
   const [btnAdd, setBtnAdd] = useState(false);
   const [btnDelete, setBtnDelete] = useState(false);
   const [textInput_Holder, setTextInput_Holder] = useState('');
+  //const [data, setData] = useState([]);
 
-  const [data, setData] = useState([]);
+  const inputEl = useRef(null);
 
   const fetchData = () => {
-    fetch('https://randomuser.me/api/?results=25')
+    fetch('https://randomuser.me/api/?results=12')
       .then(response => response.json())
       .then(responseJson => {
         let usersTemp = [];
@@ -25,16 +24,12 @@ const TestListHook = () => {
           });
           id++;
         }
-        setUsers(usersTemp)
+        setUsers(usersTemp);
       })
       .catch(error => {
         console.error(error);
       });
   };
-
-  // componentDidMount() {
-  //   this.fetchData();
-  // }
 
   useEffect(() => {
     fetchData();
@@ -48,13 +43,9 @@ const TestListHook = () => {
       isChecked: false,
     });
 
-  
-
-    setUsers(usersTemp)
-    setBtnAdd(false)
-
-    //console.log(usersTemp);
-    this.textInput.clear();
+    setUsers(usersTemp);
+    setBtnAdd(false);
+    inputEl.current.clear();
   };
 
   const deleteChekedItems = () => {
@@ -62,8 +53,8 @@ const TestListHook = () => {
 
     let usersTemp = [];
     for (let i of Object.keys(users)) {
-      if (users[i].isChecked === true) {
-      } else {
+      if (!users[i].isChecked === true) {
+     
         usersTemp.push({
           firstname: users[i].firstname,
           id: users[i].id,
@@ -71,14 +62,12 @@ const TestListHook = () => {
         });
       }
     }
-    
 
-    console.log(usersTemp);
-
+    //console.log(usersTemp);
     //this.setState({usersList: usersTemp, btnDelete: false});
 
-    setUsers(usersTemp)
-    setBtnDelete(false)
+    setUsers(usersTemp);
+    setBtnDelete(false);
   };
 
   const chekItem = item => {
@@ -102,49 +91,30 @@ const TestListHook = () => {
     let result = usersTemp.find(obj => obj.isChecked == true);
     // console.log(result);
     if (result === undefined) {
-      setBtnDelete(false)
+      setBtnDelete(false);
     } else {
-      setBtnDelete(true)
+      setBtnDelete(true);
     }
-      setUsers(usersTemp)
+    setUsers(usersTemp);
   };
 
   const handleUserInput = val => {
     if (val.length >= 2) {
-      setBtnAdd(true)
-      setTextInput_Holder(val)
-      // this.setState(
-      //   {
-      //     btnAdd: true,
-      //     textInput_Holder: val,
-      //   },
-      //   () => {
-      //     //console.log(this.state.btnAdd);
-      //   },
-      // );
+      setBtnAdd(true);
+      setTextInput_Holder(val);
     } else {
-      setBtnAdd(false)
+      setBtnAdd(false);
     }
-    //console.log(val);
   };
 
-
-
-  return (
-    //<View/>
-    <TestList
-      users={users}
-      btnAdd={btnAdd}
-      btnDelete={btnDelete}
-
-      addUser={addUser}
-      //deleteUser={}
-
-      deleteChekedItems={deleteChekedItems}
-      chekItem={chekItem}
-      handleUserInput={handleUserInput}
-    />
-  );
+  return {
+    users,
+    addUser,
+    deleteChekedItems,
+    chekItem,
+    handleUserInput,
+    btnAdd,
+    btnDelete,
+    inputEl,
+  };
 };
-
-export default TestListHook;

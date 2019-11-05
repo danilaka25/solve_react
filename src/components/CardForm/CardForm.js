@@ -3,47 +3,28 @@
 import React from 'react';
 import {TextInput, View, Text, TouchableHighlight} from 'react-native';
 import stylesForm from './Styles';
-// import {connect} from 'react-redux';
-// import {serverSendData} from '../../actions/onSubmit';
+import {useCardForm} from './useCardForm';
+import { connect } from "react-redux";
+ import {serverSendData} from '../../actions/onSubmit';
 
-type State = {
-  fields: {
-    cardNunmber: string,
-    cardExpirationDate: string,
-    cvv: string,
-    firstName: string,
-    lastName: string,
-    secretQuestion: string,
-    secretAnswer: string,
-  },
 
-  formErrors: {
-    cardNunmber: boolean,
-    cardExpirationDate: boolean,
-    cvv: boolean,
-    firstName: boolean,
-    lastName: boolean,
-    secretQuestion: boolean,
-    secretAnswer: boolean,
-  },
 
-  formValid: boolean,
-  paySystem: string,
-};
 
-type Props = {
-  data: State,
-  formIsLoading: boolean,
-  handleUserInput: (inputName: string, inputName: string) => void,
-  handleSubmit: () => void,
-};
 
-const CardForm = ({
-  data,
-  formIsLoading,
-  handleUserInput,
-  handleSubmit,
-}: Props) => {
+const CardForm = (form) => {
+  const {
+    data,
+    handleUserInput, 
+    handleSubmit
+    } = useCardForm();
+
+    //console.log("********INPUTS*********", data)
+
+
+    let formIsLoading = form.serverIsLoading;
+
+    console.log("********INPUTS*********", form.serverIsLoading)
+
 
   return (
     <>
@@ -81,9 +62,7 @@ const CardForm = ({
               },
             ]}
             placeholder="mm/yyyy"
-            onChangeText={val =>
-              handleUserInput('cardExpirationDate', val)
-            }
+            onChangeText={val => handleUserInput('cardExpirationDate', val)}
           />
 
           <TextInput
@@ -173,4 +152,18 @@ const CardForm = ({
   );
 };
 
-export default CardForm;
+
+const FormReduxContainer = connect(
+  state => {
+    return {
+      form: state.formReducer,
+    };
+  },
+  {
+    //serverSendData,
+  },
+)(CardForm);
+
+export default FormReduxContainer;
+
+//export default CardForm;
