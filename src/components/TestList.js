@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   Button,
+  Image
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 
@@ -21,11 +22,48 @@ export default class TestList extends React.Component {
       btnAdd: false,
       btnDelete: false,
       inputValid: false,
+      isLoading: true,
     };
   }
 
   fetchData() {
-    return fetch('https://randomuser.me/api/?results=25')
+    fetch("https://api-football-beta.p.rapidapi.com/teams?league=534", {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "api-football-beta.p.rapidapi.com",
+      "x-rapidapi-key": "5cd0d9f62cmsh26e688ce8c24379p154337jsne3668a2c22f7"
+    }
+  })
+  .then(response => response.json())
+  .then(responseJson => {
+    console.log(responseJson.response)
+
+    let usersTemp = [];
+
+
+        for ( let i of Object.keys(responseJson.response)) {
+          console.log(i)
+          usersTemp.push({
+            firstname: responseJson.response[i].team.name,
+            id: responseJson.response[i].team.id,
+            img: responseJson.response[i].team.logo,
+          });
+          //id++;
+        }
+        this.setState({
+          usersList: usersTemp,
+        });
+
+  })
+  .catch(err => {
+    console.log(err);
+  });
+  }
+
+
+
+    fetchData2() {
+    return fetch('https://randomuser.me/api/?results=5')
       .then(response => response.json())
       .then(responseJson => {
         let usersTemp = [];
@@ -131,6 +169,11 @@ export default class TestList extends React.Component {
     }
   };
 
+
+  sortItems = () => {
+
+  }
+
   FlatListItemSeparator = () => {
     return (
       <View
@@ -146,7 +189,12 @@ export default class TestList extends React.Component {
   render() {
     return (
       <View style={styles.MainContainer}>
+        <View style={{flexDirection: "row", alignContent: "space-between", flexWrap: "wrap"}}>
+          <Button title="sort up" style={{alignSelf: "flex-start"}}/>
+          <Button title="sort down" />
+        </View>
         <FlatList
+          style={{ flex: 1}}
           ref="flatList"
           onContentSizeChange={() => this.refs.flatList.scrollToEnd()}
           data={this.state.usersList}
@@ -161,14 +209,16 @@ export default class TestList extends React.Component {
               >
                 {item.firstname} {item.id}
               </Text>
-              <CheckBox
-                style={{padding: 10}}
-                onClick={this.chekItem.bind(this, item)}
-                isChecked={item.isChecked}
+              <Image
+                style={{width: 40, height: 40}}
+                source={{uri: item.img}} 
               />
+               
             </View>
           )} //onPress={this.GetItem.bind(this, item.title)}
         />
+
+
 
         <TextInput
           placeholder="Enter Value Here"
@@ -217,7 +267,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     //alignItems: 'center',
-    flex: 1,
+    //flex: 1,
   },
   enabled: {
     color: 'green',
@@ -226,11 +276,11 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   MainContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    margin: 2,
-    marginTop: 40,
+    //  justifyContent: 'center',
+      alignItems: 'center',
+     flex: 1,
+   // margin: 2,
+     //marginTop: 40,
   },
 
   item: {
@@ -282,6 +332,7 @@ const styles = StyleSheet.create({
 
   buttonRow: {
     marginBottom: 60,
+    // flex: 1
     //color: '#fff',
     // textAlign: 'center',
   },

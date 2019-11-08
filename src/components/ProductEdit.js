@@ -155,7 +155,7 @@ class ProductEdit extends React.Component<Props, State> {
             editable={this.state.isFieldEditable}
           /> */}
 
-          <Picker
+          {/* <Picker
             selectedValue={this.state.productCountry}
             style={[stylesProduct.productPicker]}
             enabled={this.state.isFieldEditable}
@@ -166,7 +166,7 @@ class ProductEdit extends React.Component<Props, State> {
             <Picker.Item label="Jahpan" value="jahpan" />
             <Picker.Item label="Germany" value="germany" />
             <Picker.Item label="Ukraine" value="ukraine" />
-          </Picker>
+          </Picker> */}
 
           <Text style={{marginTop: 200}}>{JSON.stringify(this.state)} </Text>
         </View>

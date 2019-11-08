@@ -33,11 +33,11 @@ type State = {
   serverWasLoaded: boolean,
 };
 
-export const serverSendData = (data: State) => (
-  dispatch: (type: string, payload?: State) => {},
-  getState: void,
+export const serverSendData = (data) => (
+  dispatch,
+  getState,
 ) => {
-  //console.log('we are in action/validate');
+  console.log('we are in action/validate ONSUBMIT');
   dispatch({type: SERVER_IS_LOADING});
 
   cardValidationService

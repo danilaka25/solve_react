@@ -29,8 +29,8 @@ type State = {
   formValid: boolean,
   paySystem: string,
 
-  serverIsLoading: boolean,
-  serverWasLoaded: boolean,
+  // serverIsLoading: boolean,
+  // serverWasLoaded: boolean,
 };
 
 export const useCardForm = () => {
