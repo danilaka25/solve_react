@@ -23,7 +23,7 @@ const AppNavigator = createStackNavigator({
     ChatsItem: ChatsItem,
   },
   {
-    initialRouteName: 'MainActivity',
+    initialRouteName: 'AuthComponent',
   }
 );
 

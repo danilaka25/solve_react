@@ -18,7 +18,16 @@ import {connect} from 'react-redux';
 import {authOnServer} from '../../actions/authOnServer';
 import {serverSendData} from '../../actions/onSubmit';
 
-import { withNavigation } from 'react-navigation';
+import {withNavigation} from 'react-navigation';
+
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-community/google-signin';
+
+
+GoogleSignin.configure();
 
 
 class AuthComponent extends React.Component {
@@ -55,19 +64,49 @@ class AuthComponent extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     console.log(this.state);
-    
+
     authOnServer(this.state);
 
-    this.props.navigation.navigate('MainActivity')
+    this.props.navigation.navigate('MainActivity');
 
     //serverSendData(this.state);
   };
+
+
+
+  signIn = async () => {
+  try {
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    //this.setState({ userInfo });
+
+    this.props.navigation.navigate('MainActivity');
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      // user cancelled the login flow
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      // operation (e.g. sign in) is in progress already
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      // play services not available or outdated
+    } else {
+      // some other error happened
+    }
+  }
+};
 
   render() {
     //console.log(this.state);
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <View>
+        <GoogleSigninButton
+          style={{width: 192, height: 48}}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Dark}
+          onPress={this.signIn}
+          disabled={this.state.isSigninInProgress}
+        />
+
+        {/* <View>
           <TextInput
             style={stylesAuthForm.formInput}
             placeholder="Phone"
@@ -88,7 +127,7 @@ class AuthComponent extends React.Component {
             onPress={this.handleSubmit}>
             <Text>Auth</Text>
           </TouchableHighlight>
-        </View>
+        </View> */}
 
         {/* <ActivityIndicator />   */}
         {/* <StatusBar barStyle="default" />
@@ -208,12 +247,10 @@ const stylesAuthForm = StyleSheet.create({
 
 // export default AuthComponent;
 
-
 const AuthRedux = connect(state => {
   return {
     data: state,
   };
 })(AuthComponent);
-
 
 export default AuthComponent;

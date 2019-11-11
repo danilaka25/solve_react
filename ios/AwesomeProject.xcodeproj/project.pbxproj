@@ -19,6 +19,18 @@
 		2DCD954D1E0B4F2C00145EB5 /* AwesomeProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AwesomeProjectTests.m */; };
 		606E443E024EE3490344E0C0 /* libPods-AwesomeProject-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04964F21240C1763D808F280 /* libPods-AwesomeProject-tvOS.a */; };
 		97761FBD2377EC4FB7B21A25 /* libPods-AwesomeProjectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4C2AC1AD74A632B6A57434B /* libPods-AwesomeProjectTests.a */; };
+		9FF1498423797F5F004210B5 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF1498323797F5F004210B5 /* libRNGoogleSignin.a */; };
+		9FF1498623797FB2004210B5 /* libReact-RCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF1498523797FB2004210B5 /* libReact-RCTBlob.a */; };
+		9FF1498823797FBE004210B5 /* libReact-RCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF1498723797FBE004210B5 /* libReact-RCTAnimation.a */; };
+		9FF1498A23797FDF004210B5 /* libReact-jsi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF1498923797FDF004210B5 /* libReact-jsi.a */; };
+		9FF1498C23797FEA004210B5 /* libReact-RCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF1498B23797FEA004210B5 /* libReact-RCTActionSheet.a */; };
+		9FF1498E23798013004210B5 /* libReact-RCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF1498D23798013004210B5 /* libReact-RCTImage.a */; };
+		9FF149902379801D004210B5 /* libReact-RCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF1498F2379801D004210B5 /* libReact-RCTLinking.a */; };
+		9FF1499223798024004210B5 /* libReact-RCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF1499123798024004210B5 /* libReact-RCTNetwork.a */; };
+		9FF149942379802D004210B5 /* libReact-RCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF149932379802D004210B5 /* libReact-RCTSettings.a */; };
+		9FF1499623798032004210B5 /* libReact-RCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF1499523798032004210B5 /* libReact-RCTText.a */; };
+		9FF149982379803C004210B5 /* libReact-RCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF149972379803C004210B5 /* libReact-RCTVibration.a */; };
+		9FF1499A237980AD004210B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FF14999237980AD004210B5 /* GoogleService-Info.plist */; };
 		A59B66F5FC73DD78326ABB41 /* libPods-AwesomeProject-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F777882FD8488A2832F8CECB /* libPods-AwesomeProject-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +71,18 @@
 		7FE6B14B53406DE85E730EB5 /* Pods-AwesomeProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-AwesomeProjectTests/Pods-AwesomeProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8AA836FCB4AED04E9F9D805E /* Pods-AwesomeProject-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeProject-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-AwesomeProject-tvOS/Pods-AwesomeProject-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		94405029BBDB6B317C02D9DA /* Pods-AwesomeProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeProject.release.xcconfig"; path = "Target Support Files/Pods-AwesomeProject/Pods-AwesomeProject.release.xcconfig"; sourceTree = "<group>"; };
+		9FF1498323797F5F004210B5 /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF1498523797FB2004210B5 /* libReact-RCTBlob.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTBlob.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF1498723797FBE004210B5 /* libReact-RCTAnimation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTAnimation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF1498923797FDF004210B5 /* libReact-jsi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-jsi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF1498B23797FEA004210B5 /* libReact-RCTActionSheet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTActionSheet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF1498D23798013004210B5 /* libReact-RCTImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF1498F2379801D004210B5 /* libReact-RCTLinking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTLinking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF1499123798024004210B5 /* libReact-RCTNetwork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTNetwork.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF149932379802D004210B5 /* libReact-RCTSettings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTSettings.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF1499523798032004210B5 /* libReact-RCTText.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTText.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF149972379803C004210B5 /* libReact-RCTVibration.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTVibration.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FF14999237980AD004210B5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B4C2AC1AD74A632B6A57434B /* libPods-AwesomeProjectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AwesomeProjectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBDF37D86CC0FBAC1379B05A /* Pods-AwesomeProject-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeProject-tvOS.release.xcconfig"; path = "Target Support Files/Pods-AwesomeProject-tvOS/Pods-AwesomeProject-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		D9EA927ADEA272B1A7E366B2 /* Pods-AwesomeProject-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeProject-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-AwesomeProject-tvOSTests/Pods-AwesomeProject-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -82,6 +106,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FF149982379803C004210B5 /* libReact-RCTVibration.a in Frameworks */,
+				9FF1499623798032004210B5 /* libReact-RCTText.a in Frameworks */,
+				9FF149942379802D004210B5 /* libReact-RCTSettings.a in Frameworks */,
+				9FF1499223798024004210B5 /* libReact-RCTNetwork.a in Frameworks */,
+				9FF149902379801D004210B5 /* libReact-RCTLinking.a in Frameworks */,
+				9FF1498E23798013004210B5 /* libReact-RCTImage.a in Frameworks */,
+				9FF1498C23797FEA004210B5 /* libReact-RCTActionSheet.a in Frameworks */,
+				9FF1498A23797FDF004210B5 /* libReact-jsi.a in Frameworks */,
+				9FF1498823797FBE004210B5 /* libReact-RCTAnimation.a in Frameworks */,
+				9FF1498623797FB2004210B5 /* libReact-RCTBlob.a in Frameworks */,
+				9FF1498423797F5F004210B5 /* libRNGoogleSignin.a in Frameworks */,
 				1B116B7AC8DBA5496B4F58E5 /* libPods-AwesomeProject.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,13 +183,23 @@
 				7FE6B14B53406DE85E730EB5 /* Pods-AwesomeProjectTests.debug.xcconfig */,
 				4E055257095748FF192D8C62 /* Pods-AwesomeProjectTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9FF149972379803C004210B5 /* libReact-RCTVibration.a */,
+				9FF1499523798032004210B5 /* libReact-RCTText.a */,
+				9FF149932379802D004210B5 /* libReact-RCTSettings.a */,
+				9FF1499123798024004210B5 /* libReact-RCTNetwork.a */,
+				9FF1498F2379801D004210B5 /* libReact-RCTLinking.a */,
+				9FF1498D23798013004210B5 /* libReact-RCTImage.a */,
+				9FF1498B23797FEA004210B5 /* libReact-RCTActionSheet.a */,
+				9FF1498923797FDF004210B5 /* libReact-jsi.a */,
+				9FF1498723797FBE004210B5 /* libReact-RCTAnimation.a */,
+				9FF1498523797FB2004210B5 /* libReact-RCTBlob.a */,
+				9FF1498323797F5F004210B5 /* libRNGoogleSignin.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				DC6CA8DFCD7DA4D9128F6A62 /* libPods-AwesomeProject.a */,
@@ -175,6 +220,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				9FF14999237980AD004210B5 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* AwesomeProject */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AwesomeProjectTests */,
@@ -230,6 +276,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				66A85161A9119679A961CF53 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -308,6 +355,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -336,6 +384,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FF1499A237980AD004210B5 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
@@ -451,6 +500,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		66A85161A9119679A961CF53 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AwesomeProject/Pods-AwesomeProject-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AwesomeProject/Pods-AwesomeProject-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8866CC5DF5B7D3A27B6978CF /* [CP] Check Pods Manifest.lock */ = {

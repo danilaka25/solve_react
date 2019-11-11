@@ -11,26 +11,27 @@ import {
   Text,
 } from 'react-native';
 
-import { withNavigation } from 'react-navigation';
+import TopBarChatsItem from '../TopBar/TopBarChatsItem';
 
+import {withNavigation} from 'react-navigation';
 
-class ChatsItem extends React.Component {
-  render() {
-    //console.log(this.state);
-    return (
+const ChatsItem = ({props}) => {
+  //console.log(this.state);
+  return (
+    <>
+      <TopBarChatsItem />
       <View
         style={{
-           flex: 1,
+          flex: 1,
           alignItems: 'center',
           flexDirection: 'row',
           alignContent: 'stretch',
           justifyContent: 'center',
-           
         }}>
         <Text>ChatsItem</Text>
       </View>
-    );
-  }
-}
+    </>
+  );
+};
 
 export default ChatsItem;

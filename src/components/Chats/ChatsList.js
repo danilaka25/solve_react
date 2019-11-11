@@ -10,15 +10,12 @@ import {
   TouchableHighlight,
   Text,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 
-import { withNavigation } from 'react-navigation';
-
+import {withNavigation} from 'react-navigation';
 
 import ChatsItem from './ChatsItem';
-
-
-
 
 class Chats extends React.Component {
   constructor(props) {
@@ -34,7 +31,7 @@ class Chats extends React.Component {
   }
 
   fetchData() {
-    return fetch('https://randomuser.me/api/?results=50')
+    return fetch('https://randomuser.me/api/?results=7')
       .then(response => response.json())
       .then(responseJson => {
         let usersTemp = [];
@@ -74,28 +71,37 @@ class Chats extends React.Component {
 
   render() {
     //console.log(this.state);
+    //const { navigate } = this.props.navigation;
+
     return (
       <View style={{flex: 10, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>CHATS</Text>
-
         <FlatList
           ref="flatList"
-          onContentSizeChange={() => this.refs.flatList.scrollToOffset({ animated: true, offset: 0 })
-}
+          onContentSizeChange={() =>
+            this.refs.flatList.scrollToOffset({animated: true, offset: 0})
+          }
           data={this.state.usersList}
           width="100%"
           keyExtractor={item => item.id.toString()}
           ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={({item}) => (
-            <View style={styles.listItem}>
-              <Text
-                style={styles.item}
-                //onPress={this.deleteData.bind(this, item.firstname)}
-              >
-                {item.firstname} {item.isChecked}
-              </Text>
-              <Button title="Press me" onPress={() => this.props.navigation.navigate('ChatsItem')} />
-            </View>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('ChatsItem')}>
+              <View style={styles.listItem}>
+                <View style={styles.listItemLeft}>
+                  <Text style={styles.itemLeftName}>
+                    {item.firstname} {/* {item.firstname} {item.isChecked} */}
+                  </Text>
+
+                  <Text style={styles.itemLeftMassage}>Last massage</Text>
+                </View>
+
+                <View style={styles.listItemRight}>
+                  <Text style={styles.itemRightTime}>12:22</Text>
+                  <Text style={styles.itemRightUnread}>1</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
           )} //onPress={this.GetItem.bind(this, item.title)}
         />
       </View>
@@ -103,15 +109,19 @@ class Chats extends React.Component {
   }
 }
 
-
-
-
 const styles = StyleSheet.create({
-    listItem: {
+  listItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  itemLeftName: {
+    fontWeight: '800',
+  },
+  listItemRight: {
+    alignItems: 'center',
   },
   container: {
     flex: 1,
@@ -127,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Chats;
+export default withNavigation(Chats);

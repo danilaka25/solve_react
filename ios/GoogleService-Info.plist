@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>470634530605-t97hghsd322kio41qphdostcg8tjfrgt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.470634530605-t97hghsd322kio41qphdostcg8tjfrgt</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDlQBDF37s6lXD3Bi86utsEaTQ9iRS7rHc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>470634530605</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>telegram.clone</string>
+	<key>PROJECT_ID</key>
+	<string>telegram-clone-fd426</string>
+	<key>STORAGE_BUCKET</key>
+	<string>telegram-clone-fd426.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:470634530605:ios:13105b9096fd14a99975a4</string>
+	<key>DATABASE_URL</key>
+	<string>https://telegram-clone-fd426.firebaseio.com</string>
+</dict>
+</plist>
