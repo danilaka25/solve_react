@@ -9,12 +9,20 @@ import {
   TextInput,
   TouchableHighlight,
   Text,
+  
 } from 'react-native';
 import TopBar from '../TopBar/TopBar';
 import ChatsList from '../Chats/ChatsList';
 
 
-import { withNavigation } from 'react-navigation';
+//import { withNavigation } from 'react-navigation';
+import {createAppContainer} from 'react-navigation';
+//import {createDrawerNavigator} from 'react-navigation-drawer';
+import {createStackNavigator} from 'react-navigation-stack';
+
+import SlideMenu from '../UserSettings/SlideMenu';
+
+
 
 
 class MainActivity extends React.Component {

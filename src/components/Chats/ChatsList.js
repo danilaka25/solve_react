@@ -11,13 +11,24 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
+  Image,
 } from 'react-native';
+import {connect} from 'react-redux';
+
 
 import {withNavigation} from 'react-navigation';
-
 import ChatsItem from './ChatsItem';
 
-class Chats extends React.Component {
+import {createStackNavigator} from 'react-navigation-stack';
+import {StackNavigator} from 'react-navigation';
+
+// import returnDataFromServer from '../../services/returnDataFromServer';
+
+import {authOnServer} from '../../actions/authOnServer';
+
+//import ChatsItem from './ChatsItem';
+
+class ChatsList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,6 +39,7 @@ class Chats extends React.Component {
       btnDelete: false,
       inputValid: false,
     };
+
   }
 
   fetchData() {
@@ -40,7 +52,8 @@ class Chats extends React.Component {
           usersTemp.push({
             firstname: responseJson.results[i].name.first,
             id: id,
-            isChecked: false,
+            img: responseJson.results[i].picture.thumbnail,
+            massages: [{}],
           });
           id++;
         }
@@ -54,7 +67,16 @@ class Chats extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    // this.fetchData();
+
+    authOnServer();
+
+
+    console.log(this.props.data)
+
+    //console.log(authOnServer);
+
+    // this.setState({usersList: returnDataFromServer.returnDataFromServer});
   }
 
   FlatListItemSeparator = () => {
@@ -73,8 +95,11 @@ class Chats extends React.Component {
     //console.log(this.state);
     //const { navigate } = this.props.navigation;
 
+    const {navigate} = this.props.navigation;
+
     return (
       <View style={{flex: 10, alignItems: 'center', justifyContent: 'center'}}>
+        {/* <TopBarChatsItem /> */}
         <FlatList
           ref="flatList"
           onContentSizeChange={() =>
@@ -86,19 +111,46 @@ class Chats extends React.Component {
           ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={({item}) => (
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('ChatsItem')}>
+              onPress={() =>
+                navigate('ChatsItem', {
+                  firstname: item.firstname,
+                  img: item.img,
+                  navigation: navigate,
+                  massages: item.massages,
+                })
+              }>
               <View style={styles.listItem}>
                 <View style={styles.listItemLeft}>
-                  <Text style={styles.itemLeftName}>
-                    {item.firstname} {/* {item.firstname} {item.isChecked} */}
-                  </Text>
+                  <Image
+                    style={{width: 45, height: 45, borderRadius: 45 / 2}}
+                    source={{uri: item.img}}
+                  />
 
-                  <Text style={styles.itemLeftMassage}>Last massage</Text>
+                  <View style={styles.listItemLeftText}>
+                    <Text style={styles.itemLeftName}>{item.firstname}</Text>
+
+                    <Text style={styles.itemLeftMassage}>
+                      {item.massages.length
+                        ? item.massages[item.massages.length - 1].massage
+                        : 'no massages yet'}
+                    </Text>
+                  </View>
                 </View>
 
                 <View style={styles.listItemRight}>
-                  <Text style={styles.itemRightTime}>12:22</Text>
-                  <Text style={styles.itemRightUnread}>1</Text>
+                  <Text style={styles.itemRightTime}>
+                    {item.massages.length
+                      ? item.massages[item.massages.length - 1].time
+                      : ''}
+                  </Text>
+                  <Text style={styles.itemRightUnread}>
+                    {/* {item.massages.length} */}
+                    {item.massages.length &&
+                    !item.massages[item.massages.length - 1].wasSeen &&
+                    !item.massages[item.massages.length - 1].owner
+                      ? item.massages.length
+                      : ''}
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -116,12 +168,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingLeft: 10,
     paddingRight: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  listItemLeft: {
+    flexDirection: 'row',
+  },
+  listItemLeftText: {
+    //alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 20,
   },
   itemLeftName: {
     fontWeight: '800',
   },
   listItemRight: {
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   container: {
     flex: 1,
@@ -137,4 +199,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(Chats);
+
+const ChatListReduxContainer = connect(
+  state => {
+    return {
+      data: state.authReducer,
+    };
+  },
+  {
+    authOnServer,
+  },
+)(ChatsList);
+
+export default withNavigation(ChatListReduxContainer);
+
+//export default withNavigation(Chats);

@@ -1,56 +1,35 @@
 //import {cardValidationService} from '../services/cardValidationService';
 
-import {userValidationOnServer} from '../services/userValidationOnServer';
+//import {ReturnDataFromServer} from '../services/returnDataFromServer';
+
+import returnDataFromServer from '../services/returnDataFromServer';
+
+
+
 import {
   SERVER_HAS_ERRORED,
   SERVER_IS_LOADING,
   SERVER_RESPONSE_SUCCESS,
+  AUTH_USER,
 } from '../types/actionTypes';
 
-// export const authOnServer = (data) =>  {
 
-//    console.log('we are in action/validate in AUTH', data);
 
-//    dispatch({type: SERVER_IS_LOADING, payload: data}),
-//    getState
+export const authOnServer = () => {
 
-// };
-
-export const authOnServer = data => {
-  // validation
-
-  console.log('we are in action/validate in AUTH');
+  console.log('we are in Action in AUTH', returnDataFromServer);
 
   return {
-    type: 'AUTH_USER',
-    payload: {
-      data,
-    },
-  };
+    type: AUTH_USER,
+    payload: returnDataFromServer.returnDataFromServer
+  }
+}
 
-  UserValidationOnServer.validateUser(data)
-    // cardValidationService(data)
-    .then(data => {
-      dispatch({type: SERVER_RESPONSE_SUCCESS, payload: data});
-    })
-    .catch(err => dispatch({type: SERVER_HAS_ERRORED, err}));
-};
 
-// export const authOnServer = (data) => (
+// export const authOnServer = (data) => (dispatch) => {
+  
+//   console.log('we are in Action in AUTH');
+  
+//   dispatch({type: AUTH_USER, payload: data})
 
-//   dispatch,
-//   getState
-
-// ) => {
-//    console.log('we are in action/validate in AUTH');
-//   dispatch({type: SERVER_IS_LOADING, payload: data}),
-//   getState
-
-//   // UserValidationOnServer
-//   //   .validateUser(data)
-//   //   // cardValidationService(data)
-//   //   .then(data => {
-//   //     dispatch({type: SERVER_RESPONSE_SUCCESS, payload: data});
-//   //   })
-//   //   .catch(err => dispatch({type: SERVER_HAS_ERRORED, err}));
-// };
+// }

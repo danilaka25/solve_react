@@ -41,7 +41,7 @@ class AuthComponent extends React.Component {
   }
 
   componentDidMount() {
-    // this._bootstrapAsync();
+     //this._signIn();
   }
 
   // Fetch the token from storage then navigate to our appropriate place
@@ -67,14 +67,14 @@ class AuthComponent extends React.Component {
 
     authOnServer(this.state);
 
-    this.props.navigation.navigate('MainActivity');
+    //this.props.navigation.navigate('MainActivity');
 
     //serverSendData(this.state);
   };
 
 
 
-  signIn = async () => {
+  _signIn = async () => {
   try {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
@@ -102,7 +102,7 @@ class AuthComponent extends React.Component {
           style={{width: 192, height: 48}}
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Dark}
-          onPress={this.signIn}
+          onPress={this._signIn}
           disabled={this.state.isSigninInProgress}
         />
 
@@ -245,12 +245,12 @@ const stylesAuthForm = StyleSheet.create({
   },
 });
 
+ export default AuthComponent;
+
+// const AuthRedux = connect(state => {
+//   return {
+//     data: state,
+//   };
+// })(AuthComponent);
+
 // export default AuthComponent;
-
-const AuthRedux = connect(state => {
-  return {
-    data: state,
-  };
-})(AuthComponent);
-
-export default AuthComponent;

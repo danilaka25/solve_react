@@ -6,55 +6,59 @@ import {
 } from '../types/actionTypes';
 
 const initialValue = {
-  phone: '',
-  password: '',
+  usersTemp: [],
   serverIsLoading: false,
   serverWasLoaded: false,
 };
 
 export const authReducer = (state = initialValue, action) => {
-  console.log('we are in reducer AUTH');
-  switch (action.type) {
-    case SERVER_IS_LOADING:
-      //console.log('SERVER_IS_LOADING');
-      return {
-        ...state,
-        serverIsLoading: true,
-        //data: action.payload,
-      };
+  //console.log('we are in reducer AUTH');
 
-    case SERVER_HAS_ERRORED:
-      //console.log('SERVER_HAS_ERRORED');
-      return {
-        ...state,
-        serverIsLoading: false,
-        serverWasLoaded: true,
-        //err: action.err,
-      };
 
-    case SERVER_RESPONSE_SUCCESS:
-      //console.log('SERVER_RESPONSE_SUCCESS');
+    switch (action.type) {
+
+    case AUTH_USER:
+      console.log('SERVER_RESPONSE_SUCCESS');
       return {
         ...state,
-        serverIsLoading: false,
-        serverWasLoaded: true,
         ...action.payload,
       };
 
     default:
       return state;
   }
-
+  
+  
   // switch (action.type) {
+  //   case SERVER_IS_LOADING:
+  //     //console.log('SERVER_IS_LOADING');
+  //     return {
+  //       ...state,
+  //       serverIsLoading: true,
+  //       //data: action.payload,
+  //     };
 
-  //   case AUTH_ON_SERVER:
+  //   case SERVER_HAS_ERRORED:
+  //     //console.log('SERVER_HAS_ERRORED');
+  //     return {
+  //       ...state,
+  //       serverIsLoading: false,
+  //       serverWasLoaded: true,
+  //       //err: action.err,
+  //     };
+
+  //   case SERVER_RESPONSE_SUCCESS:
   //     //console.log('SERVER_RESPONSE_SUCCESS');
   //     return {
   //       ...state,
+  //       serverIsLoading: false,
+  //       serverWasLoaded: true,
   //       ...action.payload,
   //     };
 
   //   default:
   //     return state;
   // }
+
+
 };

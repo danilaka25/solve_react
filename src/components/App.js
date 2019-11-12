@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import {View, Text, Button} from 'react-native';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
 import {Provider} from 'react-redux';
 import {store} from '../configs/createStore';
@@ -11,72 +11,67 @@ import MainActivity from './MainActivity/MainActivity';
 import UserSettings from './UserSettings/UserSettings';
 import ChatsItem from './Chats/ChatsItem';
 
- import CardForm from './CardForm';
+import ChatsList from './Chats/ChatsList';
 
+import TopBarChatsItem from './TopBar/TopBarChatsItem';
 
+// import UserAvatar from './Chats/UserAvatar';
 
+const AppNavigator = createStackNavigator(
+  {
+    // TopBarChatsItem: {
+    // screen: TopBarChatsItem,
+    // navigationOptions: {
+    //     header: null,
 
-const AppNavigator = createStackNavigator({  
-    AuthComponent: AuthComponent,
-    MainActivity: MainActivity,
+    // }
+    // },
+
+    AuthComponent: {
+      screen: AuthComponent,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    ChatsList: {
+      screen: ChatsList,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    ChatsItem: {
+      screen: ChatsItem,
+      navigationOptions: {
+        header: null,
+      },
+    },
+
+    MainActivity: {
+      screen: MainActivity,
+      navigationOptions: {
+        headerLeft: null,
+        title: 'MyScreen',
+      },
+    },
+
+    // AuthComponent: AuthComponent,
+    //MainActivity: MainActivity,
     UserSettings: UserSettings,
-    ChatsItem: ChatsItem,
+    //ChatsItem: { screen: ChatsItem },
   },
   {
-    initialRouteName: 'AuthComponent',
-  }
+    //initialRouteName: 'AuthComponent',
+    initialRouteName: 'MainActivity',
+  },
 );
 
 const FlexibleFormContainer = createAppContainer(AppNavigator);
 
-
-
-  export default () => (
-  <Provider store={store}>  
- 
+export default () => (
+  <Provider store={store}>
     <FlexibleFormContainer />
     {/* <CardForm /> */}
- 
   </Provider>
 );
-
-// // @flow
-
-// import React from 'react';
-// import {View, StyleSheet} from 'react-native';
-// import {Provider} from 'react-redux';
-// import {store} from '../configs/createStore';
-// import CardForm from './CardForm';
-// import DisplayCardInfo from './CardDispalyResult';
-// import TestList from './TestList';
-// import ProductEdit from './ProductEdit';
-// import FlatList from './FlatList';
-
-// import FlexibleForm from './FlexibleForm';
-
-// // type Props = {};
-
-// class CardApp extends React.Component {
-//   render() {
-//     return (
-//       <Provider store={store}>
-//         <View style={stylesMainscreen.mainActivity}>
-//           <FlexibleForm />
-//           {/* <TestList /> */}
-//           {/* <ProductEdit /> */}
-//           {/* <CardForm /> */}
-//           {/* <DisplayCardInfo />   */}
-//           {/* <FlatList /> */}
-//         </View>
-//       </Provider>
-//     );
-//   }
-// }
-
-// const stylesMainscreen = StyleSheet.create({
-//   mainActivity: {
-//     flex: 1,
-//   },
-// });
-
-// export default CardApp;

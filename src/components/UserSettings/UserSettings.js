@@ -11,6 +11,8 @@ import {
   Text,
 } from 'react-native';
 
+
+
 class UserSettings extends React.Component {
 
      render() {
