@@ -50,7 +50,10 @@ static navigationOptions = {
        <TouchableOpacity
               onPress={() => navigate('MainActivity')}
               >
-              <Text>Go back</Text>
+              <Image
+                    source={require('../../assets/icons/back.png')}
+                    style={{height: 35, width: 35}}
+                  />
 
              
 

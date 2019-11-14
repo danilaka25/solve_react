@@ -13,34 +13,35 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {connect} from 'react-redux';
 
+import {connect} from 'react-redux';
 
 import {withNavigation} from 'react-navigation';
 import ChatsItem from './ChatsItem';
 
-import {createStackNavigator} from 'react-navigation-stack';
-import {StackNavigator} from 'react-navigation';
+
 
 // import returnDataFromServer from '../../services/returnDataFromServer';
 
-import {authOnServer} from '../../actions/authOnServer';
+import {authOnServer} from '../../actions/onServer';
 
-//import ChatsItem from './ChatsItem';
+
+
+
 
 class ChatsList extends React.Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      usersList: [],
-      textInput_Holder: '',
-      btnAdd: false,
-      btnDelete: false,
-      inputValid: false,
-    };
+  //   // this.state = {
+  //   //   usersList: [],
+  //   //   textInput_Holder: '',
+  //   //   btnAdd: false,
+  //   //   btnDelete: false,
+  //   //   inputValid: false,
+  //   // };
 
-  }
+  // }
 
   fetchData() {
     return fetch('https://randomuser.me/api/?results=7')
@@ -57,9 +58,9 @@ class ChatsList extends React.Component {
           });
           id++;
         }
-        this.setState({
-          usersList: usersTemp,
-        });
+        // this.setState({
+        //   usersList: usersTemp,
+        // });
       })
       .catch(error => {
         console.error(error);
@@ -67,16 +68,7 @@ class ChatsList extends React.Component {
   }
 
   componentDidMount() {
-    // this.fetchData();
-
-    authOnServer();
-
-
-    console.log(this.props.data)
-
-    //console.log(authOnServer);
-
-    // this.setState({usersList: returnDataFromServer.returnDataFromServer});
+    this.props.authOnServer();
   }
 
   FlatListItemSeparator = () => {
@@ -89,6 +81,18 @@ class ChatsList extends React.Component {
         }}
       />
     );
+  };
+
+  onPressButton = () => {
+    //   this.props.authOnServer;
+    this.props.authOnServer();
+    //authOnServer;
+
+    console.log('CHATLIST DATA', this.props.data);
+
+    console.log('CHATLIST USERS_TEMP', this.props.data.usersTemp);
+
+    //console.log('ALL PROPS CHATLIST ' , this.props)
   };
 
   render() {
@@ -105,7 +109,7 @@ class ChatsList extends React.Component {
           onContentSizeChange={() =>
             this.refs.flatList.scrollToOffset({animated: true, offset: 0})
           }
-          data={this.state.usersList}
+          data={this.props.data.usersTemp}
           width="100%"
           keyExtractor={item => item.id.toString()}
           ItemSeparatorComponent={this.FlatListItemSeparator}
@@ -117,6 +121,7 @@ class ChatsList extends React.Component {
                   img: item.img,
                   navigation: navigate,
                   massages: item.massages,
+                  id: item.id
                 })
               }>
               <View style={styles.listItem}>
@@ -156,7 +161,8 @@ class ChatsList extends React.Component {
             </TouchableOpacity>
           )} //onPress={this.GetItem.bind(this, item.title)}
         />
-      </View>
+
+       </View>
     );
   }
 }
@@ -199,8 +205,7 @@ const styles = StyleSheet.create({
   },
 });
 
-
-const ChatListReduxContainer = connect(
+const ChatsListReduxContainer = connect(
   state => {
     return {
       data: state.authReducer,
@@ -208,9 +213,12 @@ const ChatListReduxContainer = connect(
   },
   {
     authOnServer,
+    // mapDispatchToProps
   },
 )(ChatsList);
 
-export default withNavigation(ChatListReduxContainer);
+export default withNavigation(ChatsListReduxContainer);
 
-//export default withNavigation(Chats);
+
+
+//export default withNavigation(ChatsList);

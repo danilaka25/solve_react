@@ -1,86 +1,90 @@
 /*Example of Navigation Drawer with Sectioned Menu*/
  
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+
+import React from 'react';
 import { NavigationActions } from 'react-navigation';
-import { ScrollView, Text, View, StyleSheet } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, SafeAreaView, Button, Image } from 'react-native';
+
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+
  
 class SlideMenu extends React.Component {
-  constructor() {
-    super();
-    /*Array of the sidebar navigation option with 
-    Heading, Subheading and screen to navigate.*/
-    //Sreen to navigate can be any screen defined in Drawer Navigator in App.js
-    
-    // this.options = [
-    //   {
-    //     mainHeading: 'Main Heading 1',
-    //     subOptions: [
-    //       { secondaryHeading: 'First Screen', navigationPath: 'First' },
-    //     ],
-    //   },
-    //   {
-    //     mainHeading: 'Main Heading 2',
-    //     subOptions: [
-    //       { secondaryHeading: 'Second Screen', navigationPath: 'Second' },
-    //       { secondaryHeading: 'Third Screen', navigationPath: 'Third' },
-    //     ],
-    //   },
-    // ];
+
+
+ constructor(props) {
+    super(props);
+
+    this.state = {
+      firstName: '',
+      lastName: '',
+      email: '',
+    };
+  } 
+
+
+signOut = async () => {
+  try {
+    await GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
+    console.log("LOG OUT")
+     
+     
+     navigate('AuthComponent')
+  } catch (error) {
+    console.error(error);
   }
- 
-  navigateToScreen = route => () => {
-    const navigateAction = NavigationActions.navigate({
-      routeName: route,
-    });
-    this.props.navigation.dispatch(navigateAction);
-  };
- 
-  render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-          <View>
-          <Text>This is my fixed header</Text>
-            {/* {this.options.map((option, key) => (
-              <View>
-                <Text style={styles.mainHeading}>{option.mainHeading}</Text>
-                {option.subOptions.map((item, key) => (
-                  <View style={styles.secondaryHeading} key={key}>
-                    <Text onPress={this.navigateToScreen(item.navigationPath)}>
-                      {item.secondaryHeading}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            ))} */}
-          </View>
-        </ScrollView>
-        <View style={styles.footerContainer}>
-          <Text>This is my fixed footer</Text>
-        </View>
-      </View>
-    );
+};
+
+
+  componentDidMount() {
+     this.getCurrentUserInfo();
+  }
+
+getCurrentUserInfo = async () => {
+  try {
+    const userInfo = await GoogleSignin.signInSilently();
+    this.setState({ 
+      name: userInfo.user.name,
+      photo: userInfo.user.photo,
+      email: userInfo.user.email,
+     });
+    //console.log(userInfo)
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+
+     
+
+    } else {
+      // some other error
+    }
   }
 }
- 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    flex: 1,
-  },
-  secondaryHeading: {
-    padding: 10,
-  },
-  mainHeading: {
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    backgroundColor: 'lightgrey',
-  },
-  footerContainer: {
-    padding: 20,
-    backgroundColor: 'lightgrey',
-  },
-});
- 
+
+ render() {
+  return (
+    <SafeAreaView style={{flex: 1, zIndex: 999}}>
+      <ScrollView>
+        <View
+          style={{
+             height: 150,
+            backgroundColor: 'Green',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <Text>{this.state.name}</Text>
+          <Text>{this.state.email}</Text>
+           
+          <Image
+              source={{uri: this.state.photo}}
+              style={{width: 50, height: 50, borderRadius: 50}}
+            />
+          
+          <Button title="log out" onPress={this.signOut}/>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+ }
+};
+
 export default SlideMenu;

@@ -15,7 +15,7 @@ import {
 
 class UserSettings extends React.Component {
 
-     render() {
+    render() {
     //console.log(this.state);
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

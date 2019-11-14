@@ -15,7 +15,7 @@ import {
 
 //import FormComponent from './FormComponent';
 import {connect} from 'react-redux';
-import {authOnServer} from '../../actions/authOnServer';
+// import {authOnServer} from '../../actions/authOnServer';
 import {serverSendData} from '../../actions/onSubmit';
 
 import {withNavigation} from 'react-navigation';

@@ -12,6 +12,9 @@ import {
   FlatList,
 } from 'react-native';
 
+import moment from "moment";
+
+
 import TopBarChatsItem from '../TopBar/TopBarChatsItem';
 
 import UserAvatar from './UserAvatar';
@@ -19,62 +22,101 @@ import UserAvatar from './UserAvatar';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
-class ChatsItem extends React.Component {
+import {connect} from 'react-redux';
+import {addMassageToChat} from '../../actions/addMassageToChat';
 
-constructor(props) {
+class ChatsItem extends React.Component {
+  constructor(props) {
     super(props);
 
+    this.state = {
+      inputMassage: '',
+    };
+  }
 
-    // this.state = {
-    //   chatBranch: params.massages
-
-    // }
+  componentDidMount() {
 
 
-}   
+
+    // console.log(
+    //       Object.keys(this.props.navigation.state.params.massages).length
+    // )
+    //console.log(this.props.data.usersTemp[this.props.navigation.state.params.id - 1].massages)
+  }
+
+  handleUserInput = ( inputValue) => {
+    
+    const value = inputValue;
+    this.setState({
+      inputMassage: value,
+    });
+  };
 
   sendMassage = () => {
+    let massageTemp = this.props.navigation.state.params.massages;
+    massageTemp.push({
+      id: Object.keys(this.props.navigation.state.params.massages).length + 1,
+      massage: this.state.inputMassage,
+      time: moment(Date.now()).format('DD.MM.YYYY'), 
+      wasSeen: false,
+      owner: true,
+    });
 
+    this.props.addMassageToChat(massageTemp);
+
+   
   };
+
+
 
   render() {
     const {params} = this.props.navigation.state;
 
-    console.log(params.navigation);
+    console.log('this.props.data ==============', this.props.data.usersTemp[0]);
+
+    //console.log(params.navigation);
     return (
-      <>
+      <View style={styles.main}>
         <TopBarChatsItem
           navigation={params.navigation}
           avatar={params.img}
           name={params.firstname}
         />
 
+        <View style={styles.massageBg}>
+
         <FlatList
           ref="flatList"
+           
           //onContentSizeChange={() => this.refs.flatList.scrollToEnd()}
           data={params.massages}
           width="100%"
           keyExtractor={item => item.id.toString()}
           // ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={({item}) => (
-            <View style={styles.listItem}>
-            <View style={item.owner ? styles.outputMassage : styles.inputMassage}>
-              <Text
-                style={styles.item}
-                //onPress={this.deleteData.bind(this, item.firstname)}
-              >
-
-              
-              {item.massage}
-              </Text>
+            <View style={styles.massageRow}>
+              <View
+                style={item.owner ? styles.outputMassage : styles.inputMassage}>
+                <Text
+                  style={styles.item}
+                  //onPress={this.deleteData.bind(this, item.firstname)}
+                >
+                  {item.massage}
+                </Text>
+              </View>
             </View>
-            </View>
-          )}  
+          )}
         />
+
+        </View>
 
         <View style={styles.footer}>
           <View style={styles.textInputRow}>
-            <TextInput style={styles.textInput} placeholder="Type Your Text" />
+            <TextInput
+              onChangeText={val => this.handleUserInput(val)}
+              style={styles.textInput}
+              placeholder="Type Your Text"
+            />
             <TouchableHighlight
               style={styles.sendButton}
               onPress={this.sendMassage}>
@@ -82,25 +124,68 @@ constructor(props) {
             </TouchableHighlight>
           </View>
         </View>
-      </>
+      </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  massageRow: {},
+const ChatsItemReduxContainer = connect(
+  state => {
+    return {
+      data: state.authReducer,
+    };
+  },
+  {
+    addMassageToChat,
+    // mapDispatchToProps
+  },
+)(ChatsItem);
 
-  inputMassage: {},
+export default ChatsItemReduxContainer;
+
+// export default withNavigation(ChatsItemReduxContainer);
+
+const styles = StyleSheet.create({
+
+
+  main: {
+    flex: 1
+  },
+
+  
+
+  massageBg: {
+    backgroundColor: '#e0e0e0',
+    flex: 6
+  },
+
+  massageRow: {
+    marginTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+
+  inputMassage: {
+    backgroundColor: '#ffffff',
+     width: '60%',
+     padding: 10,
+     borderRadius: 5
+  },
 
   outputMassage: {
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    alignSelf: 'flex-end',
+    backgroundColor: '#76e060',
+    width: '60%',
+    padding: 10,
+    borderRadius: 5
   },
 
   footer: {
-    // flex: 1,
+    flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: 66,
+    marginBottom: 16,
   },
 
   textInputRow: {
@@ -126,7 +211,7 @@ const styles = StyleSheet.create({
   },
 
   sendButton: {
-    textAlign: 'center',
+    // textAlign: 'center',
     height: 40,
     borderWidth: 1,
     borderColor: '#cccccc',
@@ -141,4 +226,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChatsItem;
+// export default ChatsItem;

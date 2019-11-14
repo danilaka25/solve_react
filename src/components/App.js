@@ -1,5 +1,4 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
@@ -13,8 +12,10 @@ import ChatsItem from './Chats/ChatsItem';
 
 import ChatsList from './Chats/ChatsList';
 
-import TopBarChatsItem from './TopBar/TopBarChatsItem';
+ 
 
+
+ 
 // import UserAvatar from './Chats/UserAvatar';
 
 const AppNavigator = createStackNavigator(
@@ -51,8 +52,9 @@ const AppNavigator = createStackNavigator(
     MainActivity: {
       screen: MainActivity,
       navigationOptions: {
-        headerLeft: null,
-        title: 'MyScreen',
+        header: null,
+        // headerLeft: null,
+        // title: 'MyScreen',
       },
     },
 
@@ -62,8 +64,8 @@ const AppNavigator = createStackNavigator(
     //ChatsItem: { screen: ChatsItem },
   },
   {
-    //initialRouteName: 'AuthComponent',
-    initialRouteName: 'MainActivity',
+    initialRouteName: 'AuthComponent',
+    //initialRouteName: 'MainActivity',
   },
 );
 
@@ -72,6 +74,7 @@ const FlexibleFormContainer = createAppContainer(AppNavigator);
 export default () => (
   <Provider store={store}>
     <FlexibleFormContainer />
+    {/* <TestList /> */}
     {/* <CardForm /> */}
   </Provider>
 );
