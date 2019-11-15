@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 const ChatsListReduxContainer = connect(
   state => {
     return {
-      data: state.authReducer,
+      data: state.messangerReducer,
     };
   },
   {

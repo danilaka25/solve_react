@@ -50,8 +50,8 @@ const AppNavigator = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'AuthComponent',
-    //initialRouteName: 'MainActivity',
+    //initialRouteName: 'AuthComponent',
+    initialRouteName: 'MainActivity',
   },
 );
 

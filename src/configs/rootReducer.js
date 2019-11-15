@@ -1,10 +1,8 @@
 /* eslint-disable */
 
 import {combineReducers} from 'redux';
-import {formReducer} from '../reducers/formReducer';
-import {authReducer} from '../reducers/authReducer';
+import {messangerReducer} from '../reducers/messangerReducer';
 
 export const rootReducer = combineReducers({
-  formReducer,
-  authReducer,
+  messangerReducer,
 });

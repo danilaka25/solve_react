@@ -4,7 +4,7 @@ const initialValue = {
   usersTemp: [],
 };
 
-export const authReducer = (state = initialValue, action) => {
+export const messangerReducer = (state = initialValue, action) => {
   switch (action.type) {
     case GET_INITAL_STATE:
       return {
