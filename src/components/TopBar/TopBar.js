@@ -1,24 +1,16 @@
 import React from 'react';
 import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
-  StyleSheet,
   View,
-  Button,
-  TextInput,
   TouchableHighlight,
   Text,
-  Image
+  Image,
 } from 'react-native';
 
 class TopBar extends React.Component {
   render() {
-    //console.log(this.state);
     return (
       <View
         style={{
-           
           alignItems: 'center',
           flexDirection: 'row',
           alignContent: 'stretch',
@@ -27,38 +19,27 @@ class TopBar extends React.Component {
           backgroundColor: '#1488db',
           paddingLeft: 10,
           paddingRight: 10,
-          paddingTop: 20
+          paddingTop: 20,
           // height: 120
         }}>
+        <TouchableHighlight onPress={() => this.props.openMenu()}>
+          <Image
+            source={require('../../assets/icons/menu.png')}
+            style={{height: 25, width: 25}}
+          />
+        </TouchableHighlight>
 
-        <TouchableHighlight
-            onPress={() => this.props.openMenu()}>
-            
-            <Image
-                    source={require('../../assets/icons/menu.png')}
-                    style={{height: 25, width: 25}}
-                  />
-          </TouchableHighlight> 
+        <Text style={{color: '#ffffff', fontSize: 22}}>TELEGRAM</Text>
 
-
-          <Text style={{color: '#ffffff', fontSize: 22}}>TELEGRAM</Text>
-
-
-          <TouchableHighlight
-            >
-            
-            <Image
-                    source={require('../../assets/icons/search.png')}
-                    style={{height: 25, width: 25}}
-                  />
-          </TouchableHighlight>         
-        
-        
-        
+        <TouchableHighlight>
+          <Image
+            source={require('../../assets/icons/search.png')}
+            style={{height: 25, width: 25}}
+          />
+        </TouchableHighlight>
       </View>
     );
   }
 }
 
 export default TopBar;
-

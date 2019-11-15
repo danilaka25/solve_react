@@ -15,60 +15,14 @@ import {
 } from 'react-native';
 
 import {connect} from 'react-redux';
-
 import {withNavigation} from 'react-navigation';
 import ChatsItem from './ChatsItem';
-
-
-
-// import returnDataFromServer from '../../services/returnDataFromServer';
-
-import {authOnServer} from '../../actions/onServer';
-
-
-
-
+import {getInitalStateFromServer} from '../../actions/getInitalStateFromServer';
 
 class ChatsList extends React.Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   // this.state = {
-  //   //   usersList: [],
-  //   //   textInput_Holder: '',
-  //   //   btnAdd: false,
-  //   //   btnDelete: false,
-  //   //   inputValid: false,
-  //   // };
-
-  // }
-
-  fetchData() {
-    return fetch('https://randomuser.me/api/?results=7')
-      .then(response => response.json())
-      .then(responseJson => {
-        let usersTemp = [];
-        let id = 1;
-        for (let i of Object.keys(responseJson.results)) {
-          usersTemp.push({
-            firstname: responseJson.results[i].name.first,
-            id: id,
-            img: responseJson.results[i].picture.thumbnail,
-            massages: [{}],
-          });
-          id++;
-        }
-        // this.setState({
-        //   usersList: usersTemp,
-        // });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
 
   componentDidMount() {
-    this.props.authOnServer();
+    this.props.getInitalStateFromServer();
   }
 
   FlatListItemSeparator = () => {
@@ -83,27 +37,12 @@ class ChatsList extends React.Component {
     );
   };
 
-  onPressButton = () => {
-    //   this.props.authOnServer;
-    this.props.authOnServer();
-    //authOnServer;
-
-    console.log('CHATLIST DATA', this.props.data);
-
-    console.log('CHATLIST USERS_TEMP', this.props.data.usersTemp);
-
-    //console.log('ALL PROPS CHATLIST ' , this.props)
-  };
-
   render() {
-    //console.log(this.state);
-    //const { navigate } = this.props.navigation;
 
     const {navigate} = this.props.navigation;
 
     return (
       <View style={{flex: 10, alignItems: 'center', justifyContent: 'center'}}>
-        {/* <TopBarChatsItem /> */}
         <FlatList
           ref="flatList"
           onContentSizeChange={() =>
@@ -121,7 +60,7 @@ class ChatsList extends React.Component {
                   img: item.img,
                   navigation: navigate,
                   massages: item.massages,
-                  id: item.id
+                  id: item.id,
                 })
               }>
               <View style={styles.listItem}>
@@ -159,10 +98,9 @@ class ChatsList extends React.Component {
                 </View>
               </View>
             </TouchableOpacity>
-          )} //onPress={this.GetItem.bind(this, item.title)}
+          )} 
         />
-
-       </View>
+      </View>
     );
   }
 }
@@ -181,7 +119,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   listItemLeftText: {
-    //alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 20,
   },
@@ -212,13 +149,10 @@ const ChatsListReduxContainer = connect(
     };
   },
   {
-    authOnServer,
-    // mapDispatchToProps
+    getInitalStateFromServer,
   },
 )(ChatsList);
 
 export default withNavigation(ChatsListReduxContainer);
 
-
-
-//export default withNavigation(ChatsList);
+ 

@@ -1,6 +1,4 @@
 import React from 'react';
-// import { createAppContainer } from 'react-navigation';
-// import { createStackNavigator } from 'react-navigation-stack';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -13,11 +11,7 @@ import {
   Text,
 } from 'react-native';
 
-//import FormComponent from './FormComponent';
 import {connect} from 'react-redux';
-// import {authOnServer} from '../../actions/authOnServer';
-import {serverSendData} from '../../actions/onSubmit';
-
 import {withNavigation} from 'react-navigation';
 
 import {
@@ -26,22 +20,27 @@ import {
   statusCodes,
 } from '@react-native-community/google-signin';
 
-
 GoogleSignin.configure();
-
 
 class AuthComponent extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      phone: '',
-      password: '',
-    };
+    
   }
 
   componentDidMount() {
-     //this._signIn();
+    getCurrentUserInfo = async () => {
+      try {
+        const userInfo = await GoogleSignin.signInSilently();
+
+        console.log(userInfo);
+      } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+        } else {
+          console.log('some other error');
+        }
+      }
+    };
   }
 
   // Fetch the token from storage then navigate to our appropriate place
@@ -53,90 +52,27 @@ class AuthComponent extends React.Component {
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   };
 
-  handleUserInput = (inputName, inputValue) => {
-    const name = inputName;
-    const value = inputValue;
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  handleSubmit = event => {
-    event.preventDefault();
-    console.log(this.state);
-
-    authOnServer(this.state);
-
-    //this.props.navigation.navigate('MainActivity');
-
-    //serverSendData(this.state);
-  };
 
 
-
-  _signIn = async () => {
-  try {
-    await GoogleSignin.hasPlayServices();
-    const userInfo = await GoogleSignin.signIn();
-    //this.setState({ userInfo });
-
-    this.props.navigation.navigate('MainActivity');
-  } catch (error) {
-    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      // user cancelled the login flow
-    } else if (error.code === statusCodes.IN_PROGRESS) {
-      // operation (e.g. sign in) is in progress already
-    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      // play services not available or outdated
-    } else {
-      // some other error happened
+  signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      this.props.navigation.navigate('MainActivity');
+    } catch (error) {
+      console.log(error);
     }
-  }
-};
+  };
 
   render() {
-    //console.log(this.state);
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <GoogleSigninButton
           style={{width: 192, height: 48}}
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Dark}
-          onPress={this._signIn}
-          disabled={this.state.isSigninInProgress}
-        />
-
-        {/* <View>
-          <TextInput
-            style={stylesAuthForm.formInput}
-            placeholder="Phone"
-            onChangeText={val => this.handleUserInput('phone', val)}
-          />
-        </View>
-        <View>
-          <TextInput
-            style={stylesAuthForm.formInput}
-            placeholder="Password"
-            onChangeText={val => this.handleUserInput('password', val)}
-          />
-        </View>
-
-        <View>
-          <TouchableHighlight
-            style={stylesAuthForm.formButton}
-            onPress={this.handleSubmit}>
-            <Text>Auth</Text>
-          </TouchableHighlight>
-        </View> */}
-
-        {/* <ActivityIndicator />   */}
-        {/* <StatusBar barStyle="default" />
-
-
-       {/* <Button
-          title="Go to CreateForm"
-          onPress={() => this.props.navigation.navigate('UpdateForm')}
-        /> */}
+          onPress={this.signIn}
+         />
       </View>
     );
   }
@@ -230,7 +166,6 @@ const stylesAuthForm = StyleSheet.create({
   formButton: {
     backgroundColor: 'green',
     alignItems: 'center',
-    // flex: 1,
     flexDirection: 'row',
     height: 40,
     justifyContent: 'center',
@@ -245,12 +180,5 @@ const stylesAuthForm = StyleSheet.create({
   },
 });
 
- export default AuthComponent;
+export default AuthComponent;
 
-// const AuthRedux = connect(state => {
-//   return {
-//     data: state,
-//   };
-// })(AuthComponent);
-
-// export default AuthComponent;

@@ -6,6 +6,7 @@ import { NavigationActions } from 'react-navigation';
 import { ScrollView, Text, View, StyleSheet, SafeAreaView, Button, Image } from 'react-native';
 
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+import {withNavigation} from 'react-navigation';
 
  
 class SlideMenu extends React.Component {
@@ -22,14 +23,22 @@ class SlideMenu extends React.Component {
   } 
 
 
+      
+
+
+
 signOut = async () => {
   try {
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
-    console.log("LOG OUT")
+    
+
+    const navigate = this.props.navigation;
+
+    console.log(navigate)
      
      
-     navigate('AuthComponent')
+     navigate.navigate('AuthComponent')
   } catch (error) {
     console.error(error);
   }
@@ -66,17 +75,19 @@ getCurrentUserInfo = async () => {
       <ScrollView>
         <View
           style={{
-             height: 150,
+            height: 150,
             backgroundColor: 'Green',
             alignItems: 'center',
             justifyContent: 'space-between',
+            paddingTop: 40,
+         
           }}>
           <Text>{this.state.name}</Text>
           <Text>{this.state.email}</Text>
            
           <Image
               source={{uri: this.state.photo}}
-              style={{width: 50, height: 50, borderRadius: 50}}
+              style={{width: 50, height: 50, borderRadius: 50, margin: 10}}
             />
           
           <Button title="log out" onPress={this.signOut}/>

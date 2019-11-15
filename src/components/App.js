@@ -7,16 +7,9 @@ import {store} from '../configs/createStore';
 
 import AuthComponent from './Auth/AuthComponent';
 import MainActivity from './MainActivity/MainActivity';
-import UserSettings from './UserSettings/UserSettings';
 import ChatsItem from './Chats/ChatsItem';
 
 import ChatsList from './Chats/ChatsList';
-
- 
-
-
- 
-// import UserAvatar from './Chats/UserAvatar';
 
 const AppNavigator = createStackNavigator(
   {
@@ -53,15 +46,8 @@ const AppNavigator = createStackNavigator(
       screen: MainActivity,
       navigationOptions: {
         header: null,
-        // headerLeft: null,
-        // title: 'MyScreen',
       },
     },
-
-    // AuthComponent: AuthComponent,
-    //MainActivity: MainActivity,
-    UserSettings: UserSettings,
-    //ChatsItem: { screen: ChatsItem },
   },
   {
     initialRouteName: 'AuthComponent',
