@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import {combineReducers} from 'redux';
 import {messangerReducer} from '../reducers/messangerReducer';
 
