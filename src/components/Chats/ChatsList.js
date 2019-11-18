@@ -47,7 +47,6 @@ class ChatsList extends React.Component {
             this.refs.flatList.scrollToOffset({animated: true, offset: 0})
           }
           data={this.props.data.usersTemp}
-          width="100%"
           keyExtractor={item => item.id.toString()}
           ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={({item}) => (
@@ -73,6 +72,7 @@ class ChatsList extends React.Component {
                         ? item.messages[item.messages.length - 1].message
                         : 'no messages yet'}
                     </Text>
+                    
                   </View>
                 </View>
                 <View style={styles.listItemRight}>

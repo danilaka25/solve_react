@@ -32,8 +32,6 @@ class ChatsItem extends React.Component {
     };
   }
 
-  componentDidMount() {}
-
   handleUserInput = inputValue => {
     const value = inputValue;
     this.setState({
@@ -103,7 +101,6 @@ class ChatsItem extends React.Component {
 
   deleteOwnMessage = messageId => {
     let userId = this.props.navigation.state.params.id;
-
     let messageTemp = this.props.data.usersTemp[userId - 1].messages.filter(
       x => {
         return x.id != messageId;
@@ -138,11 +135,7 @@ class ChatsItem extends React.Component {
                     style={
                       item.owner ? styles.outputMessage : styles.inputMessage
                     }>
-                    <Text
-                      style={styles.item}
-                    >
-                      {item.message}
-                    </Text>
+                    <Text style={styles.item}>{item.message}</Text>
                   </View>
                 </TouchableHighlight>
               </View>

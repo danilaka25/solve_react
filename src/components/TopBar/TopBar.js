@@ -1,28 +1,26 @@
 import React from 'react';
 import {View, TouchableHighlight, Text, Image, StyleSheet} from 'react-native';
 
-class TopBar extends React.Component {
-  render() {
-    return (
-      <View style={TopBarStyles.main}>
-        <TouchableHighlight onPress={() => this.props.openMenu()}>
-          <Image
-            source={require('../../assets/icons/menu.png')}
-            style={TopBarStyles.image}
-          />
-        </TouchableHighlight>
+function TopBar() {
+  return (
+    <View style={TopBarStyles.main}>
+      <TouchableHighlight onPress={() => this.props.openMenu()}>
+        <Image
+          source={require('../../assets/icons/menu.png')}
+          style={TopBarStyles.image}
+        />
+      </TouchableHighlight>
 
-        <Text style={{color: '#ffffff', fontSize: 22}}>TELEGRAM</Text>
+      <Text style={{color: '#ffffff', fontSize: 22}}>TELEGRAM</Text>
 
-        <TouchableHighlight>
-          <Image
-            source={require('../../assets/icons/search.png')}
-            style={TopBarStyles.image}
-          />
-        </TouchableHighlight>
-      </View>
-    );
-  }
+      <TouchableHighlight>
+        <Image
+          source={require('../../assets/icons/search.png')}
+          style={TopBarStyles.image}
+        />
+      </TouchableHighlight>
+    </View>
+  );
 }
 
 const TopBarStyles = StyleSheet.create({

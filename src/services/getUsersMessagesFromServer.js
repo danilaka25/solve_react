@@ -56,7 +56,7 @@ const fetchUsersMessages = () => {
         messages: [
           {
             id: 1,
-            massage: 'some text 2',
+            message: 'some text 2',
             time: '22.12.2013',
             wasSeen: false,
             owner: false,
