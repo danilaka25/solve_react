@@ -20,7 +20,6 @@ import ChatsItem from './ChatsItem';
 import {getInitalStateFromServer} from '../../actions/getInitalStateFromServer';
 
 class ChatsList extends React.Component {
-
   componentDidMount() {
     this.props.getInitalStateFromServer();
   }
@@ -38,11 +37,10 @@ class ChatsList extends React.Component {
   };
 
   render() {
-
     const {navigate} = this.props.navigation;
 
     return (
-      <View style={{flex: 10, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={styles.main}>
         <FlatList
           ref="flatList"
           onContentSizeChange={() =>
@@ -59,46 +57,41 @@ class ChatsList extends React.Component {
                   firstname: item.firstname,
                   img: item.img,
                   navigation: navigate,
-                  massages: item.massages,
+                  messages: item.messages,
                   id: item.id,
                 })
               }>
               <View style={styles.listItem}>
                 <View style={styles.listItemLeft}>
-                  <Image
-                    style={{width: 45, height: 45, borderRadius: 45 / 2}}
-                    source={{uri: item.img}}
-                  />
+                  <Image style={styles.avatar} source={{uri: item.img}} />
 
                   <View style={styles.listItemLeftText}>
                     <Text style={styles.itemLeftName}>{item.firstname}</Text>
 
-                    <Text style={styles.itemLeftMassage}>
-                      {item.massages.length
-                        ? item.massages[item.massages.length - 1].massage
-                        : 'no massages yet'}
+                    <Text style={styles.itemLeftMessage}>
+                      {item.messages.length
+                        ? item.messages[item.messages.length - 1].message
+                        : 'no messages yet'}
                     </Text>
                   </View>
                 </View>
-
                 <View style={styles.listItemRight}>
                   <Text style={styles.itemRightTime}>
-                    {item.massages.length
-                      ? item.massages[item.massages.length - 1].time
+                    {item.messages.length
+                      ? item.messages[item.messages.length - 1].time
                       : ''}
                   </Text>
                   <Text style={styles.itemRightUnread}>
-                    {/* {item.massages.length} */}
-                    {item.massages.length &&
-                    !item.massages[item.massages.length - 1].wasSeen &&
-                    !item.massages[item.massages.length - 1].owner
-                      ? item.massages.length
+                    {item.messages.length &&
+                    !item.messages[item.messages.length - 1].wasSeen &&
+                    !item.messages[item.messages.length - 1].owner
+                      ? item.messages.length
                       : ''}
                   </Text>
                 </View>
               </View>
             </TouchableOpacity>
-          )} 
+          )}
         />
       </View>
     );
@@ -106,6 +99,11 @@ class ChatsList extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  main: {
+    flex: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   listItem: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -117,6 +115,11 @@ const styles = StyleSheet.create({
   },
   listItemLeft: {
     flexDirection: 'row',
+  },
+  avatar: {
+    width: 45,
+    height: 45,
+    borderRadius: 45 / 2,
   },
   listItemLeftText: {
     justifyContent: 'center',
@@ -154,5 +157,3 @@ const ChatsListReduxContainer = connect(
 )(ChatsList);
 
 export default withNavigation(ChatsListReduxContainer);
-
- 

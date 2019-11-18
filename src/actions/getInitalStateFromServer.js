@@ -1,16 +1,9 @@
-import returnDataFromServer from '../services/returnDataFromServer';
-import {
-  GET_INITAL_STATE,
-} from '../types/actionTypes';
+import getUsersMessagesFromServer from '../services/getUsersMessagesFromServer';
+import {GET_INITAL_STATE} from '../types/actionTypes';
 
-
-
-export const getInitalStateFromServer = () => (
-  dispatch,
-) => {
-  console.log('INITAL ACTION' );
-  dispatch({type: GET_INITAL_STATE, payload: returnDataFromServer.returnDataFromServer});
+export const getInitalStateFromServer = () => {
+  return {
+    type: GET_INITAL_STATE,
+    payload: getUsersMessagesFromServer.getUsersMessagesFromServer,
+  };
 };
-
-
-

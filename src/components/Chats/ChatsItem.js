@@ -18,29 +18,26 @@ import TopBarChatsItem from '../TopBar/TopBarChatsItem';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {connect} from 'react-redux';
-import {addMassageToChat} from '../../actions/addMassageToChat';
-import {deleteMassageFromChat} from '../../actions/deleteMassageFromChat';
+import {addMessageToChat} from '../../actions/addMessageToChat';
+import {deleteMessageFromChat} from '../../actions/deleteMessageFromChat';
 
 class ChatsItem extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      inputMassage: '',
-      isForwardMassage: false,
-      forwaredMassageId: '',
+      inputMessage: '',
+      isForwardMessage: false,
+      forwaredMessageId: '',
       SendBtnDisabled: true,
     };
   }
 
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   handleUserInput = inputValue => {
     const value = inputValue;
     this.setState({
-      inputMassage: value,
+      inputMessage: value,
     });
     if (inputValue.length >= 1) {
       this.setState({
@@ -53,47 +50,41 @@ class ChatsItem extends React.Component {
     }
   };
 
-  sendMassage = () => {
-    // let allMassages = this.props.data.usersTemp[this.props.navigation.state.params.id].massages
-
-    let massageTemp = this.props.navigation.state.params.massages;
-    massageTemp.push({
-      id: Object.keys(this.props.navigation.state.params.massages).length + 1,
-      massage: this.state.isForwardMassage
+  sendMessage = () => {
+    let messageTemp = this.props.navigation.state.params.messages;
+    messageTemp.push({
+      id: Object.keys(this.props.navigation.state.params.messages).length + 1,
+      message: this.state.isForwardMessage
         ? `${
-            this.props.navigation.state.params.massages[
-              this.state.forwaredMassageId - 1
-            ].massage
-          } -->  ${this.state.inputMassage} `
-        : this.state.inputMassage,
+            this.props.navigation.state.params.messages[
+              this.state.forwaredMessageId - 1
+            ].message
+          } -->  ${this.state.inputMessage} `
+        : this.state.inputMessage,
       time: moment(Date.now()).format('DD.MM.YYYY'),
       wasSeen: false,
       owner: true,
     });
 
-    //console.log("*********" , this.props.navigation.state.params.massages[this.state.forwaredMassageId].massage)
-
-    this.props.addMassageToChat(massageTemp);
+    this.props.addMessageToChat(messageTemp);
 
     this.setState({
-      isForwardMassage: false,
-      forwaredMassageId: '',
-      inputMassage: '',
+      isForwardMessage: false,
+      forwaredMessageId: '',
+      inputMessage: '',
       SendBtnDisabled: true,
     });
     this.textInput.clear();
-
-    console.log(massageTemp);
   };
 
-  detectForwardMassage = massageId => {
+  detectForwardMessage = messageId => {
     this.setState({
-      forwaredMassageId: massageId,
-      isForwardMassage: true,
+      forwaredMessageId: messageId,
+      isForwardMessage: true,
     });
   };
 
-  pressOnMassage = massageId => {
+  pressOnMessage = messageId => {
     Alert.alert(
       'Do thomething',
       '',
@@ -103,45 +94,28 @@ class ChatsItem extends React.Component {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        {text: 'Delete', onPress: () => this.deleteOwnMassage(massageId)},
-        {text: 'Forward', onPress: () => this.detectForwardMassage(massageId)},
+        {text: 'Delete', onPress: () => this.deleteOwnMessage(messageId)},
+        {text: 'Forward', onPress: () => this.detectForwardMessage(messageId)},
       ],
       {cancelable: false},
     );
   };
 
-  deleteOwnMassage = massageId => {
-    //let massageTemp = this.props.navigation.state.params.massages;
-
-    // let massageTemp = this.props.navigation.state.params.massages.filter(x => {
-    //   return x.id != massageId;
-    // });
-
+  deleteOwnMessage = messageId => {
     let userId = this.props.navigation.state.params.id;
 
-    console.log('STORE', this.props.data.usersTemp[userId].massages[1]);
+    let messageTemp = this.props.data.usersTemp[userId - 1].messages.filter(
+      x => {
+        return x.id != messageId;
+      },
+    );
 
-    // let massageTemp = this.props.data.usersTemp[
-    //   this.props.navigation.state.params.id
-    // ].massages.filter(x => {
-    //   return x.id != massageId;
-    // });
-
-    //this.props.deleteMassageFromChat(massageTemp, userId);
-
-    //console.log(typeof deleteMassageFromChat(massageTemp))
-
-    //setTimeout(this.props.deleteMassageFromChat(massageTemp), 3000);
-
-    //console.log(massageTemp);
-    //console.log(massageId)
+    this.props.deleteMessageFromChat(messageTemp);
   };
 
   render() {
     const {params} = this.props.navigation.state;
-    //console.log('this.props.data ==============', this.props.data.usersTemp[0]);
 
-    //console.log(this.props.navigation.state.params.massages);
     return (
       <View style={styles.main}>
         <TopBarChatsItem
@@ -150,28 +124,24 @@ class ChatsItem extends React.Component {
           name={params.firstname}
         />
 
-        <View style={styles.massageBg}>
+        <View style={styles.messageBg}>
           <FlatList
             ref="flatList"
-            //onContentSizeChange={() => this.refs.flatList.scrollToEnd()}
-            data={params.massages}
-            //data={this.props.data.usersTemp[this.props.navigation.state.params.id -1].massages}
+            data={params.messages}
             width="100%"
             keyExtractor={item => item.id.toString()}
-            // ItemSeparatorComponent={this.FlatListItemSeparator}
             renderItem={({item}) => (
-              <View style={styles.massageRow}>
+              <View style={styles.messageRow}>
                 <TouchableHighlight
-                  onPress={() => this.pressOnMassage(item.id)}>
+                  onPress={() => this.pressOnMessage(item.id)}>
                   <View
                     style={
-                      item.owner ? styles.outputMassage : styles.inputMassage
+                      item.owner ? styles.outputMessage : styles.inputMessage
                     }>
                     <Text
                       style={styles.item}
-                      //onPress={this.deleteData.bind(this, item.firstname)}
                     >
-                      {item.massage}
+                      {item.message}
                     </Text>
                   </View>
                 </TouchableHighlight>
@@ -186,7 +156,7 @@ class ChatsItem extends React.Component {
               onChangeText={val => this.handleUserInput(val)}
               style={styles.textInput}
               placeholder={
-                this.state.isForwardMassage
+                this.state.isForwardMessage
                   ? 'Type Forward Text'
                   : 'Type Your Text'
               }
@@ -194,17 +164,12 @@ class ChatsItem extends React.Component {
                 this.textInput = input;
               }}
             />
-            {/* <TouchableHighlight
-              style={styles.sendButton}
-              onPress={this.sendMassage}>
-              <Text style={styles.sendButtonText}></Text>
-            </TouchableHighlight> */}
             <Button
               style={styles.sendButton}
               title={
-                this.state.isForwardMassage ? 'Forward Massage' : 'Send massage'
+                this.state.isForwardMessage ? 'Forward Message' : 'Send message'
               }
-              onPress={this.sendMassage}
+              onPress={this.sendMessage}
               disabled={this.state.SendBtnDisabled}
             />
           </View>
@@ -217,12 +182,12 @@ class ChatsItem extends React.Component {
 const ChatsItemReduxContainer = connect(
   state => {
     return {
-      data: state.authReducer,
+      data: state.messangerReducer,
     };
   },
   {
-    addMassageToChat,
-    deleteMassageFromChat,
+    addMessageToChat,
+    deleteMessageFromChat,
   },
 )(ChatsItem);
 
@@ -233,25 +198,25 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  massageBg: {
+  messageBg: {
     backgroundColor: '#e0e0e0',
     flex: 6,
   },
 
-  massageRow: {
+  messageRow: {
     marginTop: 10,
     paddingLeft: 10,
     paddingRight: 10,
   },
 
-  inputMassage: {
+  inputMessage: {
     backgroundColor: '#ffffff',
     width: '60%',
     padding: 10,
     borderRadius: 5,
   },
 
-  outputMassage: {
+  outputMessage: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignSelf: 'flex-end',

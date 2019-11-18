@@ -1,4 +1,8 @@
-import {GET_INITAL_STATE, ADD_MASSAGE, DELETE_MASSAGE} from '../types/actionTypes';
+import {
+  GET_INITAL_STATE,
+  ADD_MESSAGE,
+  DELETE_MESSAGE,
+} from '../types/actionTypes';
 
 const initialValue = {
   usersTemp: [],
@@ -12,15 +16,13 @@ export const messangerReducer = (state = initialValue, action) => {
         ...action.payload,
       };
 
-    case ADD_MASSAGE:
-      console.log('ADD_MASSAGE REDUCER');
+    case ADD_MESSAGE:
       return {
         ...state,
         ...action.payload,
       };
 
-    case DELETE_MASSAGE:
-      console.log('DELETE_MASSAGE REDUCER');
+    case DELETE_MESSAGE:
       return {
         ...state,
         ...action.payload,

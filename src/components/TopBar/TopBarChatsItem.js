@@ -20,32 +20,25 @@ import {StackNavigator} from 'react-navigation';
 
 class TopBarChatsItem extends React.Component {
   static navigationOptions = {
-    //To hide the ActionBar/NavigationBar
     title: 'Home',
-    header: null, //this will hide the header
+    header: null,
   };
 
   render() {
-
-    //console.log(this.props.navigation);
     const navigate = this.props.navigation;
 
     return (
       <View style={TopBarStyles.row}>
-        {/* <Icon name="rocket" size={30} color="#900" />; */}
         <TouchableOpacity onPress={() => navigate('MainActivity')}>
           <Image
             source={require('../../assets/icons/back.png')}
-            style={{height: 35, width: 35}}
+            style={TopBarStyles.back}
           />
         </TouchableOpacity>
 
         <Text style={TopBarStyles.userName}>{this.props.name}</Text>
 
-        <Image
-          source={{uri: this.props.avatar}}
-          style={{width: 45, height: 45, borderRadius: 45 / 2}}
-        />
+        <Image source={{uri: this.props.avatar}} style={TopBarStyles.avatar} />
       </View>
     );
   }
@@ -66,6 +59,15 @@ const TopBarStyles = StyleSheet.create({
     paddingBottom: 5,
     backgroundColor: '#1488db',
     marginTop: 50,
+  },
+  avatar: {
+    width: 45,
+    height: 45,
+    borderRadius: 45 / 2,
+  },
+  back: {
+    height: 35,
+    width: 35,
   },
 });
 
