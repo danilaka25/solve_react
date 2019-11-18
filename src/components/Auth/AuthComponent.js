@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   signInButton: {
     width: 192,
     height: 48,

@@ -36,16 +36,27 @@ class ChatsList extends React.Component {
     );
   };
 
+  clickOnChat = item => {
+    navigate('ChatsItem', {
+      firstname: item.firstname,
+      img: item.img,
+      navigation: navigate,
+      messages: item.messages,
+      id: item.id,
+    });
+  };
+
   render() {
     const {navigate} = this.props.navigation;
 
     return (
       <View style={styles.main}>
         <FlatList
-          ref="flatList"
-          onContentSizeChange={() =>
-            this.refs.flatList.scrollToOffset({animated: true, offset: 0})
-          }
+          width="100%"
+          // ref="flatList"
+          // onContentSizeChange={() =>
+          //   this.refs.flatList.scrollToOffset({animated: true, offset: 0})
+          // }
           data={this.props.data.usersTemp}
           keyExtractor={item => item.id.toString()}
           ItemSeparatorComponent={this.FlatListItemSeparator}
@@ -72,7 +83,6 @@ class ChatsList extends React.Component {
                         ? item.messages[item.messages.length - 1].message
                         : 'no messages yet'}
                     </Text>
-                    
                   </View>
                 </View>
                 <View style={styles.listItemRight}>
